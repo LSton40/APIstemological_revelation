@@ -1,0 +1,31 @@
+<p class="tease">Would you like to play a game?</p>
+
+<h1 class="splash_header">Jegs and Pokers</h1>
+
+
+
+
+{{#if user}}
+<div class="enter">
+    <p class="register_prompt">I remember you, {{user.username}}! Welcome back! No need to see Lou: head on into the lobby!</p>
+    <a href="./pages/lobby.hbs" class="button" title="Lobby">Enter</button>
+</div>
+
+<div class="leave">
+    <p class="logout_prompt">Leaving so soon? Be sure to come back!</p>
+    <a href="./pages/logout.hbs" class="button" title="Logout">Egress</button>
+</div>
+
+{{else}}
+<div class="login">
+    <p class="login_prompt">Already a club member? Go check in with Lou, the Bouncer!</p>
+    <a href="./pages/sign_in.hbs" class="button" title="Login">Bouncer</a>
+</div>
+
+
+
+<div class="register">
+    <p class="register_prompt">New here? Go see Hank to sign up!</p>
+    <a href="./pages/register.hbs" class="button" title="Register">Hank</button>
+</div>
+{{/if}}

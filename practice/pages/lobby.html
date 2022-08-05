@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whatever We're Doing</title>
+  <link rel="stylesheet" href="../front/css/style.css">
+</head>
+
+<body>
+  <h1>Jegs and Pokers</h1>
+
+
+  {{#if host}}
+      <h2>Welcome {{host.username}}</h2>
+  
+  
+      <h3>{{host.username}}</h3>
+      <ul>
+          {{#each}}
+              <p class="member_player">{{player.username}}</p>
+          {{/each}}
+      </ul>
+  
+      <button class="button">Start</button>
+      {{else}}
+      <h2>Good day {{player.username}}</h2>
+  {{/if}}
+  
+  
+      <p>We are waiting for some additional players</p>
+      <p>You need 4 players in order to play the game</p>
+  
+      <p>Please enjoy the complimentary entertainment while you wait.</p>
+
+  <script src="../front/js/front.js"></script>
+</body>
+
+</html>

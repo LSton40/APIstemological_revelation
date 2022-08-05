@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: black;
+    color: white;
+    display: grid;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:active {
+    color: gray;
+}
+
+a:hover {
+    color: gray;
+}
+
+a:visited {
+    color: white;
+}
+
+h1 {
+    font-size: CALC(4vw + 25px);
+    font-family: 'Mouse Memoirs', sans-serif;
+    margin: auto;
+    padding: 10px;
+}
+
+h2 {
+    font-size: CALC(3vw + 20px);
+    margin: auto;
+    padding: 20px;
+}
+
+.button {
+    margin: 20px auto;
+    padding: 30px 100px;
+    background-color: red;
+    font-size: CALC(1.5vw + 12px);
+}
+
+.choices {
+    margin: auto;
+    display: grid;
+}
+
+.enter {
+    padding: 20vh;
+}
+
+.button-prompt {
+    margin: auto;
+}
+
+.button-prompt p {
+    font-size: CALC(1.5vw + 12px);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+main {
+    display: none;
+}
+
+.register {
+    margin: auto;
+    height: 2vh;
+}
+
+.u-input {
+    height: 2vh;
+}
+
+p#tease {
+   color: #49acf4;
+   font-family: Courier, "Lucida Console", Monaco, monospace; 
+   font-size: 6vw;
+   font-weight: normal;
+   text-shadow: 0 0 2rem #77c6ff;
+   width: 0;
+   padding: 50vh 12vw;
+   white-space: nowrap;
+   overflow: hidden;
+   visibility: hidden;
+   transform:scale(.70,1);
+   transform-origin: left;
+   animation: type 2.1s 0s steps(41, end);
+   animation-fill-mode: forwards;
+   display: flex;
+   
+}
+
+span {
+    animation: blink is infinite;
+}
+
+@keyframes type{
+    0%{width: 0%; visibility: hidden;}
+    1%{width: 1%; visibility: visible;}
+    50%{width: 50%; visibility: visible;}
+    100%{width: 100%; visibility: visible;}
+}
+
+@keyframes blink {
+    0%{opacity: 0;}
+    49%{opacity: 0;}
+    50%{opacity: 1;}
+}
+
+::selection{
+    background: black;
+}

@@ -22,13 +22,7 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 
-
-
-
 // app.use(express.static(path.join('front')));
-
-app.engine('hbs', engine({ extname: '.hbs' }));
-app.set('view engine', 'hbs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -1,11 +1,23 @@
-<h1>Jegs and Pokers</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whatever We're Doing</title>
+  <link rel="stylesheet" href="../front/css/style.css">
+</head>
+
+<body>
+  <h1>Jegs and Pokers</h1>
 
 
 <h2>The Bouncer</h2>
 
 <p class="lou">Yer a club member? My memory ain't so good; you'll have to show me your credentials!</p>
 <form action="/auth/register" method="post">
-    <input type="email" name="email" placeholder="Whither electronic correspondence?">
+    <input type="text" name="username" placeholder="What do we call you?">
     <input type="password" name="password" placeholder="What's the secret word?">
     <button class="button">Sign In</button>
 </form>
@@ -18,4 +30,7 @@
 </div>
 {{/if}}
 
+  <script src="../front/js/front.js"></script>
+</body>
 
+</html>
