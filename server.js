@@ -49,10 +49,9 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/test', (req, res) => {
-    console.log("landing page");
-    res.sendFile(__dirname + '/index2.html');
-});
+
+
+
 
 //check if user is logged in
 io.on('connection', (browserConnection) => {
