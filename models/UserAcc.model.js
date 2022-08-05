@@ -11,7 +11,13 @@ class UserAcc extends Model {} // defining UserAcc as a model
 UserAcc.init({
   userame: { // username for the user account
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      len: {
+        args: 3,
+        msg: 'Your username must be at least 3 characters!'
+      }
+    }
   },
   email: { // email for the user account
     type: DataTypes.STRING,
@@ -43,10 +49,8 @@ UserAcc.init({
   }
 });
 
-UserAcc.prototype.validatePass = async(pass, storedPass) => {
-  // returns boolean true ? pass = storedPass : false
-  return await bcript.compare(pass, storedPass);
-}
+// returns boolean true ? pass = storedPass : false
+UserAcc.prototype.validatePass = async(pass, storedPass) => { await bcrypt.compare(pass, storedPass) }
 
 // defining one to many relationship for chats
 UserAcc.hasMany(Chat);
