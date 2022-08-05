@@ -12,9 +12,9 @@ const options = {};
 const io = require("socket.io")(server, options);
 
 //handlebars template engine
-const { engine } = require('express-handlebars');
-app.engine('hbs', engine({ extname: '.hbs' }));
-app.set('view engine', 'hbs');
+// const { engine } = require('express-handlebars');
+// app.engine('hbs', engine({ extname: '.hbs' }));
+// app.set('view engine', 'hbs');
 
 
 //manage sessions
@@ -22,13 +22,6 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 
-
-
-
-// app.use(express.static(path.join('front')));
-
-app.engine('hbs', engine({ extname: '.hbs' }));
-app.set('view engine', 'hbs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -52,23 +45,38 @@ app.use(session({
 
 //landing page
 app.get('/', (req, res) => {
+    console.log("landing page");
     res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/test', (req, res) => {
+    console.log("landing page");
+    res.sendFile(__dirname + '/index2.html');
+});
+
 //check if user is logged in
-io.on('connection', (socket) => {
+io.on('connection', (browserConnection) => {
     console.log('a user connected');
-    socket.on('disconnect', () => {
+    browserConnection.on('disconnect', () => {
         console.log('user disconnected');
     }
+
     );
-    //example of sending a message to the client
-    // socket.on('chat message', (msg) => {
-    //     console.log('message: ' + msg);
-    //     io.emit('chat message', msg);
-    // }
-    // );
+    browserConnection.on('chat message', (msg) => {
+        console.log('message: ' + msg);
+        console.log(browserConnection.id);
+        // io.to(socket.id).emit('hey', 'testing');
+
+    });
+    io.emit('test', 'blah');
+    //add connection to session
+
 });
+
+//listen for 'message' events from the client and print the message to the console
+
+
+
 
 //sync db then start server
 db.sync().then(() => {

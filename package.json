@@ -2,13 +2,16 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-session-sequelize": "^7.1.4",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
     "handlebars": "^4.7.7",
+    "http": "^0.0.1-security",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.21.3"
+    "sequelize": "^6.21.3",
+    "socket.io": "^4.5.1"
   },
   "name": "project2",
   "version": "1.0.0",
