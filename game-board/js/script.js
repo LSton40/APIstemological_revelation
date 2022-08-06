@@ -2,13 +2,15 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 canvas.width = window.innerWidth / 3;
 canvas.height = window.innerHeight / 5;
+const gameBoard = require('../.././models/GameBoard.model');
 
 // Peghole object
-function PegHole(x, y, radius, color) {
+function PegHole(x, y, radius, color, user) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.color = color;
+    this.user = user;//this would be a number
 };
 PegHole.prototype.draw = function () {
     c.beginPath();
@@ -139,6 +141,9 @@ function createGameboard() {
         pegHole.draw();
     });
     console.log(pegHoles);
+
+    //store in database
+    gameBoard.create(JSON.stringify(pegHoles));
 };
 
 createGameboard();
