@@ -1,5 +1,5 @@
 const view_router = require('express').Router();
-// const { loggedIn } = require('../controllers/authorization');
+const { loggedIn } = require('../controllers/helper_functions');
 
 // view_router.get('/lobby', loggedIn, (req, res) => {
 // //check if the socket.id of the user matches that of the same user in a database
@@ -8,11 +8,27 @@ const view_router = require('express').Router();
 // });
 
 
-view_router.get('/', (req, res) => {
+view_router.get('/', loggedIn, (req, res) => {
+
+
+    //if they are signed in, then send them to the lobby
+    //if they are not signed in, then send them to the login page
 
     res.render('index');
 
 });
+
+view_router.get('/dashboard', loggedIn, (req, res) => {
+
+
+    //if they are signed in, then send them to the lobby
+    //if they are not signed in, then send them to the login page
+
+    // res.render('index');
+
+});
+
+
 
 // function test(){
 //     console.log('test');
