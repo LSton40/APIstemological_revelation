@@ -5,8 +5,10 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-module.exports = new Sequelize(process.env.DB, process.env.USER, process.env.PASS, {
+const logging = process.env.LOG ? true : false;
+
+module.exports = new Sequelize(process.env.DB, process.env.SQLUSER, process.env.SQLPASS, {
   host: process.env.HOST,
   dialect: process.env.DIALECT,
-  logging: process.env.LOG
+  logging: logging
 });

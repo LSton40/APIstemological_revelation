@@ -9,7 +9,8 @@
     "handlebars": "^4.7.7",
     "inquirer": "^8.2.4",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.21.3"
+    "sequelize": "^6.21.3",
+    "socket.io": "^4.5.1"
   },
   "name": "project2",
   "version": "1.0.0",

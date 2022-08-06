@@ -45,11 +45,11 @@ const initQuest = [
 const getUserConfig = async() => {
   const answers = await inquirer.prompt(initQuest);
 
-  const envData = `DB=${answers.DB}
-USER=${answers.USER}
-PASS=${answers.PASS}
-HOST=${answers.HOST}
-DIALECT=${answers.DIALECT}
+  const envData = `DB="${answers.DB}"
+SQLUSER="${answers.USER}"
+SQLPASS="${answers.PASS}"
+HOST="${answers.HOST}"
+DIALECT="${answers.DIALECT}"
 LOG=${answers.LOG}`;
 
 const dbPromise = mysql.createPool({
