@@ -65,7 +65,7 @@ h2 {
 }
 
 main {
-    /* display: none; */
+    display: none;
 }
 
 .register {
@@ -78,7 +78,8 @@ main {
 }
 
 header {
-    display: grid;
+    display: flex;
+    flex-direction: column;
 }
 
 .splash_header {
@@ -88,6 +89,7 @@ header {
     transition-property: transform;
     transition-duration: 1s;
     animation-name: reduce;
+    animation-delay: 2s;
     animation-duration: 2s;
     animation-timing-function: linear;
 
