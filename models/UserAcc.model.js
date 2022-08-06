@@ -3,13 +3,12 @@
 //
 
 const { DataTypes, Model } = require('sequelize');
-const { Player, Chat } = require('.');
 const bcrypt = require('bcrypt');
 
 class UserAcc extends Model {} // defining UserAcc as a model
 
 UserAcc.init({
-  userame: { // username for the user account
+  username: { // username for the user account
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
@@ -35,28 +34,37 @@ UserAcc.init({
         msg: 'Your password requires at least 8 characters!'
       }
     }
+  },
+  socket: {
+    type: DataTypes.INTEGER,
+    defaultValue: null
+  },
+  wins: { // JD had an idea for a scoreboard but I want to be lazy and store on the useracc
+    type: DataTypes.INTEGER
+  },
+  losses: {
+    type: DataTypes.INTEGER
+  },
+  points: { // JD also had an idea for a shop - maybe we reward wins with x points to use in a store? (NTH!!)
+    type: DataTypes.INTEGER
   }
 }, {
-  sequelize: require('../db/connection'),
+  sequelize: require('../config/connection'),
   modelName: 'userAcc',
   hooks: {
     beforeCreate: async() => {
       // passing password to bcrypt to hash before saving
-      const hashedPassword = await bcrypt.hash(user.passHash, 10);
+      let pass = UserAcc.passHash;
+      const hashedPassword = await bcrypt.hash(pass, 10, (err,hash) => {
+        err ? console.error(err) : console.log(hash);
+      });
       // saving hashed password to user.passHash
-      user.passHash = hashedPassword;
+      UserAcc.passHash = hashedPassword;
     }
   }
 });
 
 // returns boolean true ? pass = storedPass : false
 UserAcc.prototype.validatePass = async(pass, storedPass) => { await bcrypt.compare(pass, storedPass) }
-
-// defining one to many relationship for chats
-UserAcc.hasMany(Chat);
-Chat.belongsTo(UserAcc);
-
-// one to one for the player to relate to the useracc
-UserAcc.belongsTo(Player);
 
 module.exports = UserAcc;
