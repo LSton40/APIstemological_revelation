@@ -11,6 +11,10 @@ const { loggedIn } = require('../controllers/helper_functions');
 view_router.get('/', loggedIn, (req, res) => {
 
 
+
+
+
+
     //if they are signed in, then send them to the lobby
     //if they are not signed in, then send them to the login page
 
@@ -20,7 +24,7 @@ view_router.get('/', loggedIn, (req, res) => {
 
 view_router.get('/dashboard', loggedIn, (req, res) => {
 
-
+    res.render('dashboard');
     //if they are signed in, then send them to the lobby
     //if they are not signed in, then send them to the login page
 
@@ -28,6 +32,15 @@ view_router.get('/dashboard', loggedIn, (req, res) => {
 
 });
 
+
+
+view_router.get('/sign_in', loggedIn, (req, res) => {
+    res.render('sign_in');
+});
+
+view_router.get('/register', loggedIn, (req, res) => {
+    res.render('register');
+});
 
 
 // function test(){

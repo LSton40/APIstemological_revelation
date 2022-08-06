@@ -118,9 +118,6 @@ app.use('/', view_routes);
 //check if user is logged in
 io.on('connection', (browserConnection) => {
 
-
-
-
     console.log(`User: ${browserConnection.id} connected to the server`);
     browserConnection.on('disconnect', (browserConnection) => {
         console.log('user disconnected');
@@ -247,11 +244,6 @@ io.on('connection', (browserConnection) => {
 
         //io.emit( 'update gameboard', gameboard );
     });
-
-
-
-
-
 
 
 
