@@ -35,7 +35,7 @@ UserAcc.init({
       }
     }
   },
-  socketID: {
+  socket: {
     type: DataTypes.INTEGER,
     defaultValue: null
   },
@@ -54,9 +54,12 @@ UserAcc.init({
   hooks: {
     beforeCreate: async() => {
       // passing password to bcrypt to hash before saving
-      const hashedPassword = await bcrypt.hash(user.passHash, 10);
+      let pass = UserAcc.passHash;
+      const hashedPassword = await bcrypt.hash(pass, 10, (err,hash) => {
+        err ? console.error(err) : console.log(hash);
+      });
       // saving hashed password to user.passHash
-      user.passHash = hashedPassword;
+      UserAcc.passHash = hashedPassword;
     }
   }
 });

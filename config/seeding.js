@@ -2,24 +2,21 @@
 // made by fixedOtter 4.8.2022
 //
 
-const { GameBoard, Player, Peg, UserAcc } = require('../models'); // epic es6 pulling in from index.js
+const UserAcc = require('../models/UserAcc.model'); // NOT epic es6 pulling in from index.js (since i deletedmy code lol)
 const db = require('./connection.js'); // connection file lol
 
 db.sync().then(() => { // syncing then doing the seeding
-  GameBoard.create({ // first creating a gameboard table obj
-    gameBoardName: 'epicGaymurs'
-  }).then(newBoard => {
-    newBoard.createGamePlayer({ // creating a player under the gameboard - does it need to be tied to userAcc??
-      playerName: 'sakura',
-      playerColor: 'F78DA7'
-    }).then(newPlayer => {
-      newPlayer.createPeg({ // finally creating a peg under the new player
-        pegName: 'germy',
-        position: 42,
-        isAtSpawn: false,
-        finishPosition: null
-      });
-    });
+  UserAcc.create({
+    username: 'bryan',
+    email: 'billy@goat.co',
+    passHash: `!Don'tknowHow2m@keAgoodPassword!!`,
+    socket: 69,
+    wins: 0,
+    losses: 432,
+    points: 0
+  }).then(user => {
+    console.log('user made:');
+    console.log(user);
   });
 });
 // i love semicolons
