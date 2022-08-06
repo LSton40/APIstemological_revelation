@@ -1,0 +1,20 @@
+<h1>Jegs and Pokers: Sign In</h1>
+
+
+{{#if errors}}
+  <div class="errors">
+    {{#each errors}}
+      <p class="error">{{this}}</p>
+    {{/each}}
+  </div>
+{{/if}}
+
+<form action="/auth/register" method="post">
+    <input type="email" name="email" placeholder="Whither electronic correspondence?">
+    <input type="password" name="password" placeholder="What's the magic word?">
+    <button class="button">Sign In</button>
+</form>
+
+<p>No account?</p>
+<button href="/register">Register!</button>
+

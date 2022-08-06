@@ -12,9 +12,9 @@ const options = {};
 const io = require("socket.io")(server, options);
 
 //handlebars template engine
-// const { engine } = require('express-handlebars');
-// app.engine('hbs', engine({ extname: '.hbs' }));
-// app.set('view engine', 'hbs');
+const { engine } = require('express-handlebars');
+app.engine('hbs', engine({ extname: '.hbs' }));
+app.set('view engine', 'hbs');
 
 
 //manage sessions
@@ -55,8 +55,11 @@ app.get('/', (req, res) => {
 
 //check if user is logged in
 io.on('connection', (browserConnection) => {
-    console.log('a user connected');
-    browserConnection.on('disconnect', () => {
+    browserConnection.on('create game', (msg) => {
+        gameData.players.push
+    });
+    console.log(`User: ${browserConnection.id} connected to the server`);
+    browserConnection.on('disconnect', (browserConnection) => {
         console.log('user disconnected');
     }
 
@@ -67,10 +70,15 @@ io.on('connection', (browserConnection) => {
         // io.to(socket.id).emit('hey', 'testing');
 
     });
+
+    //create a new user
+
     io.emit('test', 'blah');
     //add connection to session
 
 });
+
+
 
 //listen for 'message' events from the client and print the message to the console
 
