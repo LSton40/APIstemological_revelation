@@ -2,6 +2,7 @@ const PORT = process.env.PORT || 6969;
 const db = require('./config/connection');
 const path = require('path');
 require('dotenv').config();
+const { view_routes } = require('./controllers');
 
 
 //express
@@ -99,15 +100,20 @@ let gameData = {
 };
 
 // giving every route the gameData obj
-app.use((req, res, next) => {
-    req.gameData = gameData;
-    next();
-})
+// app.use((req, res, next) => {
+//     req.gameData = gameData;
+//     next();
+// })
+
+app.use('/', view_routes);
+
+
+
 
 //landing page
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/index.html');
+// });
 
 //check if user is logged in
 io.on('connection', (browserConnection) => {
@@ -138,10 +144,10 @@ io.on('connection', (browserConnection) => {
     });
 
 
-    browserConnection.on('joined game', (socket) => {
+    browserConnection.on('joined game', (boolean) => {
 
 
-
+        
 
 
     });
@@ -185,6 +191,10 @@ io.on('connection', (browserConnection) => {
 
 
 
+    });
+
+    browserConnection.on('chat message', (msg) => {
+        io.emit('chat message', msg);
     });
 
 
