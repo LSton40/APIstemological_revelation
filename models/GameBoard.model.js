@@ -1,5 +1,4 @@
 const { DataTypes, Model } = require('sequelize');
-const bcrypt = require('bcrypt');
 
 class GameBoard extends Model { }
 
