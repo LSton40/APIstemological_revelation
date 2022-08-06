@@ -20,7 +20,7 @@ app.set('view engine', 'hbs');
 
 //manage sessions
 const session = require('express-session');
-const UserAcc= require('./models/UserAcc.model');
+const UserAcc = require('./models/UserAcc.model');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 
@@ -54,44 +54,54 @@ app.use(session({
 /* JD's idea to store game data in a singe object instead of table stufs */
 // i added some example data for us to visualize / start experimenting?
 let gameData = {
-  currPlayers: [
-    {
-      name: 'guy',
-      userSID: {}, // grab useracc sid from session obj?
-      pegColor: 'purple',
-      pegs: [
-        { pegID: 1,
-          pegLocation: 3,
-          isAtSpawn: false,
-          isInFinish: false },
-        { pegID: 2,
-          pegLocation: null,
-          isAtSpawn: false,
-          isInFinish: true },
-        { pegID: 3,
-          pegLocation: null,
-          isAtSpawn: true,
-          isInFinish: false },
-        { pegID: 4,
-          pegLocation: null,
-          isAtSpawn: true,
-          isInFinish: false },
-        { pegID: 5,
-          pegLocation: null,
-          isAtSpawn: true,
-          isInFinish: false }
-      ]
-    },
+    currPlayers: [
+        {
+            name: 'guy',
+            userSID: {}, // grab useracc sid from session obj?
+            pegColor: 'purple',
+            pegs: [
+                {
+                    pegID: 1,
+                    pegLocation: 3,
+                    isAtSpawn: false,
+                    isInFinish: false
+                },
+                {
+                    pegID: 2,
+                    pegLocation: null,
+                    isAtSpawn: false,
+                    isInFinish: true
+                },
+                {
+                    pegID: 3,
+                    pegLocation: null,
+                    isAtSpawn: true,
+                    isInFinish: false
+                },
+                {
+                    pegID: 4,
+                    pegLocation: null,
+                    isAtSpawn: true,
+                    isInFinish: false
+                },
+                {
+                    pegID: 5,
+                    pegLocation: null,
+                    isAtSpawn: true,
+                    isInFinish: false
+                }
+            ]
+        },
 
-  ],
-  finishConditionMet: false,
-  isStarted: true
-  };
+    ],
+    finishConditionMet: false,
+    isStarted: true
+};
 
 // giving every route the gameData obj
-app.use((req,res,next) => {
-  req.gameData = gameData;
-  next();
+app.use((req, res, next) => {
+    req.gameData = gameData;
+    next();
 })
 
 //landing page
@@ -117,7 +127,68 @@ io.on('connection', (browserConnection) => {
 
     });
 
-    //create a new user
+    //when the join game button is clicked, the user is sent to the game lobby
+    browserConnection.on('join lobby', (socket) => {
+        // console.log('user joined lobby');
+        // console.log(browserConnection.id);
+        //grabs the socket id, socket.join the game lobby, and sends the user to the game lobby by changing handlebars to the game lobby
+
+
+
+    });
+
+
+    browserConnection.on('joined game', (socket) => {
+
+
+
+
+
+    });
+
+    browserConnection.on('start game', (socket) => {
+        // console.log('user joined game');
+        // console.log(browserConnection.id);
+        //generates a game for the user to join by calling the game-board.hbs template and storing the game data in the gameData obj for storing in the database
+        //swaps the handlebars lobby html to the game html
+    });
+
+
+    //should probably be emitted from the backend by checking if the games' finish condition is met
+    browserConnection.on('game over', (socket) => {
+        // console.log('game over');
+        // console.log(browserConnection.id);
+        //swaps the handlebars game html to the game over html
+        //changes the gameBoard database table to game over
+        //allows the users to go to the dashboard
+    });
+
+
+    browserConnection.on('player move', (gameData) => {
+        // console.log('player move');
+        // console.log(browserConnection.id);
+        //updates the game data in the database
+        //sends the updated game data to the players
+
+
+
+
+        
+        let players = gameData.players;
+        let currPlayer = gameData.currPlayer;
+
+
+
+
+
+
+
+
+
+    });
+
+
+
 
     io.emit('test', 'blah');
     //add connection to session
