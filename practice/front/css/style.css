@@ -65,7 +65,7 @@ h2 {
 }
 
 main {
-    display: none;
+    /* display: none; */
 }
 
 .register {
@@ -76,6 +76,31 @@ main {
 .u-input {
     height: 2vh;
 }
+
+header {
+    display: grid;
+}
+
+.splash_header {
+    /* position: absolute;
+    margin: auto;
+    padding: 50vh; */
+    transition-property: transform;
+    transition-duration: 1s;
+    animation-name: reduce;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+
+}
+
+@keyframes reduce {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(.4);
+    }
+};
 
 p#tease {
    color: #49acf4;
