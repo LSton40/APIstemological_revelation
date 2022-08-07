@@ -147,3 +147,5 @@ function createGameboard() {
 };
 
 createGameboard();
+
+module.exports = createGameboard;
