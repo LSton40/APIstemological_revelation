@@ -42,6 +42,9 @@ view_router.get('/register', loggedIn, (req, res) => {
     res.render('register');
 });
 
+view_router.get('/gameboard', loggedIn, (req, res) => {
+    res.render('gameboard');
+});
 
 
 // function test(){
