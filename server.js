@@ -3,7 +3,7 @@ const db = require('./config/connection');
 // const path = require('path');
 require('dotenv').config();
 
-const { view_routes } = require('./controllers');
+const { view_routes, auth_routes } = require('./controllers');
 const GameBoard = require('./models/GameBoard.model');
 
 
@@ -16,7 +16,7 @@ const options = {};
 
 const io = require("socket.io")(server, options);
 //middleware that gets cookie and asks passport to deserialize it and return the user document
-let passportSocketIo = require("passport.socketio");
+// let passportSocketIo = require("passport.socketio"); // NTH: maybe future use?
 
 
 //handlebars template engine

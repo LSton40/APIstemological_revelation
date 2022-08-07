@@ -13,11 +13,11 @@ auth_router.post('/login', loggedIn, async(req, res) => {
   /* error handling / input validation */
   if (!username) {
     req.session.errors = ['Your username cannot be blank'];
-    return res.redirect('/register');
+    return res.redirect('/login');
   }
   if (!password) {
     req.session.errors = ['Your password cannot be blank'];
-    return res.redirect('/register');
+    return res.redirect('/login');
   }
 
   /* user exists ? return newUser : return null */
@@ -36,13 +36,14 @@ auth_router.post('/login', loggedIn, async(req, res) => {
     if (validatePappword) {
       req.sesssion.save(() => {
         req.session.user_id = newUser.user_id;
+        req.session.username = newUser.username;
       });
     } else { // otherwise, send error and return to login
       req.session.errors = ['Incorrect password; Please try again.'];
       res.redirect('/login');
     }
   } else { // sending the user to the register page
-    res.session.errors = [`User doesn't exist. Please register.`];
+    req.session.errors = [`User doesn't exist. Please register.`];
     res.redirect('/register');
   }
 
@@ -74,17 +75,25 @@ auth_router.post('/register', loggedIn, async(req, res) => {
 
   /* user created ? save id to session and send them to dashboard : send user back to register page */
   if (created) {
-    req.session.save(() => {
-      // saving the id of the user to the session data
-      req.session.user_id = user.user_id;
-      // redirecting the user to root route
-      res.redirect('/');
-    });
+    // checks if the password is 
+    const validatePappword = await user.validatePass(password, user.passHash);
+    
+    if (validatePappword) {
+      // saving the id and username of the user to the session data
+      req.sesssion.save(() => {
+        req.session.user_id = newUser.user_id;
+        req.session.username = newUser.username;
+        // redirecting the user to root route
+        res.redirect('/');
+      });
+    }
   } else { // if the user was not created
     // saves verbose error and sends them to register
     req.session.errors = ['A user with that name already exists; Please choose another username'];
     res.redirect('/register');
   }
 });
+
+auth_router.get('/logout', (req,res) => {!req.session.username ? res.redirect('/') : req.session.destroy(() => {res.redirect('/')})});
 
 module.exports = auth_router;

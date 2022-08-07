@@ -15,11 +15,13 @@
       <h3>Landing Page Test</h3>
     </a>
     <nav>
-      {{#if user}}
-        <span class="email">{{user.email}}</span>
-        <a href="/auth/logout">Log Out</a>
+      {{#if username}}
+        <span class="email">{{username}}</span>
+        <form action="/auth/logout" method="get">
+          <button class="button">Sign Out</button>
+        </form>
         {{else}}
-        <a href="/sign_in">Log In</a>
+        <a href="/login">Log In</a>
         <span>or</span>
         <a href="/register">Register</a>
       {{/if}}
