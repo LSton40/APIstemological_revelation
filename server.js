@@ -2,7 +2,7 @@ const PORT = process.env.PORT || 6969;
 const db = require('./config/connection');
 // const path = require('path');
 require('dotenv').config();
-const { view_routes } = require('./controllers');
+const { view_routes, auth_routes } = require('./controllers');
 
 
 //express
@@ -102,7 +102,11 @@ let gameData = {
 //     next();
 // })
 
+/* *********** */
+/* ROUTE ROOTS */
+/* *********** */
 app.use('/', view_routes);
+app.use('/auth', auth_routes);
 
 
 
@@ -114,27 +118,39 @@ app.use('/', view_routes);
 
 //check if user is logged in
 io.on('connection', (browserConnection) => {
-    browserConnection.on('create game', (msg) => {
-        gameData.players.push
-    });
+
+
+
+
     console.log(`User: ${browserConnection.id} connected to the server`);
     browserConnection.on('disconnect', (browserConnection) => {
         console.log('user disconnected');
     }
 
     );
+
+
     browserConnection.on('chat message', (msg) => {
         console.log('message: ' + msg);
         console.log(browserConnection.id);
         // io.to(socket.id).emit('hey', 'testing');
+        console.log(browserConnection.rooms);
+    });
+
+    browserConnection.on('create game', (host, lobbyName) => {
+        // gameData.players.push
+        //when the game is created by the host add the host to the lobby
+        browserConnection.join(`${lobbyName}`);
+        //then wait for the host to start the game
 
     });
 
     //when the join game button is clicked, the user is sent to the game lobby
-    browserConnection.on('join lobby', (socket) => {
+    browserConnection.on('join lobby', (user_socket, lobbyName) => {
         // console.log('user joined lobby');
         // console.log(browserConnection.id);
         //grabs the socket id, socket.join the game lobby, and sends the user to the game lobby by changing handlebars to the game lobby
+        browserConnection.join(`${lobbyName}`);
 
 
 
@@ -144,7 +160,7 @@ io.on('connection', (browserConnection) => {
     browserConnection.on('joined game', (boolean) => {
 
 
-        
+
 
 
     });
@@ -152,8 +168,37 @@ io.on('connection', (browserConnection) => {
     browserConnection.on('start game', (socket) => {
         // console.log('user joined game');
         // console.log(browserConnection.id);
+
+        //do some check to see if the game has enough players to start
+
+
+
+
         //generates a game for the user to join by calling the game-board.hbs template and storing the game data in the gameData obj for storing in the database
         //swaps the handlebars lobby html to the game html
+        const gameId = socket.id;
+        //the users name who created the game
+        const gameCreator = UserAcc.findOne({
+            where: {
+                gameId
+            }
+        });
+
+        //if the game is ongoin, or if it is finished
+        let gameStatus = 'active';
+
+        //all player sockets from the game room
+        let gamePlayers = io.sockets.clients(gameId);
+
+        //keeps track of the current turn of the game(could either be a int or maybe the name of the player)
+        // gameTurn
+
+        //json object of the game board
+        // gameBoard
+
+        //game winner (could be a int or maybe the name of the player). this will be null if the game is not finished
+        // gameWinner:
+
     });
 
 
@@ -193,6 +238,20 @@ io.on('connection', (browserConnection) => {
     browserConnection.on('chat message', (msg) => {
         io.emit('chat message', msg);
     });
+
+    browserConnection.on('turn data', (data) => {
+
+        //get the gameboard from the database
+        //then updata the gameboard with the new data
+        //create a array that has all teh current players of that gameboard from the database
+        //then send back the updated gameboard to the players(use socket id)
+
+        //io.emit( 'update gameboard', gameboard );
+    });
+
+
+
+
 
 
 

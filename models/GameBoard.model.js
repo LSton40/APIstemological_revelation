@@ -24,7 +24,7 @@ GameBoard.init({
     },
     //json object containing a list of the users in the game
     gamePlayers: {
-        type: DataTypes.VARCHAR,
+        type: DataTypes.STRING,
         allowNull: false
     },
     //keeps track of the current turn of the game(could either be a int or maybe the name of the player)
@@ -34,7 +34,7 @@ GameBoard.init({
     },
     //json object of the game board
     gameBoard: {
-        type: DataTypes.VARCHAR,
+        type: DataTypes.STRING(2500),
         allowNull: false
     },
     //game winner (could be a int or maybe the name of the player). this will be null if the game is not finished
@@ -49,6 +49,9 @@ GameBoard.init({
         modelName: 'gameBoard',
         hooks: {
             beforeCreate: async () => {
+
+                
+
                 
             }
         }
