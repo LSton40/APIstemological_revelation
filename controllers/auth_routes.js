@@ -20,25 +20,25 @@ auth_router.post('/login', loggedIn, async(req, res) => {
     return res.redirect('/login');
   }
 
-  /* user exists ? return newUser : return null */
-  const newUser = await Account.findOne({
+  /* user exists ? return existingUser : return null */
+  const existingUser = await Account.findOne({
     where: {
       username
     }
   });
 
   /* user exists ? validate login and set session id : send user to register page */
-  if (newUser) {
-    // validate password bool (misspelled on purpose, and without reason)
-    const validatePappword = await newUser.validatePass(password, newUser.passHash);
-    
-    // if pass is valid, setting the session user id to the newly created user's id
-    if (validatePappword) {
-      req.sesssion.save(() => {
-        req.session.user_id = newUser.user_id;
-        req.session.username = newUser.username;
-      });
-    } else { // otherwise, send error and return to login
+  if (existingUser) {
+    if (loginChecker(password, existingUser)) {
+      // clearing errors and saving id and username
+      req.session.errors = [''];
+      req.session.user_id = existingUser.id;
+      req.session.username = existingUser.username;
+      req.session.passHash = existingUser.passHash;
+      // saving session data and redirecting to root route
+      req.session.save();
+      res.redirect('/');
+    } else {
       req.session.errors = ['Incorrect password; Please try again.'];
       res.redirect('/login');
     }
@@ -63,8 +63,8 @@ auth_router.post('/register', loggedIn, async(req, res) => {
     return res.redirect('/register');
   }
 
-  /* user exists ? created = false : created = true && return user */
-  const [ user, created ] = await Account.findOrCreate({
+  /* user exists ? created = false : created = true && return newUser */
+  const [ newUser, created ] = await Account.findOrCreate({
     where: { // finding query looking for the username
       username: username
     },
@@ -75,25 +75,44 @@ auth_router.post('/register', loggedIn, async(req, res) => {
 
   /* user created ? save id to session and send them to dashboard : send user back to register page */
   if (created) {
-    // checks if the password is 
-    const validatePappword = await user.validatePass(password, user.passHash);
-    
-    if (validatePappword) {
-      // saving the id and username of the user to the session data
-      req.sesssion.save(() => {
-        req.session.user_id = newUser.user_id;
-        req.session.username = newUser.username;
-        // redirecting the user to root route
-        res.redirect('/');
-      });
+    // validate the user login
+    if (loginChecker(password, newUser)) {
+      // clearing errors and saving id and username
+      req.session.errors = [''];
+      req.session.user_id = newUser.id;
+      req.session.username = newUser.username;
+      req.session.passHash = newUser.passHash;
+      // saving session data and redirecting to root route
+      req.session.save();
+      res.redirect('/');
     }
-  } else { // if the user was not created
+  } else { // if the user was not created find the user and see if they had the right login
+    /* user exists ? return newUser : return null */
+    const existingUser = await Account.findOne({
+      where: {
+        username
+      }
+    });
+    if (loginChecker(password, existingUser)) {
+      // clearing errors and saving id and username
+      req.session.errors = [''];
+      req.session.user_id = existingUser.id;
+      req.session.username = existingUser.username;
+      req.session.passHash = existingUser.passHash;
+      // saving session data and redirecting to root route
+      req.session.save();
+      res.redirect('/');
+    } else {
     // saves verbose error and sends them to register
     req.session.errors = ['A user with that name already exists; Please choose another username'];
     res.redirect('/register');
+    }
   }
 });
 
 auth_router.get('/logout', (req,res) => {!req.session.username ? res.redirect('/') : req.session.destroy(() => {res.redirect('/')})});
+
+/* checks login */
+const loginChecker = async(password, user) => {await user.validatePass(password, user.passHash)}
 
 module.exports = auth_router;

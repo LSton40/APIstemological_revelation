@@ -33,7 +33,7 @@ view_router.get('/dashboard', loggedIn, (req, res) => {
 
 
 
-view_router.get('/sign_in', loggedIn, (req, res) => {
+view_router.get('/login', loggedIn, (req, res) => {
     res.render('sign_in', { errors: req.session.errors });
 });
 
