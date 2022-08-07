@@ -3,7 +3,7 @@ const db = require('./config/connection');
 // const path = require('path');
 require('dotenv').config();
 
-const { view_routes } = require('./controllers');
+const { view_routes, auth_routes } = require('./controllers');
 const GameBoard = require('./models/GameBoard.model');
 
 
