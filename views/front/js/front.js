@@ -1,3 +1,6 @@
+//JS do it
+
+
 const teaser = setTimeout(teaserOpening, 4000)
 
 function teaserOpening() {
@@ -12,6 +15,7 @@ function titleMagic() {
     setTimeout(() => {
         document.getElementById("main").style.display = 'flex';
         document.getElementById("splash_header").style.backgroundColor = 'linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10));';
+
     }, 2500)
 
 }
