@@ -1,7 +1,13 @@
-<h1>Jegs and Pokers</h1>
+<h1>Jegs and Pokers: Sign In</h1>
 
+{{#if errors}}
+  <div class="errors">
+    {{#each errors}}
+      <p class="error">{{this}}</p>
+    {{/each}}
+  </div>
+{{/if}}
 
-<h2>The Bouncer</h2>
 
 <p class="lou">Yer a club member? My memory ain't so good; you'll have to show me your credentials!</p>
 <form action="/auth/register" method="post">
@@ -10,12 +16,6 @@
     <button class="button">Sign In</button>
 </form>
 
-{{#if error}}
-<div class="lou">
-  <p>Hey! Ya ain't a club member! Go see Hank or I'll thump ya!</p>
-  <a href="./register.hbs" class="button" title="Register">I'll go see Hank</a>
-  <a href="https://google.com" class="button" title="Leave">Do you know who I am? Try n' thump me!</a>
-</div>
-{{/if}}
-
+<p>No account?</p>
+<button href="/register">Register!</button>
 

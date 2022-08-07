@@ -1,22 +1,7 @@
 <h1 class="header">Jegs and Pokers</h1>
 
-<h2>Register with Hank</h2>
-
-
-{{#if user}}
-<div class="lou">
-  <p>Hey! I remember you! You're already a club member, ain't ya? Musta taken a wrong turn! Go check in with Lou</p>
-  <a href="./register.hbs" class="button" title="Login">I'll go see Lou</a>
-  <a href="https://google.com" class="button" title="Leave">Yeah, took a wrong turn. Don't feel like playing today. Peacing out!</a>
-</div>
-
-{{else}}
-<p>Howdy! I'm Hank. You wanna be a club member? Sign on up!</p>
-
 <form action="/auth/register" method="post">
     <input type="email" name="email" placeholder="Whither electronic correspondence?">
     <input type="password" name="password" placeholder="What'll be your secret word?">
     <button class="button">Submit</button>
 </form>
-
-{{/if}}
