@@ -1,5 +1,346 @@
 * {
     margin: 0;
     padding: 0;
+    /* box-sizing: border-box; */
 }
 
+/*Global */
+html, body {
+    height: 100vh;
+    background-color: black;
+    /* background: linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10)); */
+    color: white;
+    display: grid;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:active {
+    color: gray;
+}
+
+a:hover {
+    color: gray;
+}
+
+h2 {
+    font-size: 3vw;
+    margin: auto;
+    padding: 20px;
+}
+
+.button {
+    margin: 20px;
+    padding: 30px 100px;
+    background-color: red;
+    color: white;
+    font-size: CALC(1.5vw + 12px);
+    border-radius: 25px;
+    box-shadow: 5px 10px 8px black;
+}
+
+.button:hover {
+    color: gray;
+    background-color: darkred;
+}
+
+
+/*Header tag for Register, Login, Foyer, Lobby*/
+.fades {
+    height: 15vh;
+    animation-name: fadeIn;
+    /* animation-delay: 1s; */
+    animation-duration: 1.5s;
+    transition-timing-function: linear;
+}
+
+/*Title h1 for Register, Login, Foyer, Lobby*/
+.header {
+    font-size: 6vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    margin: auto;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+
+/*Main body of Register, Login, Foyer, Lobby*/
+.form_pages {
+    display: grid;
+    height: 85vh;
+    /* flex-direction: column; */
+    animation-name: fadeIn;
+    /* animation-delay: 1s; */
+    animation-duration: 1.5s;
+    transition-timing-function: linear;
+}
+
+/*Prompt buttons for Register, Login*/
+.your-options {
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 1;
+    /* justify-content: stretch; */
+}
+
+
+/*Text directions plus buttons and form fields: Register, Login, Foyer, Lobby*/
+.choices {
+    /* height: 30vh; */
+    margin: auto;
+    padding: 25px;
+    display: grid;
+    background-color: gray;
+    border-radius: 100px;
+}
+
+/*Text directions for form fields and buttons: Index, Register, Login, Foyer, Lobby*/
+.button-prompt {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.button-prompt p {
+    font-size: 2vw;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    align-self: center;
+    text-shadow: 5px 10px 8px black;
+}
+
+/*Formats form fields: Register, Login*/
+.register {
+    margin: auto;
+}
+
+/*Formatting for form text fields*/
+.u-input {
+    height: 2vh;
+    width: 100%;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 30px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+
+.players_ready {
+    display: flex;
+    margin: auto;
+    padding: 20px;
+    background-color: aqua;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0 100px;
+    padding: 0;
+}
+
+li {
+    background-color: blue;
+    margin-top: 15px;
+    padding: 5px 20px;
+    font-size: 3vw;
+    border-radius: 100px;
+    text-shadow: 5px 10px 8px black;
+    box-shadow: 5px 10px 8px black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*Index page opening teaser*/
+p#tease {
+    color: #49acf4;
+    font-family: Courier, "Lucida Console", Monaco, monospace; 
+    font-size: 6vw;
+    font-weight: normal;
+    text-shadow: 0 0 2rem #77c6ff;
+    width: 0;
+    padding: 0 12vw;
+    display: flex;
+    height: 100vh;
+    /* width: 100vw; */
+    /* justify-content: center; */
+    /* background-color: black; */
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    visibility: hidden;
+    transform:scale(.70,1);
+    transform-origin: left;
+    animation: type 2.1s 0s steps(41, end);
+    animation-fill-mode: forwards;
+   
+}
+
+
+/*Index page, initial Title header animation*/
+#splash_header {
+    /* font-size: CALC(18vw + 25px); */
+    font-size: 6vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    white-space: nowrap;
+    /* background: linear-gradient(to bottom right, red, yellow);
+    background-clip: text;
+    color: transparent; */
+    height: 15vh;
+    width: 100vw;
+    justify-content: center;
+    overflow: hidden;
+    /* align-items: center; */
+    /* transition-property: transform;
+    transition-duration: 1s; */
+    animation-name: reduce;
+    /* animation-delay: .5s; */
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    display: none;
+    /* visibility: hidden; */
+    /* font-size: 6vw; */
+}
+
+/*Index page main section*/
+#main {
+    height: 85vh;
+    background: linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10));
+    animation-name: fadeIn;
+    /* animation-delay: 6s; */
+    animation-duration: 1.5s;
+    transition-timing-function: linear;
+    display: none;
+    flex-wrap: wrap;
+}
+
+.gen-header {
+    height: 15vh;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*Gameboard header and title*/
+.gb-header {
+    height: 10vh;
+}
+
+.gb-title {
+    font-size: 3vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    margin: auto;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+/*Gameboard section*/
+#game-display {
+    display: grid;
+    height: 90vh;
+}
+
+/*Player areas*/
+.player {
+    background-color: green;
+}
+
+/*Player along top of screen*/
+#top_player {
+    grid-column: 1 / 11;
+    grid-row: 1 / 2;
+}
+
+/*Player on left side of screen (from user perspective)*/
+#left_player {
+    grid-column: 1 / 2;
+    grid-row: 2 / 10;
+}
+
+/*Gameboard itself*/
+#gameboard-canvas {
+    background-color: aqua;
+    grid-column: 2 / 10;
+    grid-row: 2 / 10;
+}
+
+/*Player on right side of screen (from user perspective)*/
+#right_player {
+    grid-column: 10 / 11;
+    grid-row: 2 / 10;
+}
+
+/*Player on bottom of screen, = user*/
+#me_player {
+    grid-column: 1 / 11;
+    grid-row: 10 / 11;
+}
+
+
+
+
+/*Keyframe for main section fade ins*/
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+/*Keyframe for opening teaser*/
+@keyframes type{
+    0%{width: 0%; visibility: hidden;}
+    1%{width: 1%; visibility: visible;}
+    50%{width: 50%; visibility: visible;}
+    100%{width: 100%; visibility: visible;}
+}
+
+/*Keyframe for Title movement*/
+@keyframes reduce {
+    0% {
+        font-size: 18vw;
+        margin-top: 25vh;
+        height: 75vh;
+        opacity: 0;
+    }
+    10%{
+        opacity: 1;
+    }
+    25%{
+        font-size: 18vw;
+        margin-top: 25vh;
+        height: 75vh;
+    }
+    100% {
+        font-size: 6vw;
+        height: 15vh;
+    }
+};

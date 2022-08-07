@@ -1,15 +1,33 @@
-<h1 class="header">Jegs and Pokers</h1>
+<header class="fades">
+  <h1 class="header">Jegs and Pokers</h1>
+</header>
+  
+<section class="form_pages">
+  <h2>Register with Hank</h2>
 
-{{#if errors}}
-  <div class="errors">
-    {{#each errors}}
-      <p class="error">{{this}}</p>
-    {{/each}}
+{{#if userAcc}}
+  <div class="choices">
+    <div class="button-prompt">
+      <p>Hey! I remember you, {{userAcc.username}}!</p>
+      <p>You're already a club member, ain't ya?</p> 
+      <p>Musta taken a wrong turn!</p>
+      <p>Go check in with Lou</p>
+    </div>
+    <a href="./register.hbs" class="button" title="Login">I'll go see Lou</a>
+    <a href="https://google.com" class="button" title="Leave">I'll leave</a>
+  </div>
+{{else}}
+  <div class="choices">
+    <div class="button-prompt">
+      <p>Howdy! I'm Hank.</p>
+      <p>You wanna be a club member?</p>
+      <p>Sign on up!</p>    
+    </div>
+    <form action="/auth/register" method="post" class="register">
+      <input class="u-input" type="text" name="username" placeholder="What do we call you?"><br>
+      <input class="u-input" type="password" name="password" placeholder="What'll be your secret word?"><br>
+      <button class="button">Submit</button>
+    </form>
   </div>
 {{/if}}
-
-<form action="/auth/register" method="post">
-    <input type="username" name="username" placeholder="Whither electronic correspondence?">
-    <input type="password" name="password" placeholder="What's the magic word?">
-    <button class="button">Submit</button>
-</form>
+</section>
