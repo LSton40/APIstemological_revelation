@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Board</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    {{!-- navbar for players and showing player turns --}}
+    <nav id="players">
+
+    </nav>
+
+
+    <main>
+        {{{body}}}
+    </main>
+
+
+    <div id="card-hand">
+        {{!-- <button id="card1" class="cards"></button>
+        <button id="card2" class="cards"></button>
+        <button id="card3" class="cards"></button>
+        <button id="card4" class="cards"></button>
+        <button id="card5" class="cards"></button> --}}
+
+    </div>
+
+    {{!--
+    <script src="js/front.js"></script> --}}
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+
+
+        { { !--socket.on('update ') --} }
+
+    </script>
+</body>
+
+</html>
