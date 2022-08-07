@@ -32,18 +32,18 @@
 </div> -->
 
 <!-- {{else}} -->
-<div class="button-prompt">
-  <p>Howdy! I'm Hank.</p>
-  <p>You wanna be a club member?</p>
-  <p>Sign on up!</p>    
-</div>
-
-<form action="/auth/register" method="post" class="register">
+<div class="choices">
+  <div class="button-prompt">
+    <p>Howdy! I'm Hank.</p>
+    <p>You wanna be a club member?</p>
+    <p>Sign on up!</p>    
+  </div>
+  <form action="/auth/register" method="post" class="register">
     <input class="u-input" type="text" name="username" placeholder="What do we call you?"><br>
     <input class="u-input" type="password" name="password" placeholder="What'll be your secret word?"><br>
     <button class="button">Submit</button>
-</form>
-
+  </form>
+</div>
 <!-- {{/if}} -->
 </section>
 

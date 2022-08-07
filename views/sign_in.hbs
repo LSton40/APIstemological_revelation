@@ -1,24 +1,3 @@
-
-{{#if errors}}
-  <div class="errors">
-    {{#each errors}}
-      <p class="error">{{this}}</p>
-    {{/each}}
-  </div>
-{{/if}}
-
-<p class="lou">Yer a club member? My memory ain't so good; you'll have to show me your credentials!</p>
-<form action="/auth/login" method="post">
-    <input type="username" name="username" placeholder="Whither electronic correspondence?">
-    <input type="password" name="password" placeholder="What's the secret word?">
-
-    <button class="button">Sign In</button>
-</form>
-
-<p>No account?</p>
-<button href="/register">Register!</button>
-
-
 <header class="fades">
   <h1 class="header">Jegs and Pokers</h1>
 </header>
@@ -26,27 +5,27 @@
 <section class="form_pages">
   <h2>The Bouncer</h2>
 
-
-  <div class="choices">
-    <div class="button-prompt">
-      <p>Yer a club member?</p> 
-      <p>My memory ain't so good</p> 
-      <p>You'll have to show me your credentials!</p>
+  <div class="your-options">
+    <div class="choices">
+      <div class="button-prompt">
+        <p>Yer a club member?</p> 
+        <p>My memory ain't so good</p> 
+        <p>You'll have to show me your credentials!</p>
+      </div>
+      <form action="/auth/register" method="post" class="register">
+        <input class="u-input" type="text" name="username" placeholder="What do we call you?"><br>
+        <input class="u-input" type="password" name="password" placeholder="What's the secret word?"><br>
+        <button class="button">Sign In</button>
+      </form>  
     </div>
-    <form action="/auth/register" method="post" class="register">
-      <input class="u-input" type="text" name="username" placeholder="What do we call you?"><br>
-      <input class="u-input" type="password" name="password" placeholder="What's the secret word?"><br>
-      <button class="button">Sign In</button>
-    </form>  
-  </div>
 
-  <div class="choices">
-    <div class="button-prompt">
-      <p>Hey! Ya ain't a club member!</p> 
-      <p>Go see Hank or I'll thump ya!</p>
+    <div class="choices">
+      <div class="button-prompt">
+        <p>Hey! Ya ain't a club member!</p> 
+        <p>Go see Hank or I'll thump ya!</p>
+      </div>
+      <a href="/register" class="button" title="Register">I'll go see Hank</a>
+      <a href="https://google.com" class="button" title="Leave">Try n' thump me!</a>
     </div>
-    <a href="/register" class="button" title="Register">I'll go see Hank</a>
-    <a href="https://google.com" class="button" title="Leave">Try n' thump me!</a>
   </div>
-
 </section>
