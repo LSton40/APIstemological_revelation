@@ -1,7 +1,15 @@
 <h1 class="header">Jegs and Pokers</h1>
 
+{{#if errors}}
+  <div class="errors">
+    {{#each errors}}
+      <p class="error">{{this}}</p>
+    {{/each}}
+  </div>
+{{/if}}
+
 <form action="/auth/register" method="post">
-    <input type="email" name="email" placeholder="Whither electronic correspondence?">
-    <input type="password" name="password" placeholder="What'll be your secret word?">
+    <input type="username" name="username" placeholder="Whither electronic correspondence?">
+    <input type="password" name="password" placeholder="What's the magic word?">
     <button class="button">Submit</button>
 </form>

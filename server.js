@@ -16,7 +16,7 @@ const options = {};
 
 const io = require("socket.io")(server, options);
 //middleware that gets cookie and asks passport to deserialize it and return the user document
-let passportSocketIo = require("passport.socketio");
+// let passportSocketIo = require("passport.socketio"); // NTH: maybe future use?
 
 
 //handlebars template engine
