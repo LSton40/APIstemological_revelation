@@ -264,14 +264,35 @@ io.on('connection', (browserConnection) => {
     });
 
 
-    browserConnection.on('player move', (gameData) => {
+    browserConnection.on('player move', (user, card, pegId, lobbyName) => {
         // console.log('player move');
         // console.log(browserConnection.id);
         //updates the game data in the database
         //sends the updated game data to the players/re-renders the game board
 
 
+        GameBoard.findOne({
+            where: {
+                gameId: lobbyName
+            }
+        }).then(game => {
 
+            //receive the lobbies game data from the database
+            let gameBoard = JSON.parse(game.gameBoard);
+
+
+            //once done with changes
+            game.gameBoard = JSON.stringify(gameBoard);
+
+
+
+
+
+
+        })
+            .catch(err => {
+                console.log(err);
+            });
 
 
         let players = gameData.players;
