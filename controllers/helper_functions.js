@@ -11,6 +11,7 @@ exports.loggedIn = (req, res, next) => {
             if (user_id) {
               return res.redirect('/dashboard');
             }
+            
             break;
         case '/sign_in':
             if (user_id) {
