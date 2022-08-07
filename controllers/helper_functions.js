@@ -9,18 +9,18 @@ exports.loggedIn = (req, res, next) => {
     switch (current_user_route) {
         case '/register':
             if (user_id) {
-                res.redirect('/dashboard');
+              return res.redirect('/dashboard');
             }
             
             break;
         case '/sign_in':
             if (user_id) {
-                res.redirect('/dashboard');
+              return res.redirect('/dashboard');
             }
             break;
         case '/dashboard':
             if (!user_id) {
-                res.redirect('/');
+              return res.redirect('/');
             }
             
             break;

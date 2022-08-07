@@ -18,13 +18,6 @@ UserAcc.init({
       }
     }
   },
-  email: { // email for the user account
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      isEmail: true
-    }
-  },
   passHash: { // password hash saver
     type: DataTypes.STRING,
     allowNull: false,
@@ -52,14 +45,12 @@ UserAcc.init({
   sequelize: require('../config/connection'),
   modelName: 'userAcc',
   hooks: {
-    beforeCreate: async() => {
+    beforeCreate: async(newUser) => {
       // passing password to bcrypt to hash before saving
-      let pass = UserAcc.passHash;
-      const hashedPassword = await bcrypt.hash(pass, 10, (err,hash) => {
-        err ? console.error(err) : console.log(hash);
-      });
+      const hashedPassword = await bcrypt.hash(newUser.passHash, 10);
+      console.log(hashedPassword);
       // saving hashed password to user.passHash
-      UserAcc.passHash = hashedPassword;
+      newUser.passHash = hashedPassword;
     }
   }
 });

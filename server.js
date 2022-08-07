@@ -2,8 +2,10 @@ const PORT = process.env.PORT || 6969;
 const db = require('./config/connection');
 const path = require('path');
 require('dotenv').config();
+
 const { view_routes } = require('./controllers');
 const GameBoard = require('./models/GameBoard.model');
+
 
 //express
 const express = require('express');
@@ -120,7 +122,11 @@ app.use((req, res, next) => {
     next();
 })
 
+/* ************** */
+/* ROUTE MOUNTING */
+/* ************** */
 app.use('/', view_routes);
+app.use('/auth', auth_routes);
 
 
 
