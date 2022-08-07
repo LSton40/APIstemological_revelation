@@ -1,15 +1,19 @@
 //JS do it
 
 
-// const teaser = setTimeout(teaserOpening, 2000)
+const teaser = setTimeout(teaserOpening, 4000)
 
-// function teaserOpening() {
-//     document.getElementById("tease").style.display = 'none';
-//     titleMagic();
-// }
+function teaserOpening() {
+    document.getElementById("tease").style.display = 'none';
+    titleMagic();
+}
 
-// function titleMagic() {
-//     // document.getElementById("splash-header").style.display = 'grid';
+function titleMagic() {
+    // document.getElementById("splash-header").style.display = 'flex';
+    document.getElementById("splash_header").style.display = 'flex';
+    setTimeout(() => {
+        document.getElementById("main").style.display = 'grid';
 
-//     document.getElementById("main").style.display = 'grid';
-// }
+    }, 2500)
+
+}
