@@ -43,6 +43,7 @@ view_router.get('/register', loggedIn, (req, res) => {
 });
 
 
+
 // function test(){
 //     console.log('test');
 //     return false;

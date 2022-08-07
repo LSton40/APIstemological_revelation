@@ -100,10 +100,10 @@ let gameData = {
 };
 
 // giving every route the gameData obj
-// app.use((req, res, next) => {
-//     req.gameData = gameData;
-//     next();
-// })
+app.use((req, res, next) => {
+    req.gameData = gameData;
+    next();
+})
 
 app.use('/', view_routes);
 
@@ -117,6 +117,12 @@ app.use('/', view_routes);
 
 //check if user is logged in
 io.on('connection', (browserConnection) => {
+    browserConnection.join(`room123`);
+
+
+
+
+
 
     console.log(`User: ${browserConnection.id} connected to the server`);
     browserConnection.on('disconnect', (browserConnection) => {
@@ -212,7 +218,7 @@ io.on('connection', (browserConnection) => {
         // console.log('player move');
         // console.log(browserConnection.id);
         //updates the game data in the database
-        //sends the updated game data to the players
+        //sends the updated game data to the players/re-renders the game board
 
 
 

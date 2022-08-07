@@ -22,6 +22,7 @@ exports.loggedIn = (req, res, next) => {
             if (!user_id) {
                 res.redirect('/');
             }
+            
             break;
         case '/lobby':
             // code block
