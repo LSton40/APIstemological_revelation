@@ -2,7 +2,7 @@ const PORT = process.env.PORT || 6969;
 const db = require('./config/connection');
 const path = require('path');
 require('dotenv').config();
-const { view_routes } = require('./controllers');
+const { view_routes, auth_routes } = require('./controllers');
 
 
 //express
@@ -105,7 +105,11 @@ let gameData = {
 //     next();
 // })
 
+/* ************** */
+/* ROUTE MOUNTING */
+/* ************** */
 app.use('/', view_routes);
+app.use('/auth', auth_routes);
 
 
 
