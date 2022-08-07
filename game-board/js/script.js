@@ -2,7 +2,7 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 canvas.width = window.innerWidth / 3;
 canvas.height = window.innerHeight / 5;
-const gameBoard = require('../.././models/GameBoard.model');
+// const gameBoard = require('../.././models/GameBoard.model');
 
 // Peghole object
 function PegHole(x, y, radius, color, user) {
