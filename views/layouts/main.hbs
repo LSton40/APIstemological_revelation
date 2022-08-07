@@ -14,18 +14,7 @@
     <a href="/" class="logo">
       <h3>Landing Page Test</h3>
     </a>
-    <nav>
-      {{#if username}}
-        <span class="email">{{username}}</span>
-        <form action="/auth/logout" method="get">
-          <button class="button">Sign Out</button>
-        </form>
-        {{else}}
-        <a href="/login">Log In</a>
-        <span>or</span>
-        <a href="/register">Register</a>
-      {{/if}}
-    </nav>
+
   </header>
 
   <main>

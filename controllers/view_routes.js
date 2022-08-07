@@ -41,6 +41,9 @@ view_router.get('/register', loggedIn, (req, res) => {
     res.render('register', { errors: req.session.errors });
 });
 
+view_router.get('/gameboard', loggedIn, (req, res) => {
+    res.render('gameboard');
+});
 
 
 // function test(){
