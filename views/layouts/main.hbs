@@ -5,21 +5,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Express Session Handlebars</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Landing Page</title>
+  <link rel="stylesheet" href="">
 </head>
 
 <body>
   <header>
     <a href="/" class="logo">
-      <h3>Express Auth Example</h3>
+      <h3>Landing Page Test</h3>
     </a>
     <nav>
       {{#if user}}
         <span class="email">{{user.email}}</span>
         <a href="/auth/logout">Log Out</a>
         {{else}}
-        <a href="/login">Log In</a>
+        <a href="/sign_in">Log In</a>
         <span>or</span>
         <a href="/register">Register</a>
       {{/if}}
@@ -30,7 +30,7 @@
     {{{body}}}
   </main>
 
-  <script src="js/front.js"></script>
+  {{!-- <script src="js/front.js"></script> --}}
 </body>
 
 </html>
