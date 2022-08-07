@@ -9,33 +9,33 @@
     <link rel="stylesheet" href="./index.css">
     <script src="https://pixijs.download/release/pixi.js"></script>
 
-
+    <script src="/socket.io/socket.io.js"></script>
     <script>
+        var socket = io();
         let app;
         const NORMAL = 0xFFFFFF;
         const OVER = 0x00FF00;
         const DOWN = 0xFF0000;
         const RECT_W = 100;
         const RECT_H = 100;
+        let offsetX = 750;
+        let offsetY = 150;
+        let spacing = 0;
         let pegHoles = [];
         let pointerIsDown = false;
         let pointerIsOver = false;
         let color = NORMAL;
         let radius = 5;
+        let posTracker = 0;
+
         window.onload = function () {
             app = new PIXI.Application({
-                width: window.innerWidth ,
-                height: window.innerHeight / 2,
+                width: window.innerWidth,
+                height: window.innerHeight / 1.5,
                 backgroundColor: 0xAAAAAA
 
             });
             document.querySelector('#gameDiv').appendChild(app.view);
-
-
-            // r1 = createPegHole(100, 100, RECT_W, RECT_H, "rect01", 20);
-            // r2 = createPegHole(300, 100, RECT_W, RECT_H, "rect02", 40);
-            // r3 = createPegHole(500, 100, RECT_W, RECT_H, "rect03", 80);
-            // r4 = createPegHole(0, 0, 300, 300, "rect04", 80);
 
 
 
@@ -44,7 +44,7 @@
                 const x = 70 + 10 * i;
                 const y = 20;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole((x + offsetX), y + offsetY, radius, color, "hole " + posTracker++));
             };
 
             // Right column // peg holes 19 - 36
@@ -52,119 +52,110 @@
                 const x = 250;
                 const y = 30 + 10 * i;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX + (spacing * 11), y + offsetY + spacing, radius, color, "hole " + posTracker++));
             };
             // Bottom row // peg holes 37 - 53
             for (let i = 0; i < 19; i++) {
                 const x = 250 - 10 * i;
                 const y = 200;
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Left column // peg holes 54 -71
             for (let i = 0; i < 17; i++) {
                 const x = 70;
                 const y = 190 - 10 * i;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Top finish line // peg holes 72 - 76
             for (let i = 0; i < 3; i++) {
                 const x = 100;
                 const y = 30 + 10 * i;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             for (let i = 0; i < 2; i++) {
                 const x = 110 + 10 * i;
                 const y = 50;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Bottom finish line // peg holes 77 - 81
             for (let i = 0; i < 3; i++) {
                 const x = 220;
                 const y = 170 + 10 * i;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             }
             for (let i = 0; i < 2; i++) {
                 const x = 200 + 10 * i;
                 const y = 170;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Right finish line // peg holes 82 - 86
             for (let i = 0; i < 3; i++) {
                 const x = 220 + 10 * i;
                 const y = 50;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             for (let i = 0; i < 2; i++) {
                 const x = 220;
                 const y = 60 + 10 * i;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Left finish line // peg holes 87 - 91
             for (let i = 0; i < 3; i++) {
                 const x = 80 + 10 * i;
                 const y = 170;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             for (let i = 0; i < 2; i++) {
                 const x = 100;
                 const y = 150 + 10 * i;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Top spawn // peg holes 92 - 96
             for (let i = 0; i < 5; i++) {
                 const x = 150;
                 const y = 30 + 10 * i;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Bottom spawn // peg holes 97 - 101
             for (let i = 0; i < 5; i++) {
                 const x = 170;
                 const y = 150 + 10 * i;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Right spawn // peg holes 102 - 106
             for (let i = 0; i < 5; i++) {
                 const x = 200 + 10 * i;
                 const y = 100;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Left spawn // peg holes 107 - 112
             for (let i = 0; i < 5; i++) {
                 const x = 80 + 10 * i;
                 const y = 120;
 
-                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
-
-
             //end of game drawing
-
-
-
 
             for (let i = 0; i < pegHoles.length; i++) {
                 app.stage.addChild(pegHoles[i]);
             }
-
-
-
-
-
             console.log(pegHoles);
 
             app.ticker.add(gameLoop);
+
         }
 
         function gameLoop(delta) { }
@@ -218,6 +209,13 @@
             // this.endFill();
             this.tint = DOWN;
             pointerIsDown = true;
+            let name = this.name;
+            console.log('name is being passed');
+            let test = socket.emit('tile-press', name);
+            console.log(`test: ${test}`);
+            //console.log(`name = > ${name}`)
+            console.log('name has passed');
+
         }
         function doPointerOver() {
             console.log("pointer over");
@@ -245,11 +243,21 @@
         }
 
 
+
+
+        
+
+
+
+
+
     </script>
 </head>
 
 <body>
     <div id="gameDiv"></div>
+
+
 </body>
 
 </html>
