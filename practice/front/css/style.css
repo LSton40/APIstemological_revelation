@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 html, body {
@@ -26,6 +26,7 @@ a:hover {
 
 .form_pages {
     display: flex;
+    height: 75vh;
     flex-direction: column;
     animation-name: fadeIn;
     /* animation-delay: 1s; */
@@ -33,8 +34,13 @@ a:hover {
     transition-timing-function: linear;
 }
 
+.your-options {
+    display: flex;
+    justify-content: stretch;
+}
+
 .fades {
-    height: 15vh;
+    height: 25vh;
     animation-name: fadeIn;
     /* animation-delay: 1s; */
     animation-duration: 1.5s;

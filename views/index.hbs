@@ -1,4 +1,49 @@
-<h3>Welcome {{#if username}}{{username}}{{else}}Guest{{/if}}</h3>
+{{!-- <h3>Welcome {{#if username}}{{username}}{{else}}Guest{{/if}}</h3> --}}
+
+<header class="gen-header">
+    <p id="tease">WOULD YOU LIKE TO PLAY A GAME?</p>
+    <div class="color_splash">
+        <h1 id="splash_header">Jegs and Pokers</h1>
+    </div>
+</header>
+
+<main id="main">
+    {{#if userAcc}}
+    <div class="choices">
+        <div class="button-prompt">
+            <p>I remember you, {{userAcc.username}}!</p>
+            <p>No need to see Lou!</p>
+            <p>Head on into the lobby!</p>
+        </div> 
+        <a href="./pages/lobby.hbs" class="button" title="Lobby">Enter</a>
+    </div>
+    <div class="choices">
+        <div class="button-prompt">
+            <p>Leaving so soon, {{userAcc.username}}?</p>
+            <p>Be sure to come back!</p>
+        </div>
+        <a href="./pages/logout.hbs" class="button" title="Logout">Egress</a>
+    </div>
+    {{else}}
+    <div class="choices enter">
+        <div class="button-prompt">
+            <p>Already a club member?</p>
+            <p>You look a bit familiar, but I don't remember for sure</p>
+            <p>Go check in with Lou, the Bouncer!</p>
+        </div>
+        <a href="./pages/sign_in.hbs" class="button" title="Login">Bouncer</a>
+    </div>
+    <div class="choices">
+        <div class="button-prompt">
+            <p>New here?</p>
+            <p>Go see Hank to sign up!</p>
+        </div>
+        <a href="./pages/register.hbs" class="button" title="Register">Hank</a>
+    </div>
+    {{/if}}
+</main>
+
+
 
 
  <ul id="messages"></ul>
