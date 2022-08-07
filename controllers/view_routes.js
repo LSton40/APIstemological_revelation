@@ -17,8 +17,7 @@ view_router.get('/', loggedIn, (req, res) => {
 
     //if they are signed in, then send them to the lobby
     //if they are not signed in, then send them to the login page
-
-    res.render('index');
+    res.render('index', { username: req.session.username});
 
 });
 
@@ -35,11 +34,11 @@ view_router.get('/dashboard', loggedIn, (req, res) => {
 
 
 view_router.get('/sign_in', loggedIn, (req, res) => {
-    res.render('sign_in');
+    res.render('sign_in', { errors: req.session.errors });
 });
 
 view_router.get('/register', loggedIn, (req, res) => {
-    res.render('register');
+    res.render('register', { errors: req.session.errors });
 });
 
 view_router.get('/gameboard', loggedIn, (req, res) => {
