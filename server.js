@@ -3,7 +3,7 @@ const db = require('./config/connection');
 const path = require('path');
 require('dotenv').config();
 const { view_routes } = require('./controllers');
-
+const GameBoard = require('./models/GameBoard.model');
 
 //express
 const express = require('express');
@@ -11,7 +11,11 @@ const app = require('express')();
 //io is a socket.io server
 const server = require('http').createServer(app);
 const options = {};
+
 const io = require("socket.io")(server, options);
+//middleware that gets cookie and asks passport to deserialize it and return the user document
+let passportSocketIo = require("passport.socketio");
+
 
 //handlebars template engine
 const { engine } = require('express-handlebars');
@@ -23,9 +27,20 @@ app.set('view engine', 'hbs');
 const session = require('express-session');
 const UserAcc = require('./models/UserAcc.model');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+// let sessionStore = new session.MemoryStore();
+// let cookieParser = require('cookie-parser');
 
-
-
+// try {
+//     io.use(passportSocketIo.authorize({
+//         cookieParser: cookieParser,
+//         key: 'express.sid',
+//         secret: process.env.SESSION_SECRET,
+//         store: sessionStore,
+//     }));
+// }
+// catch (err) {
+//     console.log(err);
+// }
 
 
 // app.use(express.static(path.join('front')));
@@ -117,8 +132,8 @@ app.use('/', view_routes);
 
 //check if user is logged in
 io.on('connection', (browserConnection) => {
-    browserConnection.join(`room123`);
-
+    // browserConnection.join(`room123`);
+    // console.log(browserConnection.request.user);
 
 
 
@@ -140,7 +155,34 @@ io.on('connection', (browserConnection) => {
     });
 
     browserConnection.on('create game', (host, lobbyName) => {
-        // gameData.players.push
+        gameData.players.push
+        GameBoard.findOne({
+            where: {
+                gameId: lobbyName
+            }
+        }).then(game => {
+            if (game) {
+                browserConnection.emit('game exists', 'game exists');
+            } else {
+                GameBoard.create({
+                    gameId: lobbyName,
+                    gameCreator: host,
+                    gamePlayers: JSON.stringify([host]),
+                    gameTurn: host,
+                    GameBoard: JSON.stringify(GameBoard.createGameBoard())
+                }).then(game => {
+                    browserConnection.join(game.lobbyName);
+                    browserConnection.emit('game created', game.lobbyName);
+                }).catch(err => {
+                    console.log(err);
+                }
+                );
+            }
+        }).catch(err => {
+            console.log(err);
+        }
+        );
+
         //when the game is created by the host add the host to the lobby
         browserConnection.join(`${lobbyName}`);
         //then wait for the host to start the game
@@ -168,6 +210,9 @@ io.on('connection', (browserConnection) => {
     });
 
     browserConnection.on('start game', (socket) => {
+
+
+
         // console.log('user joined game');
         // console.log(browserConnection.id);
 
@@ -175,18 +220,17 @@ io.on('connection', (browserConnection) => {
 
 
 
-
         //generates a game for the user to join by calling the game-board.hbs template and storing the game data in the gameData obj for storing in the database
         //swaps the handlebars lobby html to the game html
         const gameId = socket.id;
         //the users name who created the game
-        const gameCreator = UserAcc.findOne({
-            where: {
-                gameId
-            }
-        });
+        // const gameCreator = UserAcc.findOne({
+        //     where: {
+        //         gameId
+        //     }
+        // });
 
-        //if the game is ongoin, or if it is finished
+        //if the game is ongoing, or if it is finished
         let gameStatus = 'active';
 
         //all player sockets from the game room
@@ -257,6 +301,7 @@ io.on('connection', (browserConnection) => {
     //add connection to session
 
 });
+
 
 
 
