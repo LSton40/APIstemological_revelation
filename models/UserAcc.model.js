@@ -19,7 +19,7 @@ UserAcc.init({
     }
   },
   passHash: { // password hash saver
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(6969),
     allowNull: false,
     validate: {
       len: {
@@ -47,7 +47,10 @@ UserAcc.init({
   hooks: {
     beforeCreate: async(newUser) => {
       // passing password to bcrypt to hash before saving
-      const hashedPassword = await bcrypt.hash(newUser.passHash, 10);
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newUser.passHash, salt);
+
+      // const hashedPassword = await bcrypt.hash(newUser.passHash, 10);
       console.log(hashedPassword);
       // saving hashed password to user.passHash
       newUser.passHash = hashedPassword;
@@ -56,6 +59,6 @@ UserAcc.init({
 });
 
 // returns boolean true ? pass = storedPass : false
-UserAcc.prototype.validatePass = async(pass, storedPass) => { await bcrypt.compare(pass, storedPass) }
+UserAcc.prototype.validatePass = async(pass, storedPass) => {await bcrypt.compare(pass, storedPass)};
 
 module.exports = UserAcc;
