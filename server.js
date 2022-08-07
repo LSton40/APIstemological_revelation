@@ -137,9 +137,14 @@ app.use('/auth', auth_routes);
 io.on('connection', (browserConnection) => {
     // browserConnection.join(`room123`);
     // console.log(browserConnection.request.user);
+    console.log(browserConnection.sessionID);
 
 
+    browserConnection.on('tile-press', (tile) => {
+        console.log('message received')
+        console.log(`Someone has pressed ${tile}`)
 
+    });
 
 
     console.log(`User: ${browserConnection.id} connected to the server`);
