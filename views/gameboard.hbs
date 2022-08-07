@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixi tutorial</title>
+    <link rel="stylesheet" href="./index.css">
+    <script src="https://pixijs.download/release/pixi.js"></script>
+
+
+    <script>
+        let app;
+        const NORMAL = 0xFFFFFF;
+        const OVER = 0x00FF00;
+        const DOWN = 0xFF0000;
+        const RECT_W = 100;
+        const RECT_H = 100;
+        let pegHoles = [];
+        let pointerIsDown = false;
+        let pointerIsOver = false;
+        let color = NORMAL;
+        let radius = 5;
+        window.onload = function () {
+            app = new PIXI.Application({
+                width: window.innerWidth ,
+                height: window.innerHeight / 2,
+                backgroundColor: 0xAAAAAA
+
+            });
+            document.querySelector('#gameDiv').appendChild(app.view);
+
+
+            // r1 = createPegHole(100, 100, RECT_W, RECT_H, "rect01", 20);
+            // r2 = createPegHole(300, 100, RECT_W, RECT_H, "rect02", 40);
+            // r3 = createPegHole(500, 100, RECT_W, RECT_H, "rect03", 80);
+            // r4 = createPegHole(0, 0, 300, 300, "rect04", 80);
+
+
+
+            //beginning of game drawing
+            for (let i = 0; i < 19; i++) {
+                const x = 70 + 10 * i;
+                const y = 20;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+
+            // Right column // peg holes 19 - 36
+            for (let i = 0; i < 17; i++) {
+                const x = 250;
+                const y = 30 + 10 * i;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Bottom row // peg holes 37 - 53
+            for (let i = 0; i < 19; i++) {
+                const x = 250 - 10 * i;
+                const y = 200;
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Left column // peg holes 54 -71
+            for (let i = 0; i < 17; i++) {
+                const x = 70;
+                const y = 190 - 10 * i;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Top finish line // peg holes 72 - 76
+            for (let i = 0; i < 3; i++) {
+                const x = 100;
+                const y = 30 + 10 * i;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            for (let i = 0; i < 2; i++) {
+                const x = 110 + 10 * i;
+                const y = 50;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Bottom finish line // peg holes 77 - 81
+            for (let i = 0; i < 3; i++) {
+                const x = 220;
+                const y = 170 + 10 * i;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            }
+            for (let i = 0; i < 2; i++) {
+                const x = 200 + 10 * i;
+                const y = 170;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Right finish line // peg holes 82 - 86
+            for (let i = 0; i < 3; i++) {
+                const x = 220 + 10 * i;
+                const y = 50;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            for (let i = 0; i < 2; i++) {
+                const x = 220;
+                const y = 60 + 10 * i;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Left finish line // peg holes 87 - 91
+            for (let i = 0; i < 3; i++) {
+                const x = 80 + 10 * i;
+                const y = 170;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            for (let i = 0; i < 2; i++) {
+                const x = 100;
+                const y = 150 + 10 * i;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Top spawn // peg holes 92 - 96
+            for (let i = 0; i < 5; i++) {
+                const x = 150;
+                const y = 30 + 10 * i;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Bottom spawn // peg holes 97 - 101
+            for (let i = 0; i < 5; i++) {
+                const x = 170;
+                const y = 150 + 10 * i;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Right spawn // peg holes 102 - 106
+            for (let i = 0; i < 5; i++) {
+                const x = 200 + 10 * i;
+                const y = 100;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+            // Left spawn // peg holes 107 - 112
+            for (let i = 0; i < 5; i++) {
+                const x = 80 + 10 * i;
+                const y = 120;
+
+                pegHoles.push(new PegHole(x, y, radius, color, "hole " + i));
+            };
+
+
+            //end of game drawing
+
+
+
+
+            for (let i = 0; i < pegHoles.length; i++) {
+                app.stage.addChild(pegHoles[i]);
+            }
+
+
+
+
+
+            console.log(pegHoles);
+
+            app.ticker.add(gameLoop);
+        }
+
+        function gameLoop(delta) { }
+
+
+        function PegHole(x, y, radius, color, name, speed) {
+            let circle = new PIXI.Graphics();
+            circle.beginFill(NORMAL);
+            circle.drawCircle(x, y, radius, radius);
+            circle.endFill();
+            circle.interactive = true;
+            circle.buttonMode = true;
+
+            circle.on("pointerup", doPointerUp);
+            circle.on("pointerdown", doPointerDown);
+            circle.on("pointerover", doPointerOver);
+            circle.on("pointerout", doPointerOut);
+            circle.on("pointerupoutside", doPointerUpOutside);
+
+
+            circle.name = name;
+            circle.speed = speed;
+
+            return circle;
+        }
+
+
+
+
+
+
+        function doPointerUp() {
+            console.log("pointer up");
+            // this.beginFill(NORMAL);
+            // // this.drawRect((app.view.width / 2) - 100, (app.view.height / 2) - 100, 200, 200);
+            // this.endFill();
+            if (pointerIsOver) {
+                this.tint = NORMAL;
+                // this.y = this.y - this.speed;
+                console.log(`${this.name} is up at ${this.y}`);
+            }
+            else {
+                this.tint = NORMAL
+            }
+            pointerIsDown = false;
+        }
+        function doPointerDown() {
+            console.log("pointer down");
+            // this.beginFill(DOWN);
+            // // this.drawRect((app.view.width / 2) - 100, (app.view.height / 2) - 100, 200, 200);
+            // this.endFill();
+            this.tint = DOWN;
+            pointerIsDown = true;
+        }
+        function doPointerOver() {
+            console.log("pointer over");
+            // this.beginFill(OVER);
+            // // this.drawRect((app.view.width / 2) - 100, (app.view.height / 2) - 100, 200, 200);
+            // this.endFill();
+            this.tint = OVER;
+            pointerIsOver = true;
+        }
+        function doPointerOut() {
+            console.log("pointer out");
+            // this.beginFill(NORMAL);
+            // this.drawRect((app.view.width / 2) - 100, (app.view.height / 2) - 100, 200, 200);
+            // this.endFill();
+            this.tint = NORMAL;
+        }
+        function doPointerUpOutside() {
+            console.log("pointer up outside");
+            // this.beginFill(NORMAL);
+            // this.drawRect((app.view.width / 2) - 100, (app.view.height / 2) - 100, 200, 200);
+            // this.endFill();
+            this.tint = NORMAL;
+            pointerIsOver = false;
+            pointerIsDown = false;
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div id="gameDiv"></div>
+</body>
+
+</html>

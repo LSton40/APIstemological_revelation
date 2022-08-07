@@ -3,7 +3,7 @@ const db = require('./config/connection');
 // const path = require('path');
 require('dotenv').config();
 
-const { view_routes } = require('./controllers');
+const { view_routes, auth_routes } = require('./controllers');
 const GameBoard = require('./models/GameBoard.model');
 
 
@@ -16,7 +16,7 @@ const options = {};
 
 const io = require("socket.io")(server, options);
 //middleware that gets cookie and asks passport to deserialize it and return the user document
-let passportSocketIo = require("passport.socketio");
+// let passportSocketIo = require("passport.socketio"); // NTH: maybe future use?
 
 
 //handlebars template engine
@@ -261,14 +261,35 @@ io.on('connection', (browserConnection) => {
     });
 
 
-    browserConnection.on('player move', (gameData) => {
+    browserConnection.on('player move', (user, card, pegId, lobbyName) => {
         // console.log('player move');
         // console.log(browserConnection.id);
         //updates the game data in the database
         //sends the updated game data to the players/re-renders the game board
 
 
+        GameBoard.findOne({
+            where: {
+                gameId: lobbyName
+            }
+        }).then(game => {
 
+            //receive the lobbies game data from the database
+            let gameBoard = JSON.parse(game.gameBoard);
+
+
+            //once done with changes
+            game.gameBoard = JSON.stringify(gameBoard);
+
+
+
+
+
+
+        })
+            .catch(err => {
+                console.log(err);
+            });
 
 
         let players = gameData.players;
