@@ -1,6 +1,6 @@
 const PORT = process.env.PORT || 6969;
 const db = require('./config/connection');
-const path = require('path');
+// const path = require('path');
 require('dotenv').config();
 
 const { view_routes, auth_routes } = require('./controllers');

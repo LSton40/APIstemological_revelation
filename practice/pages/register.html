@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whatever We're Doing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../front/css/style.css">
+</head>
+
+<body>
+  
+  <header class="fades">
+    <h1 class="header">Jegs and Pokers</h1>
+  </header>
+  
+  <section class="form_pages">
+  <h2>Register with Hank</h2>
+
+<!-- {{#if user}} -->
+<!-- <div class="lou choices">
+  <div class="button-prompt">
+    <p>Hey! I remember you!</p>
+    <p>You're already a club member, ain't ya? 
+    <p>Musta taken a wrong turn!</p>
+    <p>Go check in with Lou</p>
+  </div>
+  <a href="./register.hbs" class="button" title="Login">I'll go see Lou</a>
+  <a href="https://google.com" class="button" title="Leave">I'll leave</a>
+</div> -->
+
+<!-- {{else}} -->
+<div class="button-prompt">
+  <p>Howdy! I'm Hank.</p>
+  <p>You wanna be a club member?</p>
+  <p>Sign on up!</p>    
+</div>
+
+<form action="/auth/register" method="post" class="register">
+    <input class="u-input" type="text" name="username" placeholder="What do we call you?"><br>
+    <input class="u-input" type="password" name="password" placeholder="What'll be your secret word?"><br>
+    <button class="button">Submit</button>
+</form>
+
+<!-- {{/if}} -->
+</section>
+
+  <script src="../front/js/front.js"></script>
+</body>
+
+</html>
