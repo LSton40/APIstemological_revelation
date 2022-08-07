@@ -59,10 +59,6 @@ UserAcc.init({
 });
 
 // returns boolean true ? pass = storedPass : false
-UserAcc.prototype.validatePass = async(pass, storedPass) => { 
-  console.log('validatePass called');
-  console.log(`pass: ${pass}\n storedPass: ${storedPass}`);
-  return await bcrypt.compare(pass, storedPass) 
-};
+UserAcc.prototype.validatePass = async(pass, storedPass) => {await bcrypt.compare(pass, storedPass)};
 
 module.exports = UserAcc;
