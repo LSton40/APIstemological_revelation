@@ -13,13 +13,15 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    var socket = io('/dashboard');
 
-    socket.on('active games', (data) => {
+    (async () => {
+        var socket = io();
+        const myCookie = await cookieStore.get('connect.sid');
+        socket.emit('cookie time', myCookie);
+        console.log(myCookie);
+
+    })();
 
 
-        
-
-    });
 
 </script>

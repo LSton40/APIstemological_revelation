@@ -139,6 +139,11 @@ io.on('connection', (browserConnection) => {
     // console.log(browserConnection.request.user);
     console.log(browserConnection.sessionID);
 
+    browserConnection.on('cookie time', (cookie) => {
+
+
+    });
+
 
     browserConnection.on('tile-press', (tile) => {
         console.log('message received')
