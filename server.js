@@ -295,94 +295,103 @@ app.use('/auth', auth_routes);
 // });
 
 
-io.use(wrap(sessionMiddleware));
+// io.use(wrap(sessionMiddleware));
 
-const lobby = io.of('/lobby');
-lobby.on('connection', (browserConnection) => {
-    // let username;
-    console.log(browserConnection.handshake.headers.cookie);
-    let connectionSid = browserConnection.handshake.headers.cookie.split('sid=')[1].split(';')[0];
-    console.log(`connectionSide: ${connectionSid}`);
-    console.log(`browserConnection.request.session: ${browserConnection.request.session}`);
-    //finds the user associated with the socket id
-
-
-    async function findUser() {
-        let user = await UserAcc.findOne(browserConnection.id);
-        // console.log(`username: ${user.username}`);
-        return user;
-    }
-
-    console.log('user connected to  lobby');
-    console.log(browserConnection.id);
-    browserConnection.on('disconnect', () => {
-        console.log('user disconnected');
-    });
-    browserConnection.on('cookie time', async (cookie) => {
-        // console.log(browserConnection.handshake);
-        // console.log(browserConnection.server.engin);
-        const user = findUser();
-        await user.update({ sid: connectionSid }, {
-            where: {
-                socket: browserConnection.id
-            }
-        });
+// const lobby = io.of('/lobby');
+// lobby.on('connection', (browserConnection) => {
+//     // let username;
+//     // console.log(browserConnection.handshake.headers.cookie);
+//     try{
+//     let connectionSid = browserConnection.handshake.headers.cookie.split('sid=')[1].split(';')[0];
+//     // console.log(`browserConnection.request.session: ${browserConnection.id}`);
+//     } catch(err){
+//         console.log('no cookie');
+//     }
+//     //finds the user associated with the socket id
 
 
-        console.log(`cookie: ${cookie.value}`);
-    });
+//     async function findUser() {
+//         let user = await UserAcc.findOne({
+//             where: {
+//                 sid: browserConnection.handshake.headers.cookie.split('sid=')[1].split(';')[0]
+//             }
+//         });
+//         // console.log(`username: ${user.username}`);
+//         return user;
 
-    browserConnection.on('join game', (user, lobbyName) => {
+//     }
 
-        browserConnection.join(`${lobbyName}`);
-        if (lobby.adapter.rooms[lobbyName].length < 4) {
-            browserConnection.emit('joined game', `${user} has joined the game`);
+//     console.log('user connected to  lobby');
+//     console.log(browserConnection.id);
+//     browserConnection.on('disconnect', () => {
+//         console.log('user disconnected');
+//     });
+//     browserConnection.on('cookie time', async (cookie) => {
+//         // console.log(browserConnection.handshake);
+//         // console.log(browserConnection.server.engin);
+//         const user = await findUser();
+//         console.log(`user: ${user}`);
+//         await user.update({ sid: connectionSid }, {
+//             where: {
+//                 socket: browserConnection.id
+//             }
+//         });
 
 
-        } else {
-            browserConnection.emit('room full', `${lobbyName} is currently full`);
-        }
+//         console.log(`cookie: ${cookie.value}`);
+//     });
 
-    });
+//     browserConnection.on('join game', (user, lobbyName) => {
 
-    browserConnection.on('create game', (host, lobbyName) => {
-        io.of("/lobby").in(`lobby${lobbyName}`).socketsJoin([`Game${lobbyName}`, `Chat${lobbyName}`]);
-        //create new gameboard and add it to the database
-        //find all the players in the game and add them to an array
-        browserConnection.emit('redirect', `/game/${lobbyName}`);
+//         browserConnection.join(`${lobbyName}`);
+//         if (lobby.adapter.rooms[lobbyName].length < 4) {
+//             browserConnection.emit('joined game', `${user} has joined the game`);
 
-        GameBoard.findOne({
-            where: {
-                gameId: lobbyName
-            }
-        }).then(game => {
-            if (game) {
-                browserConnection.emit('game exists', 'This game already exists');
-            } else {
-                GameBoard.create({
-                    gameId: lobbyName,
-                    gameCreator: host,
-                    gamePlayers: JSON.stringify([host]),
-                    gameTurn: host,
-                    GameBoard: JSON.stringify(GameBoard.createGameBoard())
-                }).then(game => {
-                    browserConnection.join(game.lobbyName);
-                    browserConnection.emit('game created', game.lobbyName);
-                }).catch(err => {
-                    console.log(err);
-                }
-                );
-            }
-        }).catch(err => {
-            console.log(`error finding game: ${err}`);
-        });
-    });
-    browserConnection.on('start game', (user_socket, lobbyName) => {
-        io.to(`${lobbyName}`).emit('game started', 'game started');
-    }
-    );
 
-});
+//         } else {
+//             browserConnection.emit('room full', `${lobbyName} is currently full`);
+//         }
+
+//     });
+
+//     browserConnection.on('create game', (host, lobbyName) => {
+//         io.of("/lobby").in(`lobby${lobbyName}`).socketsJoin([`Game${lobbyName}`, `Chat${lobbyName}`]);
+//         //create new gameboard and add it to the database
+//         //find all the players in the game and add them to an array
+//         browserConnection.emit('redirect', `/game/${lobbyName}`);
+
+//         GameBoard.findOne({
+//             where: {
+//                 gameId: lobbyName
+//             }
+//         }).then(game => {
+//             if (game) {
+//                 browserConnection.emit('game exists', 'This game already exists');
+//             } else {
+//                 GameBoard.create({
+//                     gameId: lobbyName,
+//                     gameCreator: host,
+//                     gamePlayers: JSON.stringify([host]),
+//                     gameTurn: host,
+//                     GameBoard: JSON.stringify(GameBoard.createGameBoard())
+//                 }).then(game => {
+//                     browserConnection.join(game.lobbyName);
+//                     browserConnection.emit('game created', game.lobbyName);
+//                 }).catch(err => {
+//                     console.log(err);
+//                 }
+//                 );
+//             }
+//         }).catch(err => {
+//             console.log(`error finding game: ${err}`);
+//         });
+//     });
+//     browserConnection.on('start game', (user_socket, lobbyName) => {
+//         io.to(`${lobbyName}`).emit('game started', 'game started');
+//     }
+//     );
+
+// });
 
 
 
