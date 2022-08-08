@@ -1,6 +1,6 @@
 const PORT = process.env.PORT || 6969;
 const db = require('./config/connection');
-// const path = require('path');
+const path = require('path');
 require('dotenv').config();
 
 const { view_routes, auth_routes } = require('./controllers');
@@ -45,7 +45,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // }
 
 
-// app.use(express.static(path.join('front')));
+app.use(express.static(path.join('views')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

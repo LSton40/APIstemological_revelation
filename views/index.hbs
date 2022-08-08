@@ -20,24 +20,26 @@
     </div>
 </main>
 {{else}}
-<p id="tease">WOULD YOU LIKE TO PLAY A GAME?</p>
-<h1 id="splash_header">Jegs and Pokers</h1>
+<div id="opening">
+    <p id="tease">WOULD YOU LIKE TO PLAY A GAME?</p>
+    <h1 id="splash_header">Jegs and Pokers</h1>
 
-<main id="main">
-    <div class="choices">
-        <div class="button-prompt">
-            <p>Already a club member?</p>
-            <p>You look a bit familiar, but I don't remember for sure</p>
-            <p>Go check in with Lou, the Bouncer!</p>
+    <main id="main">
+        <div class="choices">
+            <div class="button-prompt">
+                <p>Already a club member?</p>
+                <p>You look a bit familiar, but I don't remember for sure</p>
+                <p>Go check in with Lou, the Bouncer!</p>
+            </div>
+            <a href="login" class="button" title="Login">Bouncer</a>
         </div>
-        <a href="login" class="button" title="Login">Bouncer</a>
-    </div>
-    <div class="choices">
-        <div class="button-prompt">
-            <p>New here?</p>
-            <p>Go see Hank to sign up!</p>
+        <div class="choices">
+            <div class="button-prompt">
+                <p>New here?</p>
+                <p>Go see Hank to sign up!</p>
+            </div>
+            <a href="/register" class="button" title="Register">Hank</a>
         </div>
-        <a href="/register" class="button" title="Register">Hank</a>
-    </div>
-</main>
+    </main>
+</div>
 {{/if}}
