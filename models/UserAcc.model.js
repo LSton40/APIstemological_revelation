@@ -5,7 +5,7 @@
 const { DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 
-class UserAcc extends Model {} // defining UserAcc as a model
+class UserAcc extends Model { } // defining UserAcc as a model
 
 UserAcc.init({
   username: { // username for the user account
@@ -29,7 +29,7 @@ UserAcc.init({
     }
   },
   socket: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     defaultValue: null
   },
   wins: { // JD had an idea for a scoreboard but I want to be lazy and store on the useracc
@@ -40,12 +40,16 @@ UserAcc.init({
   },
   points: { // JD also had an idea for a shop - maybe we reward wins with x points to use in a store? (NTH!!)
     type: DataTypes.INTEGER
+  },
+  sid: {
+    type: DataTypes.STRING,
+    defaultValue: null
   }
 }, {
   sequelize: require('../config/connection'),
   modelName: 'userAcc',
   hooks: {
-    beforeCreate: async(newUser) => {
+    beforeCreate: async (newUser) => {
       // passing password to bcrypt to hash before saving
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newUser.passHash, salt);
@@ -59,6 +63,6 @@ UserAcc.init({
 });
 
 // returns boolean true ? pass = storedPass : false
-UserAcc.prototype.validatePass = async(pass, storedPass) => {await bcrypt.compare(pass, storedPass)};
+UserAcc.prototype.validatePass = async (pass, storedPass) => { await bcrypt.compare(pass, storedPass) };
 
 module.exports = UserAcc;

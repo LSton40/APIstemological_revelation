@@ -37,7 +37,11 @@ auth_router.post('/login', loggedIn, async(req, res) => {
       req.session.passHash = existingUser.passHash;
       // saving session data and redirecting to root route
       req.session.save();
-      res.redirect('/');
+
+      res.redirect('/dashboard');
+      // res.render('lobby', { layout: 'game_center.hbs' });
+
+
     } else {
       req.session.errors = ['Incorrect password; Please try again.'];
       res.redirect('/login');
@@ -48,6 +52,8 @@ auth_router.post('/login', loggedIn, async(req, res) => {
   }
 
 });
+
+
 
 auth_router.post('/register', loggedIn, async(req, res) => {
   /* grabbing the data from the user */
@@ -69,7 +75,9 @@ auth_router.post('/register', loggedIn, async(req, res) => {
       username: username
     },
     defaults: { // if there isn't a user, it will save passHash with user input password
-      passHash: password
+      //add the session id to the sid column
+      passHash: password,
+      socket: req.session.id
     }
   });
 
@@ -78,13 +86,16 @@ auth_router.post('/register', loggedIn, async(req, res) => {
     // validate the user login
     if (loginChecker(password, newUser)) {
       // clearing errors and saving id and username
+      console.log(req.session);
       req.session.errors = [''];
       req.session.user_id = newUser.id;
       req.session.username = newUser.username;
       req.session.passHash = newUser.passHash;
       // saving session data and redirecting to root route
       req.session.save();
-      res.redirect('/');
+      res.redirect('/dashboard');
+      // res.render('lobby', { layout: 'game_center.hbs' });
+
     }
   } else { // if the user was not created find the user and see if they had the right login
     /* user exists ? return newUser : return null */
@@ -101,7 +112,8 @@ auth_router.post('/register', loggedIn, async(req, res) => {
       req.session.passHash = existingUser.passHash;
       // saving session data and redirecting to root route
       req.session.save();
-      res.redirect('/');
+      res.redirect('/dashboard');
+      // res.render('lobby', { layout: 'game_center.hbs' });
     } else {
     // saves verbose error and sends them to register
     req.session.errors = ['A user with that name already exists; Please choose another username'];

@@ -1,3 +1,6 @@
+//JS do it
+
+
 const teaser = setTimeout(teaserOpening, 4000)
 
 function teaserOpening() {
