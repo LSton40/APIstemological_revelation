@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "connect": "^3.7.0",
     "connect-session-sequelize": "^7.1.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

@@ -9,20 +9,20 @@ exports.loggedIn = (req, res, next) => {
     switch (current_user_route) {
         case '/register':
             if (user_id) {
-              return res.redirect('/dashboard');
+                return res.render('lobby', { layout: 'game_center.hbs' });
+
             }
-            
+
             break;
         case '/sign_in':
-            if (user_id) {
-              return res.redirect('/dashboard');
-            }
-            break;
+
+            return res.render('lobby', { layout: 'game_center.hbs' });
+
         case '/dashboard':
             if (!user_id) {
-              return res.redirect('/');
+                return res.redirect('/');
             }
-            
+
             break;
         case '/lobby':
             // code block

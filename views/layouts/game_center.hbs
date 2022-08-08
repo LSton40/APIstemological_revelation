@@ -1,0 +1,23 @@
+<header class="fades">
+    <h1 class="header">Jegs and Pokers2</h1>
+</header>
+
+
+{{{body}}}
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+        (async () => {
+            console.log('test')
+            var socket = io('/lobby');
+
+            const myCookie = await cookieStore.get('connect.sid');
+            socket.emit('cookie time', myCookie);
+            console.log('test');
+
+        })();
+
+
+
+</script>

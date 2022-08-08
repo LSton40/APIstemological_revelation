@@ -5,23 +5,10 @@
 <section class="form_pages">
     <h2>The Foyer</h2>
     <div class="choices">
-        <button class="button">Create Game</button>
-        <button class="button">Join Game</button>
+       
+        <a href="/create" class="button" title="Create">Create Game</a>
+        <a href="/join" class="button" title="Join">Join Game</a>
     </div>
     {{!-- <p>{{}} people waiting to play.</p> --}}
 </section>
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-
-    (async () => {
-        var socket = io();
-        const myCookie = await cookieStore.get('connect.sid');
-        socket.emit('cookie time', myCookie);
-        console.log(myCookie);
-
-    })();
-
-
-
-</script>

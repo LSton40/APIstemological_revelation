@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="./index.css">
     <script src="https://pixijs.download/release/pixi.js"></script>
 
-    <script src="/socket.io/socket.io.js"></script>
     <script>
-        var socket = io();
+        
         let app;
         const NORMAL = 0xFFFFFF;
         const OVER = 0x00FF00;
@@ -149,7 +148,8 @@
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             //end of game drawing
-
+            //needs a parent square to hold pegs
+            
             for (let i = 0; i < pegHoles.length; i++) {
                 app.stage.addChild(pegHoles[i]);
             }
@@ -169,7 +169,7 @@
             circle.endFill();
             circle.interactive = true;
             circle.buttonMode = true;
-
+            
             circle.on("pointerup", doPointerUp);
             circle.on("pointerdown", doPointerDown);
             circle.on("pointerover", doPointerOver);

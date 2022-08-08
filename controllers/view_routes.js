@@ -1,26 +1,18 @@
 require('dotenv').config();
 const view_router = require('express').Router();
+const { Router } = require('express');
 const { loggedIn } = require('../controllers/helper_functions');
 const { GameBoard } = require('../models/GameBoard.model');
+const { UserAcc } = require('../models/UserAcc.model');
 
-//create socket connection to server
-const io = require('socket.io')();
-
-
-
-// view_router.get('/lobby', loggedIn, (req, res) => {
-// //check if the socket.id of the user matches that of the same user in a database
-// //if it does, then send the user to the lobby
-// //if it doesn't, then send the user to the login page
-// });
 
 
 view_router.get('/', loggedIn, (req, res) => {
 
 
 
-
-
+    //add the sid of the user to the database
+    // updateSid();
 
     //if they are signed in, then send them to the lobby
     //if they are not signed in, then send them to the login page
@@ -29,6 +21,12 @@ view_router.get('/', loggedIn, (req, res) => {
 });
 
 view_router.get('/dashboard', loggedIn, (req, res) => {
+
+
+
+    // updateSid();
+
+
 
     res.render('dashboard');
     //if they are signed in, then send them to the lobby
@@ -41,19 +39,23 @@ view_router.get('/dashboard', loggedIn, (req, res) => {
 
 
 view_router.get('/login', loggedIn, (req, res) => {
+    // updateSid();
     res.render('sign_in', { errors: req.session.errors });
 });
 
 view_router.get('/register', loggedIn, (req, res) => {
-    res.render('register', { errors: req.session.errors });
+    // updateSid();
+    res.render('lobby', { layout: 'game_center.hbs' });
 });
 
 view_router.get('/gameboard', loggedIn, (req, res) => {
+    // updateSid();
     res.render('gameboard');
 });
 
 
 view_router.get('/gameboard/:id', loggedIn, async (req, res) => {
+    // updateSid();
     const { id } = req.params;
     console.log(req.params);
     console.log('this path works');
@@ -76,10 +78,10 @@ view_router.get('/gameboard/:id', loggedIn, async (req, res) => {
 
     if (game) {
         //adds the user to the namespace and then redirects to the gameboard
-    
+
         res.render('gameboard');
 
-       
+
 
 
 
@@ -90,6 +92,20 @@ view_router.get('/gameboard/:id', loggedIn, async (req, res) => {
     }
 });
 
+
+// function updateSid() {
+//     UserAcc.update({
+//         sid: req.session.sid
+//     }, {
+//         where: {
+//             username: req.session.username
+//         }
+//     }).then(() => {
+//         // console.log('sid added to useracc');
+//     }).catch(err => {
+//         console.log(err);
+//     });
+// }
 
 
 
