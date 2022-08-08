@@ -37,6 +37,12 @@ view_router.get('/dashboard', loggedIn, (req, res) => {
 });
 
 
+view_router.get('/lobby', loggedIn, (req, res) => {
+    // updateSid();
+    res.render('lobby', { layout: 'game_center.hbs' });
+});
+
+
 
 view_router.get('/login', loggedIn, (req, res) => {
     // updateSid();
@@ -45,7 +51,8 @@ view_router.get('/login', loggedIn, (req, res) => {
 
 view_router.get('/register', loggedIn, (req, res) => {
     // updateSid();
-    res.render('lobby', { layout: 'game_center.hbs' });
+    // res.render('lobby', { layout: 'game_center.hbs' });
+    res.render('register', { errors: req.session.errors });
 });
 
 view_router.get('/gameboard', loggedIn, (req, res) => {
