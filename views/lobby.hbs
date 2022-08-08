@@ -1,0 +1,23 @@
+<h1>Jegs and Pokers</h1>
+{{#if host}}
+<h2>Welcome {{host.username}}</h2>
+
+
+<h3>{{host.username}}</h3>
+<ul>
+    {{#each}}
+    <p class="member_player">{{player.username}}</p>
+    {{/each}}
+</ul>
+
+<button class="button">Start</button>
+{{else}}
+<h2>Good day {{player.username}}</h2>
+{{/if}}
+
+
+<p>We are waiting for some additional players</p>
+<p>You need 4 players in order to play the game</p>
+
+<p>Please enjoy the complimentary entertainment while you wait.</p>
+

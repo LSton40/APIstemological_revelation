@@ -7,8 +7,8 @@ require('dotenv').config();
 
 const logging = process.env.LOG ? true : false;
 
-module.exports = new Sequelize(process.env.DB, process.env.SQLUSER, process.env.SQLPASS, {
-  host: process.env.HOST,
-  dialect: process.env.DIALECT,
-  logging: logging
+module.exports = new Sequelize('jegs_pokers_db', 'root', 'MarkUstby555', {
+  host: 'localhost',
+  dialect: 'mysql',
+  logging: false
 });

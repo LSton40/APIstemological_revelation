@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "connect": "^3.7.0",
     "connect-session-sequelize": "^7.1.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -29,5 +30,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "- [Installation](#installation)  \r - [Usage](#usage)  \r - [License](#license)  \r - [How to Contribute](#how-to-contribute)  \r - [Tests](#tests)  \r - [Questions](#questions)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LSton40/APIstemological_revelation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LSton40/APIstemological_revelation/issues"
+  },
+  "homepage": "https://github.com/LSton40/APIstemological_revelation#readme"
 }
