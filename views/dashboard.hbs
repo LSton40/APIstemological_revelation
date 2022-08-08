@@ -6,7 +6,20 @@
     <h2>The Foyer</h2>
     <div class="choices">
         <button class="button">Create Game</button>
-        <button class="button">Join Game</button>  
+        <button class="button">Join Game</button>
     </div>
     {{!-- <p>{{}} people waiting to play.</p> --}}
 </section>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io('/dashboard');
+
+    socket.on('active games', (data) => {
+
+
+        
+
+    });
+
+</script>
