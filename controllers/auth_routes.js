@@ -85,7 +85,6 @@ auth_router.post('/register', loggedIn, async(req, res) => {
     // validate the user login
     if (loginChecker(password, newUser)) {
       // clearing errors and saving id and username
-      console.log(req.session);
       req.session.errors = [''];
       req.session.user_id = newUser.id;
       req.session.username = newUser.username;
@@ -122,6 +121,8 @@ auth_router.post('/register', loggedIn, async(req, res) => {
 });
 
 auth_router.get('/logout', (req,res) => {!req.session.username ? res.redirect('/') : req.session.destroy(() => {res.redirect('/')})});
+
+auth_router.get('/authCheck', (req,res) => { req.session.user_id ? res.sendStatus(200) : res.sendStatus(6969) });
 
 /* checks login */
 const loginChecker = async(password, user) => {await user.validatePass(password, user.passHash)}

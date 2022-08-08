@@ -1,5 +1,5 @@
 <header class="fades">
-    <h1 class="header">Jegs and Pokers2</h1>
+  <h1 class="header">game_center.hbs layout</h1>
 </header>
 
 
@@ -8,16 +8,22 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-        (async () => {
-            console.log('test')
-            var socket = io('/lobby');
+  (async () => {
+    {{!-- /* calling in the username that was passed in view_routes */ --}}
+    const username = "{{username}}"
+    {{!-- /* joining the lobby room && carrying over the username & color */ --}}
+    socket.auth = { username };
+    var socket = io('/lobby', {query: `userColor=${userColor}`}); 
+    {{!-- /* maybe let user pick their or theme? */ --}}
 
-            const myCookie = await cookieStore.get('connect.sid');
-            console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
-            socket.emit('cookie time', myCookie);
-            console.log('test');
 
-        })();
+
+
+    // const myCookie = await cookieStore.get('connect.sid');
+    // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
+    socket.emit('cookie time', username);
+
+  })();
 
 
 
