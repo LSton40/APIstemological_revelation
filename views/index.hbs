@@ -9,23 +9,20 @@
             <p>No need to see Lou!</p>
             <p>Head on into the lobby!</p>
         </div> 
-        <a href="./pages/lobby.hbs" class="button" title="Lobby">Enter</a>
+        <a href="/dashboard" class="button" title="Lobby">Enter</a>
     </div>
     <div class="choices">
         <div class="button-prompt">
             <p>Leaving so soon, {{userAcc.username}}?</p>
             <p>Be sure to come back!</p>
         </div>
-        <a href="./pages/logout.hbs" class="button" title="Logout">Egress</a>
+        <a href="./logout" class="button" title="Logout">Egress</a>
     </div>
 </main>
-    {{else}}
-<header class="header">
-    <p id="tease">WOULD YOU LIKE TO PLAY A GAME?</p>
-    <div class="color_splash">
-        <h1 id="splash_header">Jegs and Pokers</h1>
-    </div>
-</header>
+{{else}}
+<p id="tease">WOULD YOU LIKE TO PLAY A GAME?</p>
+<h1 id="splash_header">Jegs and Pokers</h1>
+
 <main id="main">
     <div class="choices">
         <div class="button-prompt">
@@ -33,14 +30,14 @@
             <p>You look a bit familiar, but I don't remember for sure</p>
             <p>Go check in with Lou, the Bouncer!</p>
         </div>
-        <a href="./pages/sign_in.hbs" class="button" title="Login">Bouncer</a>
+        <a href="login" class="button" title="Login">Bouncer</a>
     </div>
     <div class="choices">
         <div class="button-prompt">
             <p>New here?</p>
             <p>Go see Hank to sign up!</p>
         </div>
-        <a href="./pages/register.hbs" class="button" title="Register">Hank</a>
+        <a href="/register" class="button" title="Register">Hank</a>
     </div>
 </main>
 {{/if}}
