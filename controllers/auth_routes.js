@@ -39,7 +39,6 @@ auth_router.post('/login', loggedIn, async(req, res) => {
       req.session.save();
 
       res.redirect('/dashboard');
-      // res.render('lobby', { layout: 'game_center.hbs' });
 
 
     } else {
