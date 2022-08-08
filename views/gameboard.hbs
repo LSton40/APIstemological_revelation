@@ -18,14 +18,16 @@
         const DOWN = 0xFF0000;
         const RECT_W = 100;
         const RECT_H = 100;
-        let offsetX = 750;
-        let offsetY = 150;
+        let offsetX = 650;
+        let offsetY = 100;
         let spacing = 0;
         let pegHoles = [];
         let pointerIsDown = false;
         let pointerIsOver = false;
         let color = NORMAL;
-        let radius = 5;
+        let startingX = 0;
+        let startingY = 0;
+        let radius = 15;
         let posTracker = 0;
 
         window.onload = function () {
@@ -40,113 +42,87 @@
 
 
             //beginning of game drawing
+            // Top column // peg hole 0 - 18
             for (let i = 0; i < 19; i++) {
-                const x = 70 + 10 * i;
-                const y = 20;
+                const x = startingX + 2 * radius * i;
+                const y = startingY;
 
                 pegHoles.push(new PegHole((x + offsetX), y + offsetY, radius, color, "hole " + posTracker++));
             };
 
-            // Right column // peg holes 19 - 36
+            // Right column // peg holes 19 - 35
             for (let i = 0; i < 17; i++) {
-                const x = 250;
-                const y = 30 + 10 * i;
+                const x = startingX + 36 * radius;
+                const y = startingY + 2 * radius + 2 * radius * i;
 
                 pegHoles.push(new PegHole(x + offsetX + (spacing * 11), y + offsetY + spacing, radius, color, "hole " + posTracker++));
             };
-            // Bottom row // peg holes 37 - 53
+            // Bottom row // peg holes 36 - 54
             for (let i = 0; i < 19; i++) {
-                const x = 250 - 10 * i;
-                const y = 200;
+                const x = startingX + 36 * radius - 2 * radius * i;
+                const y = startingY + 2 * radius + 34 * radius;
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
-            // Left column // peg holes 54 -71
+            // Left column // peg holes 55 - 71
             for (let i = 0; i < 17; i++) {
-                const x = 70;
-                const y = 190 - 10 * i;
+                const x = startingX;
+                const y = startingY + 34 * radius - 2 * radius * i;
 
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Top finish line // peg holes 72 - 76
             for (let i = 0; i < 3; i++) {
-                const x = 100;
-                const y = 30 + 10 * i;
+                const x = startingX + 6 * radius;
+                const y = startingY + 2 * radius + 2 * radius * i;
 
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             for (let i = 0; i < 2; i++) {
-                const x = 110 + 10 * i;
-                const y = 50;
+                const x = startingX + 8 * radius + 2 * radius * i;
+                const y = startingY + 6 * radius;
 
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Bottom finish line // peg holes 77 - 81
             for (let i = 0; i < 3; i++) {
-                const x = 220;
-                const y = 170 + 10 * i;
+                const x = startingX + 30 * radius;
+                const y = startingY + 30 * radius + 2 * radius * i;
 
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             }
             for (let i = 0; i < 2; i++) {
-                const x = 200 + 10 * i;
-                const y = 170;
+                const x = startingX + 26 * radius + 2 * radius * i;
+                const y = startingY + 30 * radius;
 
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Right finish line // peg holes 82 - 86
             for (let i = 0; i < 3; i++) {
-                const x = 220 + 10 * i;
-                const y = 50;
+                const x = startingX + 30 * radius + 2 * radius * i;
+                const y = startingY + 6 * radius;
 
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             for (let i = 0; i < 2; i++) {
-                const x = 220;
-                const y = 60 + 10 * i;
+                const x = startingX + 30 * radius;
+                const y = startingY + 8 * radius + 2 * radius * i;
 
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             // Left finish line // peg holes 87 - 91
             for (let i = 0; i < 3; i++) {
-                const x = 80 + 10 * i;
-                const y = 170;
+                const x = startingX + 2 * radius + 2 * radius * i;
+                const y = startingY + 30 * radius;
 
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
             for (let i = 0; i < 2; i++) {
-                const x = 100;
-                const y = 150 + 10 * i;
+                const x = startingX + 6 * radius;
+                const y = startingY + 26 * radius + 2 * radius * i;
 
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
-            // Top spawn // peg holes 92 - 96
-            for (let i = 0; i < 5; i++) {
-                const x = 150;
-                const y = 30 + 10 * i;
 
-                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
-            };
-            // Bottom spawn // peg holes 97 - 101
-            for (let i = 0; i < 5; i++) {
-                const x = 170;
-                const y = 150 + 10 * i;
-
-                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
-            };
-            // Right spawn // peg holes 102 - 106
-            for (let i = 0; i < 5; i++) {
-                const x = 200 + 10 * i;
-                const y = 100;
-
-                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
-            };
-            // Left spawn // peg holes 107 - 112
-            for (let i = 0; i < 5; i++) {
-                const x = 80 + 10 * i;
-                const y = 120;
-
-                pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
-            };
             //end of game drawing
 
             for (let i = 0; i < pegHoles.length; i++) {
@@ -245,7 +221,7 @@
 
 
 
-        
+
 
 
 
