@@ -22,18 +22,7 @@ view_router.get('/', loggedIn, (req, res) => {
 
 view_router.get('/dashboard', loggedIn, (req, res) => {
 
-
-
-    // updateSid();
-
-
-
-    res.render('dashboard');
-    //if they are signed in, then send them to the lobby
-    //if they are not signed in, then send them to the login page
-
-    // res.render('index');
-
+    res.render('dashboard', { layout: 'game_center.hbs' });
 });
 
 
