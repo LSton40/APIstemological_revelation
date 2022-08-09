@@ -413,23 +413,7 @@ auth.on('connection', (socket) => {
     let updatedData = {};
 
 
-    /* declares all games being played */
-    const gameLister = async () => {
-      let gameList = await GameBoard.findAll();
-      let filteredGames = {
-        gameName: gameList.gameID,
-        host: gameList.gameCreator,
-        status: gameList.gameStatus
-      }
 
-
-      if (filteredGames.length > 0) {
-        socket.emit('current games', filteredGames);
-      }
-      else {
-        socket.emit('no games', 'no games');
-      }
-    }
 
 
     //send data to listeners in the socket room of the turn emitter
@@ -454,7 +438,23 @@ const lobby = io.of('/lobby');
 // lobby connection func
 lobby.on('connection', async (socket) => {
 
+  /* declares all games being played */
+  const gameLister = async () => {
+    let gameList = await GameBoard.findAll();
+    let filteredGames = {
+      gameName: gameList.gameID,
+      host: gameList.gameCreator,
+      status: gameList.gameStatus
+    }
 
+
+    if (filteredGames.length > 0) {
+      socket.emit('current games', filteredGames);
+    }
+    else {
+      socket.emit('no games', 'no games');
+    }
+  }
 
 
 
