@@ -98,23 +98,22 @@
 
 
 
-  /* REMOVE THIS */
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
   const queryGameSocket = async() => {
-    let name = 'veryCoolTestGameName';
+    let name = 'epicGameName';
     socket.emit('testQuery', name);
     console.log('queried boii');
   }
-
   socket.on('logs', (data) => {
     console.log(data);
   })
-
-
-
   queryGameButtonEl = document.getElementById('queryGame');
   queryGameButtonEl.addEventListener('click', queryGameSocket);
-  /* REMOVE THIS */
-
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
 
 
 

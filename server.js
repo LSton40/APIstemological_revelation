@@ -483,19 +483,9 @@ lobby.on('connection', async (socket) => {
     console.log('caught join game call');
     const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
 
-<<<<<<< HEAD
     
     if (gameRoom) {
       // grabbing gamePlayers from the game
-=======
-
-    // grabbing gamePlayers from the game
-
-
-
-
-    if (gameRoom) {
->>>>>>> main
       let roomPlayers = gameRoom.gamePlayers || [];
 
       //if the gameRoom exists, then add the socket user to the gameID room
@@ -564,7 +554,7 @@ lobby.on('connection', async (socket) => {
 
     socket.emit('logs', {
       game: game,
-    })
+    });
 
     // console.log(GameData);
     // console.log(GameData.returnUsers());
@@ -657,14 +647,19 @@ lobby.on('connection', async (socket) => {
 
   });
 
+
+  /* ************* */
+  /* GUNGUNTESTING */
+  /* ************* */
   socket.on('testQuery', async(gameID) => {
-    playGame(gameID);
-
-
-
-
-  })
-
+    // playGame.getGameData(gameID);
+    // console.log(await playGame.getGameData(gameID));
+    playGame.initDealCards(gameID);
+    console.log(await playGame.initDealCards(gameID));
+  });
+  /* ************* */
+  /* GUNGUNTESTING */
+  /* ************* */
 
 
 

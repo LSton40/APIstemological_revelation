@@ -1,11 +1,42 @@
 const GameBoard = require('../models/GameBoard.model');
+const drawPile = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
 module.exports = {
   getGameData: async(gameID) => {
     const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
     return gameRoom
+  },
+  initDealCards: async(gameID) => {
+    const gameRoomData = await GameBoard.findOne({ where: { gameID: gameID } });
+
+    // ref array for easier
+    gamePlayers = gameRoomData.gamePlayers;
+    
+    // nested for loop to create 5 cards and push them to each players hand
+    for (let i = 0; i < gamePlayers.length; i++) {
+      tempHand = [];
+      for (let j = 0; j < 5; j++) {
+        // generate index for card
+        cardIndex = Math.floor(Math.random() * drawPile.length);
+        // push to tempcard array
+        tempHand.push(drawPile[cardIndex]);
+      }
+      // then sets the random hand to the current user 
+      gamePlayers[i].hand = tempHand;
+    }
+
+    // updates the database with the new hands for everyone
+    const updatedGameRoom = await gameRoomData.update({
+      gamePlayers: gamePlayers 
+    },
+    {
+      where: {
+        gameID: gameID
+      }
+    });
+
+    return updatedGameRoom.gamePlayers;
   }
-  
 
 
 

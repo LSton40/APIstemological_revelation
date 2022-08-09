@@ -54,8 +54,7 @@ GameBoard.init({
     allowNull: true,
     defaultValue: null
   }
-},
-  {
+}, {
     sequelize: require('../config/connection'),
     modelName: 'gameBoard'
   }
