@@ -10,12 +10,19 @@
 
   (async () => {
     {{!-- /* calling in the username that was passed in view_routes */ --}}
-    const username = "{{username}}"
-    {{!-- /* joining the lobby room && carrying over the username & color */ --}}
-    socket.auth = { username };
-    var socket = io('/lobby', {query: `userColor=${userColor}`}); 
-    {{!-- /* maybe let user pick their or theme? */ --}}
+    const username = "{{username}}";
+    const userColor = "0xF78DA7";
 
+    let query = {
+      username: username,
+      userColor:
+    }
+
+    {{!-- /* maybe let user pick their or theme? */ --}}
+    var socket = io('/lobby', { query: {username: username} }); 
+
+    {{!-- /* maybe define socket on main and have autoConnect set to false? onClick 'dashboard' start socket? */ --}}
+    {{!-- /* const socket = io('/lobby', { autoConnect: false, query: `userColor=${userColor}` }); */ --}}
 
 
 
