@@ -42,7 +42,10 @@
 
 
   socket.on('current games', (gameList) => {
-    var currentGames = document.getElementById('current-games');
+    console.log(gameList);
+
+
+    {{!-- var currentGames = document.getElementById('current-games');
 
     gameList.forEach(game => {
 
@@ -55,7 +58,7 @@
       gameDiv.appendChild(gameStatus);
       currentGames.appendChild(gameDiv);
 
-    });
+    }); --}}
 
   });
 
