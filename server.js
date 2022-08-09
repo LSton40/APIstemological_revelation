@@ -107,21 +107,6 @@ app.use('/auth', auth_routes);
 
 
 
-//     socket.on('tile-press', (tile) => {
-//         console.log('message received')
-//         console.log(`Someone has pressed ${tile}`)
-
-//     });
-
-
-
-//     socket.on('chat message', (msg) => {
-//         console.log('message: ' + msg);
-//         console.log(socket.id);
-//         // io.to(socket.id).emit('hey', 'testing');
-//         console.log(socket.rooms);
-//     });
-
 //     socket.on('create game', (host, lobbyName) => {
 //         gameData.players.push
 //         GameBoard.findOne({
@@ -413,39 +398,28 @@ auth.on('connection', (socket) => {
     let updatedData = {};
 
 
-    /* declares all games being played */
-    const gameLister = async () => {
-      let gameList = await GameBoard.findAll();
-      let filteredGames = {
-        gameName: gameList.gameID,
-        host: gameList.gameCreator,
-        status: gameList.gameStatus
-      }
-
-
-      if (filteredGames.length > 0) {
-        socket.emit('current games', filteredGames);
-      }
-      else {
-        socket.emit('no games', 'no games');
-      }
-    }
-
-
     //send data to listeners in the socket room of the turn emitter
     socket.to(turnData.room).emit(updatedData);
     //disconnect user and connect new user
-    socket.disconnect();
 
+    socket.disconnect();
+    
   });
 
 
   socket.on('disconnect', () => {
     console.log('users turn is over');
+    socket.disconnect();
   });
 
 });
 
+//     socket.on('chat message', (msg) => {
+//         console.log('message: ' + msg);
+//         console.log(socket.id);
+//         // io.to(socket.id).emit('hey', 'testing');
+//         console.log(socket.rooms);
+//     });
 
 
 
@@ -454,7 +428,28 @@ const lobby = io.of('/lobby');
 // lobby connection func
 lobby.on('connection', async (socket) => {
 
+  /* declares all games being played */
 
+  const gameLister = async () => {
+    let gameList = await GameBoard.findAll();
+    let filteredGames;
+    if (gameList.length > 0) {
+      filteredGames = gameList.map(game => {
+        return {
+          gameName: game.gameID,
+          host: game.gameCreator,
+          status: game.gameStatus
+        };
+      });
+
+      if (filteredGames.length > 0) {
+        socket.emit('current games', filteredGames);
+      }
+    }
+  
+      socket.emit('errors', 'no games');
+    
+  }
 
 
 
@@ -487,13 +482,18 @@ lobby.on('connection', async (socket) => {
     console.log('caught join game call');
     const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
 
+
     // grabbing gamePlayers from the game
-    let roomPlayers = gameRoom.gamePlayers || [];
+
+
+
 
     if (gameRoom) {
+      let roomPlayers = gameRoom.gamePlayers || [];
 
       //if the gameRoom exists, then add the socket user to the gameID room
       socket.join('gameID');
+      console.log(`${currUser} has joined the ${gameID}`);
 
       // pushing user to gamePlayers
       roomPlayers.push({
