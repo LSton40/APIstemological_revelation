@@ -5,7 +5,7 @@
 
 <div id="gameDiv"></div>
 
-<button id="card-btn">5</button>
+<button id="card-btn">7</button>
 
 <body>
     
@@ -18,6 +18,10 @@
         const NORMAL = 0xFFFFFF;
         const OVER = 0x00FF00;
         const DOWN = 0xFF0000;
+        const red = 0xff0000;
+        const blue = 0x0000FF;
+        const green = 0x008000;
+        const black = 0x000000;
         const RECT_W = 100;
         const RECT_H = 100;
         let offsetX = 650;
@@ -160,31 +164,32 @@
         function gameLoop(delta) { }
 
 
-        function PegHole(x, y, radius, color, name, speed) {
+        function PegHole(x, y, radius, color, name) {
             let circle = new PIXI.Graphics();
             circle.beginFill(NORMAL);
             circle.drawCircle(x, y, radius, radius);
             circle.endFill();
+            
+
             circle.interactive = true;
             circle.buttonMode = true;
 
-            circle.on("pointerup", doPointerUp);
-            circle.on("pointerdown", doPointerDown);
-            circle.on("pointerover", doPointerOver);
-            circle.on("pointerout", doPointerOut);
-            circle.on("pointerupoutside", doPointerUpOutside);
+            //circle.on("pointerup", doPointerUp);
+            //circle.on("pointerdown", doPointerDown);
+            //circle.on("pointerover", doPointerOver);
+            //circle.on("pointerout", doPointerOut);
+            //circle.on("pointerupoutside", doPointerUpOutside);
 
 
 
             circle.name = name;
-            circle.speed = speed;
+            //circle.speed = speed;
 
             return circle;
         }
 
 
-        const cardValue = 10;
-        const playerLocation = 2 + 1;
+        
         
         
 
@@ -207,16 +212,11 @@
             pointerIsDown = false;
         }
         function doPointerDown() {
-            pegHoles[69].tint = '0xF78DA7';
-            pegHoles[77].tint = '0xF78DA7';
-            pegHoles[89].tint = '0xF78DA7';
-
-
+           
             console.log("pointer down");
             // this.beginFill(DOWN);
             // // this.drawRect((app.view.width / 2) - 100, (app.view.height / 2) - 100, 200, 200);
             // this.endFill();
-            pegHoles[cardValue].tint = '0xF78DA7';
             this.tint = DOWN;
             pointerIsDown = true;
             let name = this.name;
@@ -252,27 +252,50 @@
             pointerIsDown = false;
         }
 
+        const cardValue = 7;
+        const playerLocation = 2 + 1;
+
+        let playerOneLocations = [4, 25, 37, 52, 64];
+        let playerTwoLocations = [7];
+        let playerThreeLocations = [41, 17, 3];
+        let playerFourLocations = [6, 31];
 
 
+        //This generates the player pieces using piece location
         function playerPieces () {
-            let piece = pegHoles[playerLocation];
-            console.log('test');
-            piece.tint = '#ff0000';
+
+            for (i = 0; i < playerOneLocations.length; i++) {
+                pegHoles[playerOneLocations[i]].tint = red;
+            }
+
+            for (i = 0; i < playerTwoLocations.length; i++) {
+                pegHoles[playerTwoLocations[i]].tint = blue;
+            }
+
+            for (i = 0; i < playerThreeLocations.length; i++) {
+                pegHoles[playerThreeLocations[i]].tint = green;
+            }
+
+            for (i = 0; i < playerFourLocations.length; i++) {
+                pegHoles[playerFourLocations[i]].tint = black;
+            }
+
         }
         
-        
+        // When player clicks on card it shows the possible moves they can do
         function showPossibleMoves () {
-            console.log('test');
-            let movelocation = playerLocation + cardValue
-            let moves = pegHoles[movelocation];
-            console.log(moves);
-            moves.tint = '0xF78DA7';
+
+            for(i = 0; i < playerOneLocations.length; i ++) {
+                let moves = pegHoles[playerOneLocations[i] + cardValue];
+                moves.tint = '0xffff00';
+            }
             
             moves.addEventListener('click', movePiece);
-
         }
-
+        
+        // We need to figure out how to move the piece to the clicked location
         function movePiece () {
+            
             console.log('click');
         }
 
