@@ -29,8 +29,8 @@ const discard = [];
 function iLikeToMoveItMoveIt(select) {
 
     switch(select) {
-        case 'A':
-            
+        case "A":
+            x + 1
             break;
         // case 'J':
     
@@ -41,35 +41,35 @@ function iLikeToMoveItMoveIt(select) {
         // case 'K':
     
         //     break;
-        case 2:
-    
+        case "2":
+            x + 2
             break;
-        case 3:
-    
+        case "3":
+            x + 3
             break;
-        case 4:
-    
+        case "4":
+            x + 4
             break;
-        case 5:
-    
+        case "5":
+            x + 5
             break;
-        case 6:
-    
+        case "6":
+            x + 6
             break;
-        case 7:
-    
+        case "7":
+            x + 7
             break;
-        case 8:
-    
+        case "8":
+            x + 8
             break;
-        case 9:
-    
+        case "9":
+            x + 9
             break;
         // case 10:
     
         //     break;
         default:
-            //move 10
+            x + 10
     
     }
 }
@@ -142,7 +142,7 @@ function dealCards() {
             // } )
             }
 
-            drawCard();
+            // drawCard();
         };
 
 
@@ -193,17 +193,23 @@ const cards = document.querySelectorAll('.cards');
 /*play function
 1) Select card, highlights*/
 
-function addSelectClass(thisCard) {
+function addSelectClass(event) {
 
-    if (thisCard.classList.contains("selectedCard")) {
-        thisCard.classList.remove("selectedCard")
+    if (event.target.classList.contains("selectedCard")) {
+        event.target.classList.remove("selectedCard")
+
+        //remove highlighting from pieces
+        //remove highlighting from target game spaces
+
     } 
-    // else {
-    //     thisCard.classList.add("selectedCard")
-    // }
-    //if classList does not include 'selectedCard', add class 'selectedCard'
-    //else if classList does include 'selectedCard', remove class 'selectedCard'
-    // let selectedCard = cardEl.classList.add('selectedCard')
+    else {
+        event.target.classList.add("selectedCard")
+
+        console.log(JSON.stringify(event.target.textContent))
+        iLikeToMoveItMoveIt(JSON.stringify(event.target.textContent));
+    }
+      
+
 
     
     
@@ -214,12 +220,12 @@ function addSelectClass(thisCard) {
 
 
 
-card1.addEventListener('click', addSelectClass(card1))
-card2.addEventListener('click', addSelectClass(card2))
-card3.addEventListener('click', addSelectClass(card3))
-card4.addEventListener('click', addSelectClass(card4))
-card5.addEventListener('click', addSelectClass(card5))
-card6.addEventListener('click', addSelectClass(card6))
+card1.addEventListener('click', addSelectClass)
+card2.addEventListener('click', addSelectClass)
+card3.addEventListener('click', addSelectClass)
+card4.addEventListener('click', addSelectClass)
+card5.addEventListener('click', addSelectClass)
+card6.addEventListener('click', addSelectClass)
 
 
 
