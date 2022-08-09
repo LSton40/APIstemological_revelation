@@ -411,11 +411,11 @@ turn.on('connection', (socket) => {
 // defining the room we're listening for
 const lobby = io.of('/lobby');
 // lobby connection func
-lobby.on('connection', async(socket) => {
+lobby.on('connection', async (socket) => {
   console.log(socket.id);
 
   /* declares all games being played */
-  const gameLister = async() => {
+  const gameLister = async () => {
     let gameList = await GameBoard.findAll();
     let filteredGames = {
       gameName: gameList.gameID,
@@ -450,7 +450,7 @@ lobby.on('connection', async(socket) => {
   /* ************************* */
   socket.on('joinGame', async (gameID) => {
     // finding game with gameID
-    const gameRoom = await GameBoard.findOne({ where: { gameID: gameID }});
+    const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
 
     // grabbing gamePlayers from the game
     let roomPlayers = gameRoom.gamePlayers || [];
@@ -480,14 +480,36 @@ lobby.on('connection', async(socket) => {
   /* ******************** */
   socket.on('createGame', async (gameID) => {
     /* board exists ? created = false : created = true && return newGame */
+    let currUser = socket.handshake.query['username'] || null;
     const [newGame, created] = await GameBoard.findOrCreate({
       where: { // finding query looking for the gameID
         gameID: gameID
       },
       defaults: { // if there isn't a game, it will save user to host variable
         gameCreator: currUser
+        
       }
     });
+    //find game by gameID and create it if it doesn't exist
+
+    // GameBoard.findOrCreate({
+    //   where: {
+    //     gameID: gameID
+    //   },
+    //   defaults: {
+    //     gameCreator: currUser,
+    //     gamePlayers: JSON.stringify([{
+    //       username: currUser
+    //     }])
+    //   }
+    // }).then(game => {
+    //   console.log(game);
+    // });
+
+
+
+
+
 
     if (created) {
       // defining the playerList to include the host
