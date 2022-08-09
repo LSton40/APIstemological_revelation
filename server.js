@@ -411,14 +411,29 @@ turn.on('connection', (socket) => {
 // defining the room we're listening for
 const lobby = io.of('/lobby');
 // lobby connection func
-lobby.on('connection', async (socket) => {
+lobby.on('connection', async(socket) => {
+  /* declares all games being played */
+  const gameLister = async() => {
+    let gameList = await GameBoard.findAll();
+    let filteredGames = {
+      gameName: gameList.gameID,
+      host: gameList.gameCreator,
+      status: gameList.gameStatus
+    }
+    socket.emit('current games', filteredGames);
+  }
+
+
+
+
   // grabbing the username from the frontend as it's being passed. [!!]could technically be modified on front end[!!]
-  let currUser = socket.handshake.query.auth;
+  let currUser = socket.handshake.query['username'] || null;
   // NTH: let user set their color or theme from some options? 
   let currUserColor = socket.handshake.query['userColor'];
 
   console.log(`${currUser} has connected to the lobby`);
-  console.log(socket.id);
+
+  gameLister();
 
 
   // finding user from the database by its username
@@ -433,10 +448,26 @@ lobby.on('connection', async (socket) => {
   /* ************************* */
   socket.on('joinGame', async (gameID) => {
     // finding game with gameID
-    const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
+    const gameRoom = await GameBoard.findOne({ where: { gameID: gameID }});
+
+    // grabbing gamePlayers from the game
+    let roomPlayers = gameRoom.gamePlayers || [];
 
     if (gameRoom) {
-      // FIXME: push to gameRoom gamePlayers ??
+      // pushing user to gamePlayers
+      roomPlayers.push({
+        username: currUser,
+        userColor: currUserColor
+      });
+
+      // setting the gamePlayers array after updating
+      gameRoom.gamePlayers = roomPlayers;
+
+    } else {
+      // emitting any errors that occur
+      socket.emit('errors', {
+        error: 'Error joining room - please try agian!'
+      })
     }
   });
 
@@ -457,12 +488,38 @@ lobby.on('connection', async (socket) => {
     });
 
     if (created) {
+      // defining the playerList to include the host
+      let roomPlayers = [];
+      roomPlayers.push({
+        username: currUser,
+        userColor: currUserColor
+      });
+
+      // setting the gamePlayers array after updating
+      gameRoom.gamePlayers = roomPlayers;
+
+      gameLister();
 
 
+
+
+      socket.emit('redirect', '/lobby');
+
+
+
+    } else {
+      socket.emit('errors', {
+        error: 'Error creating room - room with that name must already exist!'
+      });
     }
 
 
   });
+
+
+
+
+
 
 
 

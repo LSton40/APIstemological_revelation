@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jegs and Pokers GAME CENTER HANDLE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="front/css/style.css">
+</head>
+
+
+
 <header class="fades">
   <h1 class="header">game_center.hbs layout</h1>
 </header>
@@ -12,18 +26,19 @@
 <script>
 
 
-
-
-  //(async () => {
-
-
-
   /* calling in the username that was passed in view_routes */
-  const username = "{{username}}"
+  const username = "{{username}}";
+  const userColor = "0xF78DA7";
+  /* maybe let user pick their or theme?  NTH VERYLOW PRIORITY */
+
+  /* setting query to pass to the socket */
+  let query = {
+    username: username,
+    userColor: userColor
+  }
+
   /* joining the lobby room && carrying over the username & color */
-  var socket = io('/lobby');
-  socket.auth = { username };
-  /* maybe let user pick their or theme? */
+  var socket = io('/lobby', { query: query });
 
 
   socket.on('current games', (gameList) => {
@@ -44,14 +59,29 @@
 
   });
 
+  socket.on('errors', (error) => {
+    {{!-- /* append the errors somewhere!! TOAST??!?!?!?! */ --}}
+  });
+
+  socket.on('redirect', (url) => {
+    window.location.href = url;
+  });
+
   // const myCookie = await cookieStore.get('connect.sid');
   // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
   socket.emit('cookie time', username);
 
 
+  const createGameSocket = async() => {
+    socket.emit('createGame', 'veryCoolTestGameName');
+    console.log('CreateGame called!');
+  }
 
-  //})();
+  const joinGameSocket = async() => {
+    socket.emit('joinGame', 'lessCoolTestGameName');
+    console.log('JoinGame called!');
+  }
 
-
-
+  document.getElementById('createGame').addEventListener('click', createGameSocket);
+  document.getElementById('joinGame').addEventListener('click', joinGameSocket);
 </script>
