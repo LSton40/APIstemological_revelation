@@ -403,7 +403,7 @@ auth.on('connection', (socket) => {
     //disconnect user and connect new user
 
     socket.disconnect();
-    
+
   });
 
 
@@ -446,9 +446,9 @@ lobby.on('connection', async (socket) => {
         socket.emit('current games', filteredGames);
       }
     }
-  
-      socket.emit('errors', 'no games');
-    
+
+    socket.emit('errors', 'no games');
+
   }
 
 
@@ -521,108 +521,8 @@ lobby.on('connection', async (socket) => {
     /* board exists ? created = false : created = true && return newGame */
     let currUser = socket.handshake.query['username'] || null;
 
-    /* TEST DATA */
-    let testGameID = 'epicGameName';
-    let testUserList = [
-      {
-        username: 'bryan',
-        userColor: '0xF78DA7'
-      },
-      {
-        username: 'datboi',
-        userColor: '0x8ED1FC'
-      },
-      {
-        username: 'jewishMom',
-        userColor: '0xFF6900'
-      },
-      {
-        username: 'ordinateur',
-        userColor: '0xABB8C3'
-      }
-    ];
 
-    const GameData = new GameDataClass(testGameID, testUserList);
-    console.log(GameData);
-    console.log(GameData.returnUsers());
-
-    console.log(`current turn: ${GameData.gameTurn}`);
-    console.log(`nextUserTurn called and the next player turn is: ${GameData.nextUserTurn()}`);
-
-
-
-
-    // try {
-    //   const [newGame, created] = await GameBoard.findOrCreate({
-    //     where: { // finding query looking for the gameID
-    //       gameID: gameID
-    //     },
-    //     defaults: { // if there isn't a game, it will save user to host variable
-    //       gameCreator: currUser,
-    //       gamePlayers: roomPlayers,
-    //       gameTurn: currUser
-    //     }
-    //   });
-    // } catch (err) {
-    //   socket.emit('errors', {
-    //     error: 'There was an error creating the game!',
-    //     errorData: err
-    //   });
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //find game by gameID and create it if it doesn't exist
-
-    // GameBoard.findOrCreate({
-    //   where: {
-    //     gameID: gameID
-    //   },
-    //   defaults: {
-    //     gameCreator: currUser,
-    //     gamePlayers: JSON.stringify([{
-    //       username: currUser
-    //     }])
-    //   }
-    // }).then(game => {
-    //   console.log(game);
-    // });
-
-
-
-
-
-
-    // if (created) {
-    //   // defining the playerList to include the host
-    //   let roomPlayers = [];
-    //   roomPlayers.push({
-    //     username: currUser,
-    //     userColor: currUserColor
-    //   });
-
-    //   // setting the gamePlayers array after updating
-    //   gameRoom.gamePlayers = roomPlayers;
-
-    //   gameLister();
-
-
-
-
-    //   socket.emit('redirect', '/lobby');
-
+    socket.emit('redirect', '/lobby');
 
 
     // } else {
@@ -637,6 +537,110 @@ lobby.on('connection', async (socket) => {
 
 
 
+  /* TEST DATA */
+  let testGameID = 'epicGameName';
+  let testUserList = [
+    {
+      username: 'bryan',
+      userColor: '0xF78DA7'
+    },
+    {
+      username: 'datboi',
+      userColor: '0x8ED1FC'
+    },
+    {
+      username: 'jewishMom',
+      userColor: '0xFF6900'
+    },
+    {
+      username: 'ordinateur',
+      userColor: '0xABB8C3'
+    }
+  ];
+
+  const GameData = new GameDataClass(testGameID, testUserList);
+  console.log(GameData);
+  console.log(GameData.returnUsers());
+
+  console.log(`current turn: ${GameData.gameTurn}`);
+  console.log(`nextUserTurn called and the next player turn is: ${GameData.nextUserTurn()}`);
+
+
+
+
+  // try {
+  //   const [newGame, created] = await GameBoard.findOrCreate({
+  //     where: { // finding query looking for the gameID
+  //       gameID: gameID
+  //     },
+  //     defaults: { // if there isn't a game, it will save user to host variable
+  //       gameCreator: currUser,
+  //       gamePlayers: roomPlayers,
+  //       gameTurn: currUser
+  //     }
+  //   });
+  // } catch (err) {
+  //   socket.emit('errors', {
+  //     error: 'There was an error creating the game!',
+  //     errorData: err
+  //   });
+  // }
+
+
+
+
+  //find game by gameID and create it if it doesn't exist
+
+  // GameBoard.findOrCreate({
+  //   where: {
+  //     gameID: gameID
+  //   },
+  //   defaults: {
+  //     gameCreator: currUser,
+  //     gamePlayers: JSON.stringify([{
+  //       username: currUser
+  //     }])
+  //   }
+  // }).then(game => {
+  //   console.log(game);
+  // });
+
+
+
+
+
+
+  // if (created) {
+  //   // defining the playerList to include the host
+  //   let roomPlayers = [];
+  //   roomPlayers.push({
+  //     username: currUser,
+  //     userColor: currUserColor
+  //   });
+
+  //   // setting the gamePlayers array after updating
+  //   gameRoom.gamePlayers = roomPlayers;
+
+  //   gameLister();
+
+
+
+
+
+
+
+  //listens for the start game to be pressed
+  socket.on('startGame', async (gameID) => {
+    //create all the necessary game data
+    socket.emit('init local storage', data => {
+
+    });
+
+
+
+  });
+
+
 
 
 
@@ -649,6 +653,10 @@ lobby.on('connection', async (socket) => {
     // socket.socket.reconnect();
     socket.disconnect();
   });
+
+
+
+
 });
 
 //sync db then start server
