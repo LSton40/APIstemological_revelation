@@ -416,8 +416,9 @@ lobby.on('connection', async(socket) => {
 
   console.log(`${currUser} has connected to the lobby`);
 
+
   // finding user from the database by its username
-  const currDBUser = await UserAcc.findOne({where: {username: currUser}});
+  const currDBUser = await UserAcc.findOne({where: {username: currUser}}) || null;
   // setting the user to have the socket id
   const updatedUser = currDBUser.update({socket: socket.id});
 

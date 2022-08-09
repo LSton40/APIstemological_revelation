@@ -47,7 +47,7 @@ view_router.get('/register', loggedIn, (req, res) => {
 
 view_router.get('/gameboard', loggedIn, (req, res) => {
   // updateSid();
-  res.render('gameboard');
+  res.render('gameboard', { layout: 'game_center.hbs', username: req.session.username });
 });
 
 
