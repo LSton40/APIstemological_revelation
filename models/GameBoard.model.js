@@ -12,7 +12,7 @@ GameBoard.init({
   //the users name who created the game
   gameCreator: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   //if the game is ongoin, or if it is finished
   gameStatus: {
