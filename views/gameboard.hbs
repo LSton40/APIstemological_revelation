@@ -215,11 +215,17 @@
                 this.tint = red;
                 console.log(playerOneLocations);
                 //get location of original peg
+                let pegLoc = this.name - cardValue;
+
+                if (pegLoc < 0) {
+                    pegLoc = pegLoc + 72;
+                }
                 let originalLoc = playerOneLocations.find(peg => {
-                    return peg == pegHoles[this.name - cardValue].name;
+                    return peg == pegHoles[pegLoc].name;
                 });
                 //change the hand numbers 
                 playerOneLocations[playerOneLocations.indexOf(originalLoc)] = this.name;
+                pegHoles[pegLoc].tint = NORMAL;
                 console.log(playerOneLocations);
 
                 console.log(localStorage.getItem('playerOneLocations'));
@@ -254,12 +260,22 @@
 
         }
 
+
         // When player clicks on card it shows the possible moves they can do
         function showPossibleMoves() {
+            
 
             for (i = 0; i < playerOneLocations.length; i++) {
-                let moves = pegHoles[playerOneLocations[i] + cardValue];
-                pegHoles[playerOneLocations[i] + cardValue].canMove = true;
+                let moveLocations = playerOneLocations[i] + cardValue;
+                let moves;
+
+                if(moveLocations > 71) {
+                    moveLocations = moveLocations - 72;
+                    
+                }
+                 
+                moves = pegHoles[moveLocations];
+                moves.canMove = true;
                 moves.tint = '0xffff00';
             }
             //console.log(moves);
