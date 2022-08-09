@@ -21,7 +21,7 @@
   /* calling in the username that was passed in view_routes */
   const username = "{{username}}"
   /* joining the lobby room && carrying over the username & color */
-  var socket = io('/lobby', { query: `userColor=${userColor}` });
+  var socket = io('/lobby');
   socket.auth = { username };
   /* maybe let user pick their or theme? */
 

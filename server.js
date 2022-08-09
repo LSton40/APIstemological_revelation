@@ -25,7 +25,6 @@ app.set('view engine', 'hbs');
 
 
 /* manage sessions */
-const session = require('express-session'); // looks like this was moved to serverControl - del?
 const UserAcc = require('./models/UserAcc.model');
 // const { databaseVersion } = require('./config/connection');
 const { sessionMiddleware, wrap } = require('./serverControl');
@@ -395,7 +394,11 @@ app.use('/auth', auth_routes);
 
 
 
+const turn = io.of('/auth');
+turn.on('connection', (socket) => {
 
+
+});
 
 
 
@@ -408,28 +411,29 @@ app.use('/auth', auth_routes);
 // defining the room we're listening for
 const lobby = io.of('/lobby');
 // lobby connection func
-lobby.on('connection', async(socket) => {
+lobby.on('connection', async (socket) => {
   // grabbing the username from the frontend as it's being passed. [!!]could technically be modified on front end[!!]
   let currUser = socket.handshake.query.auth;
   // NTH: let user set their color or theme from some options? 
   let currUserColor = socket.handshake.query['userColor'];
 
   console.log(`${currUser} has connected to the lobby`);
+  console.log(socket.id);
 
 
   // finding user from the database by its username
-  const currDBUser = await UserAcc.findOne({where: {username: currUser}}) || null;
+  const currDBUser = await UserAcc.findOne({ where: { username: currUser } }) || null;
   // setting the user to have the socket id
-  const updatedUser = currDBUser.update({socket: socket.id});
+  const updatedUser = currDBUser.update({ socket: socket.id });
 
 
 
   /* ************************* */
   /* join game socket listener */
   /* ************************* */
-  socket.on('joinGame', async(gameID) => {
+  socket.on('joinGame', async (gameID) => {
     // finding game with gameID
-    const gameRoom = await GameBoard.findOne({ where: { gameID: gameID }});
+    const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
 
     if (gameRoom) {
       // FIXME: push to gameRoom gamePlayers ??
@@ -441,9 +445,9 @@ lobby.on('connection', async(socket) => {
   /* ******************** */
   /* create game listener */
   /* ******************** */
-  socket.on('createGame', async(gameID) => {
+  socket.on('createGame', async (gameID) => {
     /* board exists ? created = false : created = true && return newGame */
-    const [ newGame, created ] = await GameBoard.findOrCreate({
+    const [newGame, created] = await GameBoard.findOrCreate({
       where: { // finding query looking for the gameID
         gameID: gameID
       },
@@ -453,7 +457,8 @@ lobby.on('connection', async(socket) => {
     });
 
     if (created) {
-      
+
+
     }
 
 
@@ -466,6 +471,8 @@ lobby.on('connection', async(socket) => {
   /* ******************* */
   socket.on('disconnect', () => {
     console.log(`${currUser} has disconnected from the lobby`);
+    socket.socket.reconnect();
+
   });
 });
 
