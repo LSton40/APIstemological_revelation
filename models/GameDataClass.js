@@ -5,6 +5,7 @@ module.exports = class gameData {
     this.gameStatus = 'active',
     this.gameTurn = userList[Math.floor(Math.random() * userList.length)].username, // makes the first player be random
     this.gameWinner = null,
+    this.drawPile = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'],
     this.gamePlayers = [
       {
         username: userList[0].username,

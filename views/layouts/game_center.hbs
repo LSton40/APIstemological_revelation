@@ -110,6 +110,57 @@
 
 
 
+
+
+
+
+
+
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
+  const queryGameSocket = async() => {
+    let name = 'epicGameName';
+    socket.emit('testQuery', name);
+    console.log('queried boii');
+  }
+  socket.on('logs', (data) => {
+    console.log(data);
+  })
+  queryGameButtonEl = document.getElementById('queryGame');
+  queryGameButtonEl.addEventListener('click', queryGameSocket);
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
+
+
+
+
+
+
+
+
+
+    let joinGameFormEl = document.getElementById('joinForm');
+    let joinGameInput = document.getElementById('roomCode');
+
+    joinGameFormEl.addEventListener('submit', (e) => {
+      console.log('clicked')
+      e.preventDefault();
+      if (joinGameInput.value) {
+        console.log(`sending request to join ${joinGameInput.value}`)
+        socket.emit('joinGame', joinGameInput.value);
+        joinGameInput.value = '';
+      }
+
+      window.location.assign("/lobby")
+
+
+    });
+  }
+
+
+
     let joinGameFormEl = document.getElementById('joinForm');
     let joinGameInput = document.getElementById('roomCode');
 
