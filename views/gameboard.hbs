@@ -166,6 +166,7 @@
             circle.on("pointerupoutside", doPointerUpOutside);
 
 
+
             circle.name = name;
             circle.speed = speed;
 
@@ -173,7 +174,7 @@
         }
 
 
-
+        let cardValue = 5;
 
 
 
@@ -197,6 +198,7 @@
             // this.beginFill(DOWN);
             // // this.drawRect((app.view.width / 2) - 100, (app.view.height / 2) - 100, 200, 200);
             // this.endFill();
+            pegHoles[cardValue].tint = '0xF78DA7';
             this.tint = DOWN;
             pointerIsDown = true;
             let name = this.name;
@@ -231,15 +233,6 @@
             pointerIsOver = false;
             pointerIsDown = false;
         }
-
-
-
-
-
-
-
-
-
 
     </script>
 </head>
