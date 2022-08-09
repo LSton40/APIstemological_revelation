@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixi tutorial</title>
-    <link rel="stylesheet" href="./index.css">
+
+
+<div id="gameDiv"></div>
+
+<body>
+
+
     <script src="https://pixijs.download/release/pixi.js"></script>
 
     <script>
-        
+
         let app;
         const NORMAL = 0xFFFFFF;
         const OVER = 0x00FF00;
@@ -53,7 +54,7 @@
 
             // Right column // peg holes 19 - 35
             for (let i = 0; i < 17; i++) {
-            
+
                 const x = startingX + 36 * radius;
                 const y = startingY + 2 * radius + 2 * radius * i;
 
@@ -138,7 +139,7 @@
 
             //end of game drawing
             //needs a parent square to hold pegs
-            
+
             for (let i = 0; i < pegHoles.length; i++) {
                 app.stage.addChild(pegHoles[i]);
             }
@@ -158,7 +159,7 @@
             circle.endFill();
             circle.interactive = true;
             circle.buttonMode = true;
-            
+
             circle.on("pointerup", doPointerUp);
             circle.on("pointerdown", doPointerDown);
             circle.on("pointerover", doPointerOver);
@@ -193,9 +194,9 @@
             pointerIsDown = false;
         }
         function doPointerDown() {
-          pegHoles[69].tint = '0xF78DA7';
-          pegHoles[77].tint = '0xF78DA7';
-          pegHoles[89].tint = '0xF78DA7';
+            pegHoles[69].tint = '0xF78DA7';
+            pegHoles[77].tint = '0xF78DA7';
+            pegHoles[89].tint = '0xF78DA7';
 
 
             console.log("pointer down");
@@ -247,10 +248,8 @@
 
 
     </script>
-</head>
 
-<body>
-    <div id="gameDiv"></div>
+
 
 
 </body>

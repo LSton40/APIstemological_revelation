@@ -19,8 +19,8 @@
   /* calling in the username that was passed in view_routes */
   const username = "{{username}}"
   /* joining the lobby room && carrying over the username & color */
-  socket.auth = { username };
   var socket = io('/lobby', { query: `userColor=${userColor}` });
+  socket.auth = { username };
   /* maybe let user pick their or theme? */
 
 
@@ -29,7 +29,7 @@
     let playerCount = document.createElement('h2');
     let gameStatus;
 
-    gameList.forEach()
+    gameList.forEach(gameList)
 
 
 
