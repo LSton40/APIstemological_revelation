@@ -9,7 +9,7 @@ exports.loggedIn = (req, res, next) => {
   switch (route_destination) {
     case '/register':
       if (user_id) {
-        res.redirect('/dashboard');
+        return res.redirect('/dashboard');
         // res.render('lobby', { layout: 'game_center.hbs' });
       }
 

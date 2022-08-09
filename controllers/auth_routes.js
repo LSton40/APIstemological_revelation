@@ -38,16 +38,16 @@ auth_router.post('/login', loggedIn, async(req, res) => {
       // saving session data and redirecting to root route
       req.session.save();
 
-      res.redirect('/dashboard');
+      return res.redirect('/dashboard');
 
 
     } else {
       req.session.errors = ['Incorrect password; Please try again.'];
-      res.redirect('/login');
+      return res.redirect('/login');
     }
   } else { // sending the user to the register page
     req.session.errors = [`User doesn't exist. Please register.`];
-    res.redirect('/register');
+    return res.redirect('/register');
   }
 
 });
@@ -91,7 +91,7 @@ auth_router.post('/register', loggedIn, async(req, res) => {
       req.session.passHash = newUser.passHash;
       // saving session data and redirecting to root route
       req.session.save();
-      res.redirect('/dashboard');
+      return res.redirect('/dashboard');
       // res.render('lobby', { layout: 'game_center.hbs' });
 
     }
@@ -110,12 +110,12 @@ auth_router.post('/register', loggedIn, async(req, res) => {
       req.session.passHash = existingUser.passHash;
       // saving session data and redirecting to root route
       req.session.save();
-      res.redirect('/dashboard');
+      return res.redirect('/dashboard');
       // res.render('lobby', { layout: 'game_center.hbs' });
     } else {
     // saves verbose error and sends them to register
     req.session.errors = ['A user with that name already exists; Please choose another username'];
-    res.redirect('/register');
+    return res.redirect('/register');
     }
   }
 });
