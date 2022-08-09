@@ -197,7 +197,7 @@
             //console.log(outlineFilter);
             //moves.filterOn();
             //circle.on('pointerdown', filterOn);
-            //circle.filters = [new OutlineFilter(2, 0x99ff99)];
+            //circle.filters = [];
 
 
             // circle.on("pointerup", doPointerUp);
@@ -205,7 +205,7 @@
             //circle.on("pointerover", doPointerOver);
             //circle.on("pointerout", doPointerOut);
             //circle.on("pointerupoutside", doPointerUpOutside);
-
+            //circle.filters = [new OutlineFilter(2, 0x99ff99)]
             let canMove = false;
 
             circle.name = name;
@@ -248,7 +248,7 @@
                 console.log(playerOneLocations);
 
                 console.log(localStorage.getItem('playerOneLocations'));
-                this.filters = [outlineFilter];
+                // this.filters.push(outlineFilter);
 
             }
             console.log("pointer down");
@@ -284,17 +284,17 @@
 
         // When player clicks on card it shows the possible moves they can do
         function showPossibleMoves() {
-            
+
 
             for (i = 0; i < playerOneLocations.length; i++) {
                 let moveLocations = playerOneLocations[i] + cardValue;
                 let moves;
 
-                if(moveLocations > 71) {
+                if (moveLocations > 71) {
                     moveLocations = moveLocations - 72;
-                    
+
                 }
-                 
+
                 moves = pegHoles[moveLocations];
                 moves.canMove = true;
                 moves.tint = '0xffff00';
