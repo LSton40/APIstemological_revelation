@@ -76,7 +76,8 @@ function iLikeToMoveItMoveIt(select) {
 
 
 
-
+const hand = document.querySelector('#me_player');
+let userHand;
 
 //Deck generation function
 function gameStart(cardArray) {
@@ -95,50 +96,81 @@ function gameStart(cardArray) {
 
     console.log(playDeck);
 
-    
+    dealCards();
+}
+
     //function to populate player's hand at start
-    function dealCards() {
-        
-        let player1Hand = [];
-        let player2Hand = [];
-        let player3Hand = [];
-        let player4Hand = [];
+function dealCards() {
+    
+    let player1Hand;
+    let player2Hand;
+    let player3Hand;
+    let player4Hand;
 
-            player1Hand.push(playDeck.splice(0, 5));
-        
-            player2Hand.push(playDeck.splice(0, 5));
-        
-            player3Hand.push(playDeck.splice(0, 5));
-        
-            player4Hand.push(playDeck.splice(0, 5));
-            console.log(player1Hand);
-            console.log(player2Hand);
-            console.log(player3Hand);
-            console.log(player4Hand);
-        
-            //Switch statement to equate userHand to appropriate player Hand ??
+        player1Hand = playDeck.splice(0, 5);
+    
+        player2Hand = playDeck.splice(0, 5);
+    
+        player3Hand = playDeck.splice(0, 5);
+    
+        player4Hand = playDeck.splice(0, 5);
 
-            let userHand = player1Hand;
-            let hand = document.querySelector('#me_player');
+        console.log(player1Hand);
+        console.log(player2Hand);
+        console.log(player3Hand);
+        console.log(player4Hand);
+    
+        //Switch statement to equate userHand to appropriate player Hand ??
 
-            userHand.forEach((el) => {
-                const handCard = document.createElement('div');
-                handCard.setAttribute('id', `card${userHand[i]}`)
-                handCard.classList.add("cards");
-                handCard.textContent = el;
+        userHand = player1Hand;
+
+        dealMeIn(userHand) 
+        
+}
+    
+    // let userHand = [8,'Q',5,9,3]
+
+    function dealMeIn(myHand) {
+           
+            for (let c in myHand) {
+                
+                let handCard = document.createElement('div');
+                handCard.id = `card${c}`;
+                handCard.className = "cards"
+                handCard.textContent = myHand[c];
                 hand.appendChild(handCard);
-            } )
+            // } )
+            }
 
-        }
+            drawCard();
+        };
 
-        dealCards();
 
-// const userHand = [];
 
+ 
+
+        //function to draw 6th card on turn
+        
+function drawCard() {
+    
+    let drawCard = userHand.push(playDeck.splice(0, 1));
+
+    let handCard = document.createElement('div');
+    handCard.id = 'card5';
+    handCard.className = "cards"
+    handCard.textContent = drawCard;
+    hand.appendChild(handCard);
 }
 
 
+
+
+
+
+
+
 gameStart(cardArray);
+
 
 
 //JOKER FUNCTION
@@ -147,13 +179,34 @@ gameStart(cardArray);
 
 
 
+const card1 = document.querySelector('#card0');
+const card2 = document.querySelector('#card1');
+const card3 = document.querySelector('#card2');
+const card4 = document.querySelector('#card3');
+const card5 = document.querySelector('#card4');
+const card6 = document.querySelector('#card5');
 
-//function to draw 6th card on turn
+const cards = document.querySelectorAll('.cards');
 
-function drawCard() {
 
-    userHand.push(playDeck.splice(0, 1));
 
+/*play function
+1) Select card, highlights*/
+
+function addSelectClass(thisCard) {
+
+    if (thisCard.classList.contains("selectedCard")) {
+        thisCard.classList.remove("selectedCard")
+    } 
+    // else {
+    //     thisCard.classList.add("selectedCard")
+    // }
+    //if classList does not include 'selectedCard', add class 'selectedCard'
+    //else if classList does include 'selectedCard', remove class 'selectedCard'
+    // let selectedCard = cardEl.classList.add('selectedCard')
+
+    
+    
 }
 
 
@@ -161,15 +214,13 @@ function drawCard() {
 
 
 
-/*play function
-    1) Select card, highlights*/
+card1.addEventListener('click', addSelectClass(card1))
+card2.addEventListener('click', addSelectClass(card2))
+card3.addEventListener('click', addSelectClass(card3))
+card4.addEventListener('click', addSelectClass(card4))
+card5.addEventListener('click', addSelectClass(card5))
+card6.addEventListener('click', addSelectClass(card6))
 
-// function addSelectClass() {
-
-//     //if classList does not include 'selectedCard', add class 'selectedCard'
-//     //else if classList does include 'selectedCard', remove class 'selectedCard'
-//     let selectedCard = cardEl.classList.add('selectedCard')
-// }
 
 
 // for (let i = 0; i < userHand.length; i++) {

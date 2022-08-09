@@ -5,8 +5,10 @@
 
 <div id="gameDiv"></div>
 
-<body>
+<button id="card-btn">5</button>
 
+<body>
+    
 
     <script src="https://pixijs.download/release/pixi.js"></script>
 
@@ -29,7 +31,7 @@
         let startingY = 0;
         let radius = 15;
         let posTracker = 0;
-        const PEG_HOLE_SPACING = 10;
+        const cardBtn = document.querySelector('#card-btn');
         let gameContainer;
 
         window.onload = function () {
@@ -139,6 +141,8 @@
                 pegHoles.push(new PegHole(x + offsetX, y + offsetY, radius, color, "hole " + posTracker++));
             };
 
+            playerPieces();
+
             //end of game drawing
             //needs a parent square to hold pegs
 
@@ -171,6 +175,7 @@
             circle.on("pointerupoutside", doPointerUpOutside);
 
 
+
             circle.name = name;
             circle.speed = speed;
 
@@ -178,8 +183,12 @@
         }
 
 
+        const cardValue = 10;
+        const playerLocation = 2 + 1;
+        
+        
 
-
+        
 
 
         function doPointerUp() {
@@ -207,6 +216,7 @@
             // this.beginFill(DOWN);
             // // this.drawRect((app.view.width / 2) - 100, (app.view.height / 2) - 100, 200, 200);
             // this.endFill();
+            pegHoles[cardValue].tint = '0xF78DA7';
             this.tint = DOWN;
             pointerIsDown = true;
             let name = this.name;
@@ -242,18 +252,34 @@
             pointerIsDown = false;
         }
 
-        function test(){
-            console.log('rewrwrwerwer');
+
+
+        function playerPieces () {
+            let piece = pegHoles[playerLocation];
+            console.log('test');
+            piece.tint = '#ff0000';
+        }
+        
+        
+        function showPossibleMoves () {
+            console.log('test');
+            let movelocation = playerLocation + cardValue
+            let moves = pegHoles[movelocation];
+            console.log(moves);
+            moves.tint = '0xF78DA7';
+            
+            moves.addEventListener('click', movePiece);
+
         }
 
+        function movePiece () {
+            console.log('click');
+        }
 
+        
 
-
-
-
-
-
-
+        cardBtn.addEventListener('click', showPossibleMoves)
+ 
     </script>
 
 
