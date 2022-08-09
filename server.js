@@ -412,6 +412,8 @@ turn.on('connection', (socket) => {
 const lobby = io.of('/lobby');
 // lobby connection func
 lobby.on('connection', async(socket) => {
+  console.log(socket.id);
+
   /* declares all games being played */
   const gameLister = async() => {
     let gameList = await GameBoard.findAll();
@@ -436,10 +438,10 @@ lobby.on('connection', async(socket) => {
   gameLister();
 
 
-  // finding user from the database by its username
-  const currDBUser = await UserAcc.findOne({ where: { username: currUser } }) || null;
-  // setting the user to have the socket id
-  const updatedUser = currDBUser.update({ socket: socket.id });
+  // // finding user from the database by its username
+  // const currDBUser = await UserAcc.findOne({ where: { username: currUser } }) || null;
+  // // setting the user to have the socket id
+  // const updatedUser = await currDBUser.update({ socket: socket.id });
 
 
 
@@ -528,7 +530,7 @@ lobby.on('connection', async(socket) => {
   /* ******************* */
   socket.on('disconnect', () => {
     console.log(`${currUser} has disconnected from the lobby`);
-    socket.socket.reconnect();
+    // socket.socket.reconnect();
 
   });
 });
