@@ -132,7 +132,7 @@ app.use('/auth', auth_routes);
 //                 socket.emit('game exists', 'game exists');
 //             } else {
 //                 GameBoard.create({
-//                     gameId: lobbyName,
+//                     gameId: lobbyN  ame,
 //                     gameCreator: host,
 //                     gamePlayers: JSON.stringify([host]),
 //                     gameTurn: host,
@@ -450,6 +450,7 @@ lobby.on('connection', async (socket) => {
   /* ************************* */
   socket.on('joinGame', async (gameID) => {
     // finding game with gameID
+    console.log('caught join game call');
     const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
 
     // grabbing gamePlayers from the game
@@ -553,11 +554,9 @@ lobby.on('connection', async (socket) => {
   socket.on('disconnect', () => {
     console.log(`${currUser} has disconnected from the lobby`);
     // socket.socket.reconnect();
-
+    socket.disconnect();
   });
 });
-
-
 
 //sync db then start server
 db.sync().then(() => {
