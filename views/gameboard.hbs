@@ -153,6 +153,8 @@
 
             app.ticker.add(gameLoop);
 
+            test();
+
         }
 
         function gameLoop(delta) { }
@@ -250,6 +252,8 @@
             pointerIsDown = false;
         }
 
+
+
         function playerPieces () {
             let piece = pegHoles[playerLocation];
             console.log('test');
@@ -266,7 +270,6 @@
             
             moves.addEventListener('click', movePiece);
 
-            
         }
 
         function movePiece () {

@@ -59,29 +59,30 @@
 
   });
 
-  socket.on('errors', (error) => {
-    {{!-- /* append the errors somewhere!! TOAST??!?!?!?! */ --}}
-  });
+  //socket.on('errors', (error) => {
+    /* append the errors somewhere!! TOAST??!?!?!?! */
 
-  socket.on('redirect', (url) => {
-    window.location.href = url;
-  });
+    socket.on('redirect', (url) => {
+      window.location.href = url;
+    });
 
-  // const myCookie = await cookieStore.get('connect.sid');
-  // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
-  socket.emit('cookie time', username);
+    // const myCookie = await cookieStore.get('connect.sid');
+    // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
+    socket.emit('cookie time', username);
 
 
-  const createGameSocket = async() => {
-    socket.emit('createGame', 'veryCoolTestGameName');
-    console.log('CreateGame called!');
-  }
-
-  const joinGameSocket = async() => {
-    socket.emit('joinGame', 'lessCoolTestGameName');
-    console.log('JoinGame called!');
-  }
-
-  document.getElementById('createGame').addEventListener('click', createGameSocket);
-  document.getElementById('joinGame').addEventListener('click', joinGameSocket);
+    const createGameSocket = async () => {
+      let name = 'veryCoolTestGameName';
+      socket.emit('createGame', name);
+      console.log('CreateGame called!');
+    }
+    const joinGameSocket = async () => {
+      let name = 'lessCoolTestGameName';
+      socket.emit('joinGame', name);
+      console.log('JoinGame called!');
+    }
+    createGameButtonEl = document.getElementById('createGame');
+    joinGameButtonEl = document.getElementById('joinGame');
+    createGameButtonEl.addEventListener('click', createGameSocket);
+    joinGameButtonEl.addEventListener('click', joinGameSocket);
 </script>

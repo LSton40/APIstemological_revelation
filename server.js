@@ -25,7 +25,6 @@ app.set('view engine', 'hbs');
 
 
 /* manage sessions */
-const session = require('express-session'); // looks like this was moved to serverControl - del?
 const UserAcc = require('./models/UserAcc.model');
 // const { databaseVersion } = require('./config/connection');
 const { sessionMiddleware, wrap } = require('./serverControl');
@@ -395,7 +394,11 @@ app.use('/auth', auth_routes);
 
 
 
+const turn = io.of('/auth');
+turn.on('connection', (socket) => {
 
+
+});
 
 
 
@@ -409,6 +412,8 @@ app.use('/auth', auth_routes);
 const lobby = io.of('/lobby');
 // lobby connection func
 lobby.on('connection', async(socket) => {
+  console.log(socket.id);
+
   /* declares all games being played */
   const gameLister = async() => {
     let gameList = await GameBoard.findAll();
@@ -433,17 +438,17 @@ lobby.on('connection', async(socket) => {
   gameLister();
 
 
-  // finding user from the database by its username
-  const currDBUser = await UserAcc.findOne({where: {username: currUser}}) || null;
-  // setting the user to have the socket id
-  const updatedUser = currDBUser.update({socket: socket.id});
+  // // finding user from the database by its username
+  // const currDBUser = await UserAcc.findOne({ where: { username: currUser } }) || null;
+  // // setting the user to have the socket id
+  // const updatedUser = await currDBUser.update({ socket: socket.id });
 
 
 
   /* ************************* */
   /* join game socket listener */
   /* ************************* */
-  socket.on('joinGame', async(gameID) => {
+  socket.on('joinGame', async (gameID) => {
     // finding game with gameID
     const gameRoom = await GameBoard.findOne({ where: { gameID: gameID }});
 
@@ -473,9 +478,9 @@ lobby.on('connection', async(socket) => {
   /* ******************** */
   /* create game listener */
   /* ******************** */
-  socket.on('createGame', async(gameID) => {
+  socket.on('createGame', async (gameID) => {
     /* board exists ? created = false : created = true && return newGame */
-    const [ newGame, created ] = await GameBoard.findOrCreate({
+    const [newGame, created] = await GameBoard.findOrCreate({
       where: { // finding query looking for the gameID
         gameID: gameID
       },
@@ -525,6 +530,8 @@ lobby.on('connection', async(socket) => {
   /* ******************* */
   socket.on('disconnect', () => {
     console.log(`${currUser} has disconnected from the lobby`);
+    // socket.socket.reconnect();
+
   });
 });
 
