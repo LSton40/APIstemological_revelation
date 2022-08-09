@@ -10,19 +10,55 @@
 const userTokens = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]
 const userTokensOnBoard = [];
 
-const userStart = [];
+let userStart;
 const userHome = [];
 
-
-
+const cardSelect = document.querySelector('.selectedCard');
+const hCounter = document.querySelector('#hCounter');
+const sCounter = document.querySelector('#sCounter');
+const bCounter = document.querySelector('.basecounters')
 
 //Array of cards
-const cardArray = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
+const cardArray = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
 let playDeck;
 
+let cardsAtPlay;
+
 //discard pile array
 const discard = [];
+
+
+
+function startCounter() {
+
+    for (let c in userHome) {
+
+        let basecounter = document.createElement('span');
+        basecounter.className = "basecounters"
+        basecounter.textContent = '|';
+        sCounter.appendChild(baseCounter);
+    };
+}
+
+function homeCounter() {
+
+    let hometokens = document.createElement('span');
+    hometokens.className = "homecounters"
+    hometokens.textContent = '|';
+    hCounter.appendChild(hometokens);
+
+    // for (let c in userHome) {
+
+    //     let hometokens = document.createElement('span');
+    //     hometokens.className = "homecounters"
+    //     hometokens.textContent = '|';
+    //     hCounter.appendChild(hometokens);
+
+    // }
+}
+
+
 
 //assign values to "cards": spaces to play
 
@@ -120,11 +156,13 @@ function dealCards() {
         console.log(player3Hand);
         console.log(player4Hand);
     
+
         //Switch statement to equate userHand to appropriate player Hand ??
 
         userHand = player1Hand;
 
-        dealMeIn(userHand) 
+        startCounter();
+        dealMeIn(userHand);
         
 }
     
@@ -139,7 +177,6 @@ function dealCards() {
                 handCard.className = "cards"
                 handCard.textContent = myHand[c];
                 hand.appendChild(handCard);
-            // } )
             }
 
             // drawCard();
@@ -196,7 +233,7 @@ const cards = document.querySelectorAll('.cards');
 function addSelectClass(event) {
 
     if (event.target.classList.contains("selectedCard")) {
-        event.target.classList.remove("selectedCard")
+        // event.target.classList.remove("selectedCard")
 
         //remove highlighting from pieces
         //remove highlighting from target game spaces
@@ -205,8 +242,8 @@ function addSelectClass(event) {
     else {
         event.target.classList.add("selectedCard")
 
-        console.log(JSON.stringify(event.target.textContent))
-        iLikeToMoveItMoveIt(JSON.stringify(event.target.textContent));
+        // console.log(JSON.stringify(event.target.textContent))
+        // iLikeToMoveItMoveIt(JSON.stringify(event.target.textContent));
     }
       
 
@@ -216,7 +253,57 @@ function addSelectClass(event) {
 }
 
 
+function comeOut() {
 
+    const emergePiece = userTokens.splice(0, 1);
+    const token = emergePiece.find(el => el);
+    userTokensOnBoard.push(token);
+
+
+    //Modify to remove only one
+    bcounter.remove();
+
+
+    console.log(emergePiece);
+    console.log(userTokens);
+    console.log(userTokensOnBoard);
+
+}
+
+comeOut();
+
+
+function goHome() {
+
+    const exitPiece = userTokensOnBoard.splice(0, 1);
+    const byeToken = exitPiece.find(el => el);
+    userHome.push(byeToken);
+
+}
+
+
+function winCondition() {
+
+    if (userHome.length = 5) {
+        //Game over message
+    }
+}
+
+
+
+//Remove selected card at end of turn
+
+function discardDatCard() {
+
+    const discardCard = userHand.find(cardSelect.textContent);
+    discard.push(discardCard);
+
+    cardSelect.remove();
+
+    for (let c in cards) {
+        cards[c].id = `card${c}`;
+    }
+}
 
 
 
@@ -226,7 +313,6 @@ card3.addEventListener('click', addSelectClass)
 card4.addEventListener('click', addSelectClass)
 card5.addEventListener('click', addSelectClass)
 card6.addEventListener('click', addSelectClass)
-
 
 
 // for (let i = 0; i < userHand.length; i++) {
@@ -247,9 +333,6 @@ card6.addEventListener('click', addSelectClass)
 
 
 
-// const cardEl = document.querySelector();
-
-// cardEl.addEventListener('click', addSelectClass)
 
 
 
