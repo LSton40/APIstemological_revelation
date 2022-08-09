@@ -59,6 +59,11 @@
 
   });
 
+
+
+
+
+
   //socket.on('errors', (error) => {
   /* append the errors somewhere!! TOAST??!?!?!?! */
 
@@ -76,21 +81,17 @@
     socket.emit('createGame', name);
     console.log('CreateGame called!');
   }
-  //onst joinGameSocket = async () => {
-    //const name = 'lessCoolTestGameName4';
-    //socket.emit('joinGame', name);
-    //console.log('JoinGame called!');
-  //}
+
   createGameButtonEl = document.getElementById('createGame');
   createGameButtonEl.addEventListener('click', createGameSocket);
- 
+
   let joinGameFormEl = document.getElementById('joinForm');
   let joinGameInput = document.getElementById('roomCode');
 
   joinGameFormEl.addEventListener('submit', (e) => {
     console.log('clicked')
     e.preventDefault();
-    if(joinGameInput.value){
+    if (joinGameInput.value) {
       console.log(`sending request to join ${joinGameInput.value}`)
       socket.emit('joinGame', joinGameInput.value);
       joinGameInput.value = '';

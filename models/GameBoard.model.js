@@ -12,7 +12,7 @@ GameBoard.init({
   //the users name who created the game
   gameCreator: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   //if the game is ongoin, or if it is finished
   gameStatus: {
@@ -24,7 +24,7 @@ GameBoard.init({
   //json object containing a list of the users in the game
   gamePlayers: {
     type: DataTypes.TEXT,
-    allowNull: false,
+    allowNull: true,
     get() { // when getting, the object will be parsed from json
       const parsed = JSON.parse(this.getDataValue("gamePlayers"));
       return parsed ? parsed : null;
@@ -44,13 +44,13 @@ GameBoard.init({
   //json object of the game board
   gameBoard: {
     type: DataTypes.TEXT,
-    allowNull: false
+    allowNull: true,
     get() { // when getting, the object will be parsed from json
       const parsed = JSON.parse(this.getDataValue("gameBoard"));
       return parsed ? parsed : null;
     },
     set() { // when setting, the object will be parsed to json
-      const stringed = this.setDataValue("gameBoard", JSON.stringify(value));
+      const stringed = this.setDataValue("gameBoard", JSON.stringify(this.getDataValue("gameBoard")));
       return stringed ? stringed : null;
     }
   },

@@ -24,12 +24,11 @@ db.sync().then(async () => { // syncing then doing the seeding
     console.log('<---------- USER CREATED: ---------->');
     console.log(user.dataValues);
     console.log('<---------- SEEDING COMPLETE ---------->');
-    process.exit();
   });
 
 
   await GameBoard.create({
-    gameID: '69',
+    gameID: 'test33',
     gameCreator: 'bryan',
     gameStatus: 'active',
     gamePlayers: [
@@ -81,6 +80,117 @@ db.sync().then(async () => { // syncing then doing the seeding
               isInFinish: false
             }
           ]
+        },
+        {
+          name: 'guy2',
+          userSID: {}, // grab useracc sid from session obj?
+          pegColor: 'purple',
+          pegs: [
+            {
+              pegID: 1,
+              pegLocation: 3,
+              isAtSpawn: false,
+              isInFinish: false
+            },
+            {
+              pegID: 2,
+              pegLocation: null,
+              isAtSpawn: false,
+              isInFinish: true
+            },
+            {
+              pegID: 3,
+              pegLocation: null,
+              isAtSpawn: true,
+              isInFinish: false
+            },
+            {
+              pegID: 4,
+              pegLocation: null,
+              isAtSpawn: true,
+              isInFinish: false
+            },
+            {
+              pegID: 5,
+              pegLocation: null,
+              isAtSpawn: true,
+              isInFinish: false
+            }
+          ]
+        },
+        {
+          name: 'guy3',
+          userSID: {}, // grab useracc sid from session obj?
+          pegColor: 'purple',
+          pegs: [
+            {
+              pegID: 1,
+              pegLocation: 3,
+              isAtSpawn: false,
+              isInFinish: false
+            },
+            {
+              pegID: 2,
+              pegLocation: null,
+              isAtSpawn: false,
+              isInFinish: true
+            },
+            {
+              pegID: 3,
+              pegLocation: null,
+              isAtSpawn: true,
+              isInFinish: false
+            },
+            {
+              pegID: 4,
+              pegLocation: null,
+              isAtSpawn: true,
+              isInFinish: false
+            },
+            {
+              pegID: 5,
+              pegLocation: null,
+              isAtSpawn: true,
+              isInFinish: false
+            }
+          ]
+        },
+        {
+          name: 'guy4',
+          userSID: {}, // grab useracc sid from session obj?
+          pegColor: 'purple',
+          pegs: [
+            {
+              pegID: 1,
+              pegLocation: 3,
+              isAtSpawn: false,
+              isInFinish: false
+            },
+            {
+              pegID: 2,
+              pegLocation: null,
+              isAtSpawn: false,
+              isInFinish: true
+            },
+            {
+              pegID: 3,
+              pegLocation: null,
+              isAtSpawn: true,
+              isInFinish: false
+            },
+            {
+              pegID: 4,
+              pegLocation: null,
+              isAtSpawn: true,
+              isInFinish: false
+            },
+            {
+              pegID: 5,
+              pegLocation: null,
+              isAtSpawn: true,
+              isInFinish: false
+            }
+          ]
         }
 
       ]
@@ -92,6 +202,9 @@ db.sync().then(async () => { // syncing then doing the seeding
     console.log('<---------- SEEDING COMPLETE ---------->');
     process.exit();
   });
+}).catch(err => {
+  console.log('<---------- ERROR ---------->');
+  console.log(err);
 });
 
 

@@ -394,19 +394,43 @@ app.use('/auth', auth_routes);
 
 
 
-const turn = io.of('/auth');
-turn.on('connection', (socket) => {
 
+/* ************************* */
+/* gunguns socket experiment */
+/* ************************* */
+
+//auth socket will be used only listen to players who are currently on their turn
+const auth = io.of('/auth');
+
+auth.on('connection', (socket) => {
+
+  //recieve turn data object on 'turn emit'
+  socket.on('turn', turnData => {
+
+
+    //run logic and return updated gameboard
+    let updatedData = {};
+
+
+
+
+
+    //send data to listeners in the socket room of the turn emitter
+    socket.to(turnData.room).emit(updatedData);
+    //disconnect user and connect new user
+    socket.disconnect();
+
+  });
+
+
+  socket.on('disconnect', () => {
+    console.log('users turn is over');
+  });
 
 });
 
 
 
-
-
-/* ************************* */
-/* gunguns socket experiment */
-/* ************************* */
 
 // defining the room we're listening for
 const lobby = io.of('/lobby');
@@ -414,20 +438,14 @@ const lobby = io.of('/lobby');
 lobby.on('connection', async (socket) => {
   console.log(socket.id);
 
-  /* declares all games being played */
-  const gameLister = async () => {
-    let gameList = await GameBoard.findAll();
-    let filteredGames = {
-      gameName: gameList.gameID,
-      host: gameList.gameCreator,
-      status: gameList.gameStatus
-    }
-    socket.emit('current games', filteredGames);
-  }
 
 
 
 
+  // // finding user from the database by its username
+  // const currDBUser = await UserAcc.findOne({ where: { username: currUser } }) || null;
+  // // setting the user to have the socket id
+  // const updatedUser = await currDBUser.update({ socket: socket.id });
   // grabbing the username from the frontend as it's being passed. [!!]could technically be modified on front end[!!]
   let currUser = socket.handshake.query['username'] || null;
   // NTH: let user set their color or theme from some options? 
@@ -437,11 +455,23 @@ lobby.on('connection', async (socket) => {
 
   gameLister();
 
+  /* declares all games being played and will only return games IF there are > 0 games*/
+  const gameLister = async () => {
+    let gameList = await GameBoard.findAll();
+    let filteredGames = {
+      gameName: gameList.gameID,
+      host: gameList.gameCreator,
+      status: gameList.gameStatus
+    }
+    //might have to strngified to json
+    if (filteredGames.length > 0) {
+      socket.emit('current games', filteredGames);
+    } else {
+      socket.emit('errors', 'no games currently being played');
+    }
 
-  // // finding user from the database by its username
-  // const currDBUser = await UserAcc.findOne({ where: { username: currUser } }) || null;
-  // // setting the user to have the socket id
-  // const updatedUser = await currDBUser.update({ socket: socket.id });
+  }
+
 
 
 
@@ -457,6 +487,10 @@ lobby.on('connection', async (socket) => {
     let roomPlayers = gameRoom.gamePlayers || [];
 
     if (gameRoom) {
+
+      //if the gameRoom exists, then add the socket user to the gameID room
+      socket.join('gameID');
+
       // pushing user to gamePlayers
       roomPlayers.push({
         username: currUser,
@@ -488,7 +522,7 @@ lobby.on('connection', async (socket) => {
       },
       defaults: { // if there isn't a game, it will save user to host variable
         gameCreator: currUser
-        
+
       }
     });
     //find game by gameID and create it if it doesn't exist
