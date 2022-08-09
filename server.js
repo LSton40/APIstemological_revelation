@@ -518,6 +518,9 @@ lobby.on('connection', async (socket) => {
     /* board exists ? created = false : created = true && return newGame */
     let currUser = socket.handshake.query['username'] || null;
 
+
+
+
     /* TEST DATA */
     let testGameID = 'epicGameName';
     let testUserList = [
