@@ -6,6 +6,7 @@ require('dotenv').config();
 const { view_routes, auth_routes } = require('./controllers');
 const GameBoard = require('./models/GameBoard.model');
 const GameDataClass = require('./models/GameDataClass');
+const playGame = require('./gameLogic/playGame');
 
 /* express */
 const express = require('express');
@@ -487,10 +488,10 @@ lobby.on('connection', async (socket) => {
     console.log('caught join game call');
     const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
 
-    // grabbing gamePlayers from the game
-    let roomPlayers = gameRoom.gamePlayers || [];
-
+    
     if (gameRoom) {
+      // grabbing gamePlayers from the game
+      let roomPlayers = gameRoom.gamePlayers || [];
 
       //if the gameRoom exists, then add the socket user to the gameID room
       socket.join('gameID');
@@ -508,7 +509,7 @@ lobby.on('connection', async (socket) => {
       // emitting any errors that occur
       socket.emit('errors', {
         error: 'Error joining room - please try agian!'
-      })
+      });
     }
   });
 
@@ -543,11 +544,27 @@ lobby.on('connection', async (socket) => {
     ];
 
     const GameData = new GameDataClass(testGameID, testUserList);
-    console.log(GameData);
-    console.log(GameData.returnUsers());
 
-    console.log(`current turn: ${GameData.gameTurn}`);
-    console.log(`nextUserTurn called and the next player turn is: ${GameData.nextUserTurn()}`);
+    console.log(GameData.gamePlayers);
+
+    /* game exists ? created = false : created = true && return game */
+    const game = await GameBoard.create({
+        gameID: GameData.gameID,
+        gameCreator: GameData.gameCreator,
+        gameStatus: GameData.gameStatus,
+        gamePlayers: GameData.gamePlayers,
+        gameTurn: GameData.gameTurn
+    });
+
+    socket.emit('logs', {
+      game: game,
+    })
+
+    // console.log(GameData);
+    // console.log(GameData.returnUsers());
+
+    // console.log(`current turn: ${GameData.gameTurn}`);
+    // console.log(`nextUserTurn called and the next player turn is: ${GameData.nextUserTurn()}`);
 
 
 
@@ -634,7 +651,13 @@ lobby.on('connection', async (socket) => {
 
   });
 
+  socket.on('testQuery', async(gameID) => {
+    playGame(gameID);
 
+
+
+
+  })
 
 
 

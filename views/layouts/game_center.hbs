@@ -88,6 +88,38 @@
   createGameButtonEl = document.getElementById('createGame');
   createGameButtonEl.addEventListener('click', createGameSocket);
 
+
+
+
+
+
+
+  /* REMOVE THIS */
+  const queryGameSocket = async() => {
+    let name = 'veryCoolTestGameName';
+    socket.emit('testQuery', name);
+    console.log('queried boii');
+  }
+
+  socket.on('logs', (data) => {
+    console.log(data);
+  })
+
+
+
+  queryGameButtonEl = document.getElementById('queryGame');
+  queryGameButtonEl.addEventListener('click', queryGameSocket);
+  /* REMOVE THIS */
+
+
+
+
+
+
+
+
+
+
   let joinGameFormEl = document.getElementById('joinForm');
   let joinGameInput = document.getElementById('roomCode');
 
