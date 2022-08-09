@@ -30,6 +30,7 @@
         let radius = 15;
         let posTracker = 0;
         const PEG_HOLE_SPACING = 10;
+        let gameContainer;
 
         window.onload = function () {
             app = new PIXI.Application({
@@ -39,7 +40,8 @@
 
             });
             document.querySelector('#gameDiv').appendChild(app.view);
-
+            gameContainer = new PIXI.Container();
+            app.stage.addChild(gameContainer);
 
 
             //beginning of game drawing
@@ -141,7 +143,7 @@
             //needs a parent square to hold pegs
 
             for (let i = 0; i < pegHoles.length; i++) {
-                app.stage.addChild(pegHoles[i]);
+                gameContainer.addChild(pegHoles[i]);
             }
             console.log(pegHoles);
 

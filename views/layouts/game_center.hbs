@@ -12,6 +12,8 @@
 <script>
 
 
+
+
   //(async () => {
 
 
@@ -25,15 +27,20 @@
 
 
   socket.on('current games', (gameList) => {
-    let gameDiv = document.createElement('div');
-    let playerCount = document.createElement('h2');
-    let gameStatus;
+    var currentGames = document.getElementById('current-games');
 
-    gameList.forEach(gameList)
+    gameList.forEach(game => {
 
+      let gameDiv = document.createElement('div');
+      let playerCount = document.createElement('h2');
+      playerCount.innerText = game.players;
+      let gameStatus = game.gameStatus;
 
+      gameDiv.appendChild(playerCount);
+      gameDiv.appendChild(gameStatus);
+      currentGames.appendChild(gameDiv);
 
-
+    });
 
   });
 
