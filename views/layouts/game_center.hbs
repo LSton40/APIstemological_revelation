@@ -1,6 +1,9 @@
 <header class="fades">
   <h1 class="header">game_center.hbs layout</h1>
 </header>
+<div id="current-games">
+
+</div>
 
 
 {{{body}}}
@@ -8,22 +11,39 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-  (async () => {
-    {{!-- /* calling in the username that was passed in view_routes */ --}}
-    const username = "{{username}}"
-    {{!-- /* joining the lobby room && carrying over the username & color */ --}}
-    socket.auth = { username };
-    var socket = io('/lobby', {query: `userColor=${userColor}`}); 
-    {{!-- /* maybe let user pick their or theme? */ --}}
+
+  //(async () => {
+
+
+
+  /* calling in the username that was passed in view_routes */
+  const username = "{{username}}"
+  /* joining the lobby room && carrying over the username & color */
+  socket.auth = { username };
+  var socket = io('/lobby', { query: `userColor=${userColor}` });
+  /* maybe let user pick their or theme? */
+
+
+  socket.on('current games', (gameList) => {
+    let gameDiv = document.createElement('div');
+    let playerCount = document.createElement('h2');
+    let gameStatus;
+
+    gameList.forEach()
 
 
 
 
-    // const myCookie = await cookieStore.get('connect.sid');
-    // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
-    socket.emit('cookie time', username);
 
-  })();
+  });
+
+  // const myCookie = await cookieStore.get('connect.sid');
+  // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
+  socket.emit('cookie time', username);
+
+
+
+  //})();
 
 
 
