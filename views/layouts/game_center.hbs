@@ -92,6 +92,37 @@
   createGameButtonEl = document.getElementById('createGame');
   createGameButtonEl.addEventListener('click', createGameSocket);
 
+
+
+
+
+
+
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
+  const queryGameSocket = async() => {
+    let name = 'epicGameName';
+    socket.emit('testQuery', name);
+    console.log('queried boii');
+  }
+  socket.on('logs', (data) => {
+    console.log(data);
+  })
+  queryGameButtonEl = document.getElementById('queryGame');
+  queryGameButtonEl.addEventListener('click', queryGameSocket);
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
+
+
+
+
+
+
+
+
+
   let joinGameFormEl = document.getElementById('joinForm');
   let joinGameInput = document.getElementById('roomCode');
 
