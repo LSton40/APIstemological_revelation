@@ -1,67 +1,44 @@
+/************
+ FUNCTIONS STILL TO CONSIDER
+************/
+
 /* Counters 
-    User's Starting counter array
-    User's home counter array
 
     Opponents' Starting counter arrays
     Opponents' Home counter arrays
-*/
 
+    Handled automatically through the sockets connection???
+    */
 
-const userTokens = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]
-const userTokensOnBoard = [];
+   //JOKER FUNCTION
 
-let userStart;
-const userHome = [];
-
-const cardSelect = document.querySelector('.selectedCard');
-const hCounter = document.querySelector('#hCounter');
-const sCounter = document.querySelector('#sCounter');
-const bCounter = document.querySelector('.basecounters')
-
-//Array of cards
-const cardArray = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-
-let playDeck;
-
-let cardsAtPlay;
-
-//discard pile array
-const discard = [];
+   
 
 
 
-function startCounter() {
 
-    for (let c in userHome) {
 
-        let basecounter = document.createElement('span');
-        basecounter.className = "basecounters"
-        basecounter.textContent = '|';
-        sCounter.appendChild(baseCounter);
-    };
-}
 
-function homeCounter() {
-
-    let hometokens = document.createElement('span');
-    hometokens.className = "homecounters"
-    hometokens.textContent = '|';
-    hCounter.appendChild(hometokens);
-
-    // for (let c in userHome) {
-
-    //     let hometokens = document.createElement('span');
-    //     hometokens.className = "homecounters"
-    //     hometokens.textContent = '|';
-    //     hCounter.appendChild(hometokens);
-
-    // }
-}
-
+/************************
+ FUNCTIONS TO FINISH
+************************/
 
 
 //assign values to "cards": spaces to play
 
+// 2) Highlight pieces and all possible moves (only for player)
+// 2a) function calculates all possible moves*/
+
+//     //Highlight pieces on board, add class 'myPieces'
+
+//     //Possible moves: 
+//     //location of 'myPieces' + value of 'selectedCard'
+//     //highlight all spaces from sum
+// }
+
+
+
+//Function that highlights the possible moves given the value of the card selection
 function iLikeToMoveItMoveIt(select) {
 
     switch(select) {
@@ -112,14 +89,114 @@ function iLikeToMoveItMoveIt(select) {
 
 
 
+
+
+
+
+//Highlights a given card on click, or removes highlighting on second click
+//When highlighted, also calls iLikeToMoveItMoveIt function to display possible moves from card selection
+function addSelectClass(event) {
+
+    if (event.target.classList.contains("selectedCard")) {
+        event.target.classList.remove("selectedCard")
+
+        //remove highlighting from pieces
+        //remove highlighting from target game spaces
+
+    } 
+    else {
+        event.target.classList.add("selectedCard")
+
+        console.log(JSON.stringify(event.target.textContent))
+        iLikeToMoveItMoveIt(JSON.stringify(event.target.textContent));
+    }
+          
+    
+}
+
+
+
+
+/********************************************************************************************************************* */
+
+
+
+
+
+
+
+
+
+
+   
+const cardSelect = document.querySelector('.selectedCard');
+const hCounter = document.querySelector('#hCounter');
+const sCounter = document.querySelector('#sCounter');
+const bCounter = document.querySelectorAll('.basecounters');
 const hand = document.querySelector('#me_player');
+const card1 = document.querySelector('#card0');
+const card2 = document.querySelector('#card1');
+const card3 = document.querySelector('#card2');
+const card4 = document.querySelector('#card3');
+const card5 = document.querySelector('#card4');
+const card6 = document.querySelector('#card5');
+
+const cards = document.querySelectorAll('.cards');
+
+
+
+//Array of userTokens within the Starting Area
+const userTokens = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]
+
+//Array of userTokens currently in play on the board
+const userTokensOnBoard = [];
+
+//Array of userTokens that have reached home base
+const userHome = [];
+
+
+//Base Array of all cards
+const cardArray = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+//Variable for the Shuffled Deck
+let playDeck;
+
+//Deck Discard pile array
+const discard = [];
+
+//Variable for the user's current hand of cards
 let userHand;
 
-//Deck generation function
-function gameStart(cardArray) {
+/********************
+Token Ticker Counters
+**********************/
 
-    // playDeck = cardArray.map(Math.floor(Math.random() * cardArray.length))
-    
+//Displays number of tokens in starting area at beginning of game
+function startCounter() {
+
+    for (let c in userTokens) {
+        let basecounter = document.createElement('span');
+        basecounter.className = "basecounters"
+        basecounter.textContent = '|';
+        sCounter.appendChild(basecounter);
+    };
+}
+
+//Displays number of tokens that have reached home base
+function homeCounter() {
+
+    let hometokens = document.createElement('span');
+    hometokens.className = "homecounters"
+    hometokens.textContent = '|';
+    hCounter.appendChild(hometokens);
+}
+
+
+
+
+
+//Starts game: shuffles cards, pushes into playDeck, then passes to the dealCards function
+function gameStart(cardArray) {
 
     for (let i = cardArray.length -1; i > 0; i--) {
         let j = Math.floor(Math.random() * i);
@@ -130,12 +207,12 @@ function gameStart(cardArray) {
         
     playDeck = cardArray.map(value => value);
 
-    console.log(playDeck);
-
     dealCards();
 }
 
-    //function to populate player's hand at start
+//Populates all players' hands from shuffled playDeck and equates the userHand with their player id
+//Calls the counter for the tokens in the start area
+//Calls the dealMeIn function
 function dealCards() {
     
     let player1Hand;
@@ -166,28 +243,26 @@ function dealCards() {
         
 }
     
-    // let userHand = [8,'Q',5,9,3]
+    
+//Displays the player's hand in the HTML
+function dealMeIn(myHand) {
+    
+    for (let c in myHand) {
+        
+        let handCard = document.createElement('div');
+        handCard.id = `card${c}`;
+        handCard.className = "cards"
+        handCard.textContent = myHand[c];
+        hand.appendChild(handCard);
+    }
 
-    function dealMeIn(myHand) {
-           
-            for (let c in myHand) {
-                
-                let handCard = document.createElement('div');
-                handCard.id = `card${c}`;
-                handCard.className = "cards"
-                handCard.textContent = myHand[c];
-                hand.appendChild(handCard);
-            }
-
-            // drawCard();
-        };
+};
 
 
 
  
 
-        //function to draw 6th card on turn
-        
+//On player's turn, draws a card and displays it in the HTML
 function drawCard() {
     
     let drawCard = userHand.push(playDeck.splice(0, 1));
@@ -201,87 +276,61 @@ function drawCard() {
 
 
 
-
-
-
-
-
-gameStart(cardArray);
-
-
-
-//JOKER FUNCTION
-
-
-
-
-
-const card1 = document.querySelector('#card0');
-const card2 = document.querySelector('#card1');
-const card3 = document.querySelector('#card2');
-const card4 = document.querySelector('#card3');
-const card5 = document.querySelector('#card4');
-const card6 = document.querySelector('#card5');
-
-const cards = document.querySelectorAll('.cards');
-
-
-
-/*play function
-1) Select card, highlights*/
-
-function addSelectClass(event) {
-
-    if (event.target.classList.contains("selectedCard")) {
-        // event.target.classList.remove("selectedCard")
-
-        //remove highlighting from pieces
-        //remove highlighting from target game spaces
-
-    } 
-    else {
-        event.target.classList.add("selectedCard")
-
-        // console.log(JSON.stringify(event.target.textContent))
-        // iLikeToMoveItMoveIt(JSON.stringify(event.target.textContent));
-    }
-      
-
-
-    
-    
-}
-
-
+//Removes token from userTokens when a piece moves out of start position
+//Also removes counter from header
 function comeOut() {
 
     const emergePiece = userTokens.splice(0, 1);
     const token = emergePiece.find(el => el);
     userTokensOnBoard.push(token);
 
-
-    //Modify to remove only one
-    bcounter.remove();
-
-
-    console.log(emergePiece);
-    console.log(userTokens);
-    console.log(userTokensOnBoard);
-
+    bCounter[0].remove();
 }
 
-comeOut();
+//Removes the played card to the discard pile upon piece click
+//Reassigns ids of remaining cards in hand
+function discardDatCard() {
+    
+    const discardCard = userHand.find(cardSelect.textContent);
+    discard.push(discardCard);
+    
+    cardPlayed(discardCard)
+
+    cardSelect.remove();
+    
+    for (let c in cards) {
+        cards[c].id = `card${c}`;
+    }
+}
+
+//Displays the played card to the header for a few seconds
+function cardPlayed(showAll) {
+    
+    const playPlayer = document.querySelector('#player1');
+    const playCard = document.createElement('div');
+    playCard.textContent = showAll;
+    playPlayer.appendChild(playCard);
+    
+    setTimeout(() => {
+        playCard.remove();
+    }, 5000)
+    
+}
 
 
+//Removes token from the userTokensOnBoard array when it reaches Home base
+//Adds calls homeCounter function to add home counter to header
 function goHome() {
 
     const exitPiece = userTokensOnBoard.splice(0, 1);
     const byeToken = exitPiece.find(el => el);
     userHome.push(byeToken);
 
+    homeCounter();
 }
 
 
+//If all of the user's pieces enter home base, the game ends
 function winCondition() {
 
     if (userHome.length = 5) {
@@ -290,21 +339,8 @@ function winCondition() {
 }
 
 
-
-//Remove selected card at end of turn
-
-function discardDatCard() {
-
-    const discardCard = userHand.find(cardSelect.textContent);
-    discard.push(discardCard);
-
-    cardSelect.remove();
-
-    for (let c in cards) {
-        cards[c].id = `card${c}`;
-    }
-}
-
+//Starts game on page load
+gameStart(cardArray);
 
 
 card1.addEventListener('click', addSelectClass)
@@ -317,41 +353,10 @@ card6.addEventListener('click', addSelectClass)
 
 // for (let i = 0; i < userHand.length; i++) {
 //     if (userHand[i] = ) {
-//         //send to discard deck if selected 
+    //         //send to discard deck if selected 
 //     }
 // }
 
-
-
-
-
-
-/* Move token from home*/
-
-
-
-
-
-
-
-
-
-/*
-    2) Highlight pieces and all possible moves (only for player)
-        2a) function calculates all possible moves*/
-
-// function possibleMoves() {
-
-//     userTokensOnBoard.forEach()
-//     //Highlight pieces on board, add class 'myPieces'
-
-//     //Possible moves: 
-//     //location of 'myPieces' + value of 'selectedCard'
-//     //highlight all spaces from sum
-// }
-
-
-// const selection = document.querySelector
 
 
 
@@ -361,17 +366,13 @@ card6.addEventListener('click', addSelectClass)
     3b) piece and space highlighting disappears */
 
 
-
 /*
-    3c) card displayed in header
-    3d) card goes to discard pile
-    3e) cards in hand reshuffle
-    //function to remove selected card from hand and add selected card to array
-    //shifts remaining 5 cards in hand
+
+
 
 
     4) turn ends
-    5) 3rd party API triggers: show random fact
+
 
 */
 
