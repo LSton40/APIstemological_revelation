@@ -404,7 +404,7 @@ auth.on('connection', (socket) => {
     //disconnect user and connect new user
 
     socket.disconnect();
-    
+
   });
 
 
@@ -447,9 +447,9 @@ lobby.on('connection', async (socket) => {
         socket.emit('current games', filteredGames);
       }
     }
-  
-      socket.emit('errors', 'no games');
-    
+
+    socket.emit('errors', 'no games');
+
   }
 
 
@@ -517,6 +517,9 @@ lobby.on('connection', async (socket) => {
   socket.on('createGame', async (gameID) => {
     /* board exists ? created = false : created = true && return newGame */
     let currUser = socket.handshake.query['username'] || null;
+
+
+
 
     /* TEST DATA */
     let testGameID = 'epicGameName';
@@ -636,6 +639,7 @@ lobby.on('connection', async (socket) => {
 
     //   socket.emit('redirect', '/lobby');
 
+    socket.emit('redirect', '/lobby');
 
 
     // } else {
@@ -673,6 +677,10 @@ lobby.on('connection', async (socket) => {
     // socket.socket.reconnect();
     socket.disconnect();
   });
+
+
+
+
 });
 
 //sync db then start server

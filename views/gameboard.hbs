@@ -11,9 +11,9 @@
 
 
     <script src="https://pixijs.download/release/pixi.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
     <script>
-
+        //const filters = new PIXI.filters;
         let app;
         const NORMAL = 0xFFFFFF;
         const OVER = 0x00FF00;
@@ -43,9 +43,9 @@
         let playerTwoLocations = [7];
         let playerThreeLocations = [41, 17, 3];
         let playerFourLocations = [6, 31];
+        let outlineFilter;
         //when the start button is presses put all clientside information in local storage
         localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
-
         window.onload = function () {
             app = new PIXI.Application({
                 width: window.innerWidth,
@@ -53,6 +53,12 @@
                 backgroundColor: 0xAAAAAA
 
             });
+            console.log('test');
+            const outlineFilter = new PIXI.filters.OutlineFilter();
+            console.log(outlineFilter);
+            //console.log(PIXI.filters);
+            //  const outlineFilterBlue = new PIXI.filters.OutlineFilter(2, 0x99ff99);
+            //const outlineFilterRed = new PIXI.filters.GlowFilter(15, 2, 1, 0xff9999, 0.5);
             document.querySelector('#gameDiv').appendChild(app.view);
             gameContainer = new PIXI.Container();
             app.stage.addChild(gameContainer);
@@ -171,22 +177,35 @@
         function gameLoop(delta) { }
 
 
+        function filterOn() {
+            this.filters = [outlineFilterRed];
+        }
+
+        function filterOff() {
+            this.filters = [outlineFilterBlue];
+        }
+
         function PegHole(x, y, radius, color, name) {
             let circle = new PIXI.Graphics();
             circle.beginFill(NORMAL);
             circle.drawCircle(x, y, radius, radius);
             circle.endFill();
             let type = 'peghole';
-
+            //console.log(circle.filters);
             circle.interactive = true;
             circle.buttonMode = true;
+            //console.log(outlineFilter);
+            //moves.filterOn();
+            //circle.on('pointerdown', filterOn);
+            //circle.filters = [];
+
 
             // circle.on("pointerup", doPointerUp);
             circle.on("pointerdown", doPointerDown);
             //circle.on("pointerover", doPointerOver);
             //circle.on("pointerout", doPointerOut);
             //circle.on("pointerupoutside", doPointerUpOutside);
-
+            //circle.filters = [new OutlineFilter(2, 0x99ff99)]
             let canMove = false;
 
             circle.name = name;
@@ -231,6 +250,8 @@
                 console.log(playerOneLocations);
 
                 console.log(localStorage.getItem('playerOneLocations'));
+                // this.filters.push(outlineFilter);
+
             }
             console.log("pointer down");
             pointerIsDown = true;
@@ -265,7 +286,7 @@
 
         // When player clicks on card it shows the possible moves they can do
         function showPossibleMoves() {
-            
+
 
             for (i = 0; i < playerOneLocations.length; i++) {
                 let moveLocations = playerOneLocations[i] + cardValue;
@@ -273,16 +294,16 @@
 
                 //If next move i > 71, it will go to the beginning of the array before counting
                 if(moveLocations > 71) {
+
                     moveLocations = moveLocations - 72;
-                    
+
                 }
 
-                 
                 moves = pegHoles[moveLocations];
                 moves.canMove = true;
                 moves.tint = '0xffff00';
             }
-            
+      
             //Allow player to deploy unused peg
             if(playerOneLocations.length < 5){
                 let newPeg = pegHoles[39 + cardValue];
@@ -290,6 +311,7 @@
                 playerOneLocations.push(newPeg.name);
                 console.log(playerOneLocations);
                 }
+
         }
 
 
