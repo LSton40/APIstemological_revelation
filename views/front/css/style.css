@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    /* box-sizing: border-box; */
 }
 
 /*Global */
@@ -11,52 +10,44 @@ html, body {
     display: grid;
 }
 
-body {
+body, .button {
     background: linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10));
 }
 
-#opening {
-    background: black;
-    animation-name: fadeOut;
-    animation-delay: 8.5s;
-    animation-duration: 1.5s;
-    transition-timing-function: linear;
+a, .button {
+    color: rgb(209, 206, 206);
 }
 
 a {
-    color: rgb(209, 206, 206);
     text-decoration: none;
 }
 
-a:active {
+a:active, a:hover {
     color: gray;
 }
 
 a:hover {
-    color: gray;
     background: rgb(60, 9, 10);
+}
+
+h2, h3 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: auto;
+    text-shadow: 5px 10px 8px black;
 }
 
 h2 {
     font-size: 3vw;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin: auto;
     padding: 20px;
-    text-shadow: 5px 10px 8px black;
 }
 
 h3 {
     font-size: 1.5vw;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin: auto;
-    text-shadow: 5px 10px 8px black;
 }
 
 .button {
     margin: 20px;
     padding: 30px 100px;
-    background: linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10));;
-    color: rgb(209, 206, 206);
     font-size: CALC(1.5vw + 12px);
     border-radius: 25px;
     box-shadow: 5px 10px 8px black;
@@ -67,6 +58,14 @@ h3 {
     background: rgb(60, 9, 10);
 }
 
+/* Index page load animation */
+#opening {
+    background: black;
+    animation-name: fadeOut;
+    animation-delay: 8.5s;
+    animation-duration: 1.5s;
+    transition-timing-function: linear;
+}
 
 /*Header tag for Register, Login, Foyer, Lobby*/
 .fades {
@@ -91,7 +90,6 @@ h3 {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: rgb(209, 206, 206);
 }
 
 
@@ -116,13 +114,6 @@ h3 {
     /* justify-content: stretch; */
 }
 
-
-#whiskey {
-    align-self: center;
-    border-radius: 10px;
-    box-shadow: 0 0 5px 10px rgb(28, 1, 1);
-    z-index: -1;
-}
 
 /*Text directions plus buttons and form fields: Register, Login, Foyer, Lobby*/
 .choices {
@@ -202,14 +193,6 @@ li {
 
 
 
-
-
-
-
-
-
-
-
 /*Index page opening teaser*/
 p#tease {
     color: #49acf4;
@@ -243,7 +226,6 @@ p#tease {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: rgb(209, 206, 206);
     height: 15vh;
     width: 100vw;
     justify-content: center;
@@ -287,20 +269,6 @@ p#tease {
 
 
 
-/*Gameboard header and title*/
-.gb-header {
-    height: 5vh;
-}
-
-.gb-title {
-    font-size: 3vw;
-    font-family: 'Mouse Memoirs', sans-serif;
-    margin: auto;
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-}
-
 /*Gameboard section*/
 #game-display {
     display: grid;
@@ -308,9 +276,8 @@ p#tease {
     /* padding: 2vh; */
 }
 
+
 /*Player areas*/
-
-
 /*Player along top of screen*/
 #top_player {
     grid-column: 1 / 11;
@@ -330,7 +297,6 @@ p#tease {
     border-radius: 50px;
     display: grid;
     justify-content:center;
-    /* margin-left: 6vw; */
     box-shadow: 5px 10px 15px rgb(119, 89, 89);
     color: black;
     font-size: 1.5vw;
