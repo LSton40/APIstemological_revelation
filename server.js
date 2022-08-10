@@ -454,7 +454,9 @@ lobby.on('connection', async (socket) => {
       }
     }
 
-    socket.emit('errors', 'no games');
+    socket.emit('errors', {
+      error: 'No games currently found'
+    });
 
   }
 
@@ -671,10 +673,12 @@ lobby.on('connection', async (socket) => {
   socket.on('testQuery', async (gameID) => {
     // playGame.getGameData(gameID);
     // console.log(await playGame.getGameData(gameID));
-    playGame.initDealCards(gameID);
-    console.log(await playGame.initDealCards(gameID));
+    // playGame.initDealCards(gameID);
+    // console.log(await playGame.initDealCards(gameID));
 
-    socket.emit('redirect', '/lobby');
+    socket.emit('errors', {
+      error: 'this is the best error message'
+    });
   });
   /* ************* */
   /* GUNGUNTESTING */
