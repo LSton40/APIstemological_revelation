@@ -1,14 +1,37 @@
 const GameBoard = require('../models/GameBoard.model');
 const drawPile = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-const gameRoomPinger = async() => { await GameBoard.findOne({ where: { gameID: gameID } })}
+const gameRoomPinger = async(gameID) => { await GameBoard.findOne({ where: { gameID: gameID } })}
 
 module.exports = {
+  gameMaker: async(GameData) => {
+    newGameRoom = GameBoard.findOrCreate({ 
+      where: {
+        gameID: GameData.gameID,
+    }, 
+      defaults: {
+        gameCreator: GameData.gameCreator,
+        gameStatus: GameData.gameStatus,
+        gamePlayers: GameData.gamePlayers,
+        gameTurn: GameData.gameTurn
+    }});
+
+    // if it is there, it just overwrites the one found
+    newGameRoom.update({
+      gameID: GameData.gameID,
+      gameCreator: GameData.gameCreator,
+      gameStatus: GameData.gameStatus,
+      gamePlayers: GameData.gamePlayers,
+      gameTurn: GameData.gameTurn
+    });
+
+    return newGameRoom;
+  },
   getGameData: async(gameID) => {
-    const gameRoom = gameRoomPinger();
+    const gameRoom = gameRoomPinger(gameID);
     return gameRoom
   },
   initDealCards: async(gameID) => {
-    const gameRoom = gameRoomPinger();
+    const gameRoom = gameRoomPinger(gameID);
 
     // ref array for easier
     gamePlayers = gameRoom.gamePlayers;
@@ -117,27 +140,8 @@ module.exports = {
 
     return updatedGameRoom;
   },
-  getAllPegs: (gameID) => {
-    const gameRoom = gameRoomPinger(gameID);
-
-    let pegList = [];
-    // first looping through all the players
-    for (let i = 0; i < gameRoom.gamePlayers.length; i++) {
-      // for each player, loop through all the pegs
-      for (let j = 0; j < gameRoom.gamePlayer[i].pegs.length; j++) {
-        pegList.push({ // push each peg data to the peg array for easy rendering
-          userID: gameRoom.gamePlayer[i].pegs[j].pegID,
-          pegLoc: gameRoom.gamePlayer[i].pegs[j].pegLocation,
-          atSpawn: gameRoom.gamePlayer[i].pegs[j].isAtSpawn,
-          inFinish: gameRoom.gamePlayer[i].pegs[j].isInFinish,
-          pegColor: gameRoom.gamePlayers[i].userColor
-        });
-      }
-    }
-    return pegList;
-  },
   dealCard: (gameID, player, cardPlayed) => {
-    const gameRoom = gameRoomPinger();
+    const gameRoom = gameRoomPinger(gameID);
     let gamePlayers = gameRoom.gamePlayers;
 
 
@@ -170,6 +174,52 @@ module.exports = {
     });
 
     return updatedGameRoom;
+  },
+  getAllPegs: (gameID) => {
+    const gameRoom = gameRoomPinger(gameID);
+
+    let pegList = [];
+    // first looping through all the players
+    for (let i = 0; i < gameRoom.gamePlayers.length; i++) {
+      // for each player, loop through all the pegs
+      for (let j = 0; j < gameRoom.gamePlayer[i].pegs.length; j++) {
+        pegList.push({ // push each peg data to the peg array for easy rendering
+          userID: gameRoom.gamePlayer[i].pegs[j].pegID,
+          pegLoc: gameRoom.gamePlayer[i].pegs[j].pegLocation,
+          atSpawn: gameRoom.gamePlayer[i].pegs[j].isAtSpawn,
+          inFinish: gameRoom.gamePlayer[i].pegs[j].isInFinish,
+          pegColor: gameRoom.gamePlayers[i].userColor
+        });
+      }
+    }
+    return pegList;
+  },
+  getPlayerData: async(gameID) => {
+    const gameRoom = gameRoomPinger(gameID);
+
+    gamePlayers = gameRoom.gamePlayers;
+    let playerData = [];
+    
+
+    for (let i = 0; i < gamePlayers.length; i++) {
+      let pegsAtSpawn = 0;
+      let pegsInFinish = 0;
+      for (let j = 0; j < gamePlayers[i].pegs.length; j++) {
+        gamePlayers[i].pegs[j].isAtSpawn ? pegsAtSpawn++ : false;
+        gamePlayers[i].pegs[j].isInFinish ? pegsInFinish++ : false;
+      }
+      playerData.push({
+        username: gamePlayers[i].username,
+        userColor: gamePlayers[i].userColor,
+        pegsAtSpawn: pegsAtSpawn,
+        pegsInFinish: pegsInFinish
+      })
+    }
+
+    return playerData;
+  },
+  checkIfWin: async(gameID) => {
+
   }
 }
 
