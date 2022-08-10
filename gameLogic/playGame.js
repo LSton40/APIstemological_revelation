@@ -38,32 +38,26 @@ module.exports = {
 
     return updatedGameRoom.gamePlayers;
   },
-  movePeg: async(gameID, player, pegID, pegLoc) => {
+  movePeg: async(gameID, player, pegID, pegLoc) => { // FIXME
     const gamePlayers = gameRoomPinger().gamePlayers;
 
-    for (let i = 0; i < gamePlayers.length; i++) {
-      for (let j = 0; j < gamePlayers[i].pegs.length; j++) {
-        if ( gamePlayers[i].pegs[j].pegID == pegID ) {
-
-        }
-      }
-    }
-
+    // first iterates through all players and pegs to 
     for (let i = 0; i < gamePlayers.length; i++) {
       for (let j = 0; j < gamePlayers[i].pegs.length; j++) {
         if ( gamePlayers[i].pegs[j].pegLocation == pegLoc) {
           return { error: `Peg location occupied by peg with ID: ${gamePlayers[i].pegs[j].pegID}`};
         } else {
-          gamePlayers[i]
+          for (let i = 0; i < gamePlayers.length; i++) {
+            for (let j = 0; j < gamePlayers[i].pegs.length; j++) {
+              if ( gamePlayers[i].pegs[j].pegID == pegID ) {
+                gamePlayers[i].pegs[j].pegLocation = pegLoc;
+              }
+            }
+          }
         }
       }
       
     }
-
-
-
-
-
 
 
 
