@@ -429,6 +429,8 @@ const lobby = io.of('/lobby');
 // lobby connection func
 lobby.on('connection', async (socket) => {
 
+  let playerArray = [];
+
   let i = 1;
   console.log(i++);
   //const destination = '/index.html';
@@ -492,36 +494,18 @@ lobby.on('connection', async (socket) => {
   /* join game socket listener */
   /* ************************* */
   socket.on('joinRequest', async (userData) => {
-    // finding game with gameID
-    console.log('clicked2')
-    console.log(userData);
-    //gameID
-    console.log('caught join game call');
-    const gameRoom = await GameBoard.findOne({ where: { gameID: userData.username } });
 
-    console.log(`gameRoom: ${gameRoom}`);
-
-    if (gameRoom) {
-      // grabbing gamePlayers from the game
-      let roomPlayers = gameRoom.gamePlayers || [];
-
-      //if the gameRoom exists, then add the socket user to the gameID room
-      socket.join('userData.username');
-      console.log(`${currUser} has joined the game of ${userData.username}`);
-
-      // pushing user to gamePlayers
-      roomPlayers.push({
-        username: currUser,
-        userColor: currUserColor
-      });
-
-      // setting the gamePlayers array after updating
-      gameRoom.gamePlayers = roomPlayers;
-
-      // updating the gamePlayers array in the database
-      await gameRoom.update({ gamePlayers: roomPlayers });
+    playerArray.push({
+      username: userData.username,
+      userColor: userData.userColor
+    });
 
 
+
+
+
+    if (playerArray.length == 4) {
+      socket.emit('enoughLength', playerArray);
 
     } else {
       // emitting any errors that occur
@@ -529,6 +513,50 @@ lobby.on('connection', async (socket) => {
         error: 'Error joining room - please try agian!'
       });
     }
+    
+
+
+
+    
+    // // finding game with gameID
+    // console.log('clicked2')
+    // console.log(userData);
+    // //gameID
+    // console.log('caught join game call');
+    // const gameRoom = await GameBoard.findOne({ where: { gameID: userData.username } });
+
+    // console.log(`gameRoom: ${gameRoom}`);
+
+
+
+
+
+    // if (gameRoom) {
+    //   // grabbing gamePlayers from the game
+    //   let roomPlayers = gameRoom.gamePlayers || [];
+
+    //   auth.use((socket, next) => {
+    //     // auth user
+    //     next();
+        
+    //   })
+
+    //   //if the gameRoom exists, then add the socket user to the gameID room
+    //   socket.join('userData.username');
+    //   console.log(`${currUser} has joined the game of ${userData.username}`);
+
+    //   // pushing user to gamePlayers
+    //   roomPlayers.push({
+    //     username: currUser,
+    //     userColor: currUserColor
+    //   });
+
+    //   // setting the gamePlayers array after updating
+    //   gameRoom.gamePlayers = roomPlayers;
+
+    //   // updating the gamePlayers array in the database
+    //   await gameRoom.update({ gamePlayers: roomPlayers });
+   
   });
 
 
@@ -540,10 +568,21 @@ lobby.on('connection', async (socket) => {
     /* board exists ? created = false : created = true && return newGame */
     console.log(userData);
     let currUser = userData.username || null;
+    let currUserColor = userData.userColor || '0xF78DA7';
+    
+    playerArray.push({
+      username: currUser,
+      userColor: currUserColor
+    });
     
     gameLister();
-
-    socket.join(currUser);
+    if (currUser) {
+      socket.join(currUser);
+    } else {
+      socket.emit('errors', {
+        error: 'Error creating room - please try agian!'
+      });
+    }
     // console.log(socket);
 
     socket.emit('logs', {
