@@ -57,7 +57,7 @@ module.exports = {
     // if the peg is in the finish location of any of the players
     switch (playerI) {
       case 0:
-      if (pegLoc >= 72 && pegLoc <= 76) {
+      if (pegLoc >= 72) {
         gamePlayers[playerI].pegs[pegI].pegLocation = null;
         gamePlayers[playerI].pegs[pegI].isInFinish = true;
       } else if (gamePlayers[playerI].pegs[pegI].isAtSpawn) {
@@ -66,7 +66,7 @@ module.exports = {
       }
         break;
       case 1:
-      if (pegLoc >= 77 && pegLoc <= 81) {
+      if (pegLoc >= 77) {
         gamePlayers[playerI].pegs[pegI].pegLocation = null;
         gamePlayers[playerI].pegs[pegI].isInFinish = true;
       } else if (gamePlayers[playerI].pegs[pegI].isAtSpawn) {
@@ -75,7 +75,7 @@ module.exports = {
       }
         break;
       case 2:
-      if (pegLoc >= 82 && pegLoc <= 86) {
+      if (pegLoc >= 82) {
         gamePlayers[playerI].pegs[pegI].pegLocation = null;
         gamePlayers[playerI].pegs[pegI].isInFinish = true;
       } else if (gamePlayers[playerI].pegs[pegI].isAtSpawn) {
@@ -84,7 +84,7 @@ module.exports = {
       }
         break;
       case 3:
-      if (pegLoc >= 87 && pegLoc <= 91) {
+      if (pegLoc >= 87) {
         gamePlayers[playerI].pegs[pegI].pegLocation = null;
         gamePlayers[playerI].pegs[pegI].isInFinish = true;
       } else if (gamePlayers[playerI].pegs[pegI].isAtSpawn) {
