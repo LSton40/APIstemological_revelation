@@ -1,15 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<div id="gameDiv"></div>
-
-<button id="card-btn">7</button>
-
 <body>
+    <main id="game-display">
+        <section id="top_player" class="player">
+            <div id="player1" class="player-1 players thisPlayer">
+                <p class="user">Chippy</p>
+                <div class="numHere"></div>
+                <div class="counters">
+                    <div id="sCounter" class="sCounters">Start:</div>
+                    <div id="hCounter" class="hCounters">Home:</div>
+                </div>
+            </div>
+
+            <div id="player2" class="player-2 players">
+                <p class="user">Vladivastok</p>
+                <div class="numHere"></div>
+                <div class="counters">
+                    <div id="sCounter2" class="sCounters">Start:</div>
+                    <div id="hCounter2" class="hCounters">Home:</div>
+                </div>
+            </div>
+
+            <div id="player3" class="player-3 players">
+                <p class="user">Dufus69</p>
+                <div class="numHere"></div>
+                <div class="counters">
+                    <div id="sCounter3" class="sCounters">Start:</div>
+                    <div id="hCounter3" class="hCounters">Home:</div>
+                </div>
+            </div>
+
+            <div id="player4" class="player-4 players">
+                <p class="user">straightEdge420</p>
+                <div class="numHere"></div>
+                <div class="counters">
+                    <div id="sCounter4" class="sCounters">Start:</div>
+                    <div id="hCounter4" class="hCounters">Home:</div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="left_player" class="player"></section>
+
+        <section id="gameboard-canvas">
+            <div id="gameDiv"></div>
+
+            {{! Temporary Button}}
+        </section>
+
+        <section id="right_player" class="player"></section>
+
+        <section id="me_player" class="player"></section>
+
+
+
+    </main>
+
+
+
+
 
     <script src="https://pixijs.download/release/pixi.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
+    {{!--
+    <script src="../views/front/js/board.js"></script> --}}
     <script>
+
+
+
         let app;
         const NORMAL = 0xFFFFFF;
         const OVER = 0x00FF00;
@@ -18,6 +75,7 @@
         const blue = 0x0000FF;
         const green = 0x008000;
         const black = 0x000000;
+        const yellow = 0xffff00;
         const RECT_W = 100;
         const RECT_H = 100;
         let offsetX = 650;
@@ -31,22 +89,24 @@
         let startingY = 0;
         let radius = 15;
         let posTracker = 0;
-        const cardBtn = document.querySelector('#card-btn');
+        //const cardBtn = document.querySelector('#card-btn');
         let gameContainer;
-        const cardValue = 7;
+        let cardValue;
         const playerLocation = 2 + 1;
-        let playerOneLocations = [4, 25, 52, 64];
+        let playerOneLocations = [];
         let playerTwoLocations = [7];
         let playerThreeLocations = [41, 17, 3];
         let playerFourLocations = [6, 31];
 
-        //when the start button is presses put all clientside information in local storage
-        localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
+        let p1StartPosition =
+
+            //when the start button is presses put all clientside information in local storage
+            localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
         window.onload = function () {
             app = new PIXI.Application({
                 width: window.innerWidth,
                 height: window.innerHeight / 1.5,
-                backgroundColor: 0xAAAAAA
+                backgroundColor: 0x2b1515
 
             });
 
@@ -183,11 +243,66 @@
             return circle;
         }
 
+        //Function that highlights the possible moves given the value of the card selection
+        function iLikeToMoveItMoveIt(select) {
+
+            switch (select) {
+                case "A":
+                    cardValue = 1
+                    return showPossibleMoves(cardValue);
+                case "2":
+                    cardValue = 2
+                    return showPossibleMoves(cardValue);
+                case "3":
+                    cardValue = 3
+                    return showPossibleMoves(cardValue);
+                case "4":
+                    cardValue = 4
+                    return showPossibleMoves(cardValue);
+                case "5":
+                    cardValue = 5
+                    return showPossibleMoves(cardValue);
+                case "6":
+                    cardValue = 6
+                    return showPossibleMoves(cardValue);
+                case "7":
+                    cardValue = 7
+                    return showPossibleMoves(cardValue);
+                case "8":
+                    cardValue = 8
+                    return showPossibleMoves(cardValue);
+                case "9":
+                    cardValue = 9
+                    return showPossibleMoves(cardValue);
+                default:
+                    cardValue = 10
+                    return showPossibleMoves(cardValue);
+            }
+        }
+
+
         function doPointerDown() {
             console.log(`type: ${this.type}`);
             console.log(`type: ${this.canMove}`);
             console.log(`this output ${this}`);
             console.log(`name ${this.name}`);
+
+            //This lets the user to use new peg
+            if (playerOneLocations.length < 5) {
+
+                if (this.name === pegHoles[39 + cardValue].name) {
+
+                    pegHoles[39 + cardValue].tint = red;
+
+                    playerOneLocations.push(pegHoles[39 + cardValue].name)
+
+                    clearYellowSpaces();
+                }
+
+                console.log(playerOneLocations);
+            };
+
+            //This lets the user move a peg to a new spot
             if (this.canMove === true) {
                 this.tint = red;
 
@@ -205,10 +320,43 @@
                 playerOneLocations[playerOneLocations.indexOf(originalLoc)] = this.name;
                 pegHoles[pegLoc].tint = NORMAL;
 
+
+                let newPositions = playerOneLocations.map((pos) => { return pos + cardValue });
+                //let blob = newPositions.splice(playerOneLocations.indexOf(originalLoc + cardValue), 1)
+
+                //.splice(playerOneLocations.indexOf(originalLoc), 1)
+                console.log(playerOneLocations);
+                console.log(newPositions);
+
+                clearYellowSpaces();
+
+
+                for (let i = 0; i < newPositions.length; i++) {
+                    console.log(pegHoles[i])
+
+                    if (newPositions[i] > 71) {
+
+                        newPositions[i] = newPositions[i] - 72;
+
+                    };
+
+                    pegHoles[newPositions[i]].tint = NORMAL;
+
+                };
+
+
+
+
+
+                discardDatCard();
+                //newPositions.forEach((pos) => {return pos.tint = NORMAL});
+
                 console.log(localStorage.getItem('playerOneLocations'));
 
             };
             pointerIsDown = true;
+
+
         };
 
         //This generates the player pieces using piece location
@@ -248,14 +396,15 @@
 
                 moves = pegHoles[moveLocations];
                 moves.canMove = true;
-                moves.tint = '0xffff00';
+                moves.tint = yellow;
             };
 
             //Allow player to deploy unused peg
             if (playerOneLocations.length < 5) {
 
 
-                pegHoles[39 + cardValue].tint = '0xffff00';
+
+                pegHoles[39 + cardValue].tint = yellow;
 
                 //We'll need to add this to the array if they click it    
                 //playerOneLocations.push(pegHoles[39 + cardValue].name);
@@ -264,10 +413,289 @@
             };
         };
 
-        cardBtn.addEventListener('click', showPossibleMoves);
+        function clearYellowSpaces () {
+            for (let i = 0; i < pegHoles.length; i++) {
+
+                        if (pegHoles[i].tint === yellow) {
+                            pegHoles[i].tint = NORMAL;
+                        };
+                    };
+        };
+
+        //cardBtn.addEventListener('click', showPossibleMoves); --}}
+
+
+
+
+        const hCounter = document.querySelector('#hCounter');
+        const sCounter = document.querySelector('#sCounter');
+        const bCounter = document.querySelectorAll('.basecounters');
+        const hand = document.querySelector('#me_player');
+
+
+
+
+
+        //Array of userTokens within the Starting Area
+        const userTokens = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]
+
+        //Array of userTokens currently in play on the board
+        const userTokensOnBoard = [];
+
+        //Array of userTokens that have reached home base
+        const userHome = [];
+
+
+        //Base Array of all cards
+        const cardArray = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+        //Variable for the Shuffled Deck
+        let playDeck;
+
+        //Deck Discard pile array
+        const discard = [];
+
+        //Variable for the user's current hand of cards
+        let userHand;
+
+        /********************
+        Token Ticker Counters
+        **********************/
+
+        //Displays number of tokens in starting area at beginning of game
+        function startCounter() {
+
+            for (let c in userTokens) {
+                let basecounter = document.createElement('span');
+                basecounter.className = "basecounters"
+                basecounter.textContent = '|';
+                sCounter.appendChild(basecounter);
+            };
+        };
+
+        //Displays number of tokens that have reached home base
+        function homeCounter() {
+
+            let hometokens = document.createElement('span');
+            hometokens.className = "homecounters"
+            hometokens.textContent = '|';
+            hCounter.appendChild(hometokens);
+        };
+
+
+
+
+
+        //Starts game: shuffles cards, pushes into playDeck, then passes to the dealCards function
+        function gameStart(cardArray) {
+
+            for (let i = cardArray.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * i);
+                let k = cardArray[i]
+                cardArray[i] = cardArray[j]
+                cardArray[j] = k;
+            }
+
+            playDeck = cardArray.map(value => value);
+
+            dealCards();
+        };
+
+        //Populates all players' hands from shuffled playDeck and equates the userHand with their player id
+        //Calls the counter for the tokens in the start area
+        //Calls the dealMeIn function
+        function dealCards() {
+
+
+            let player1Hand;
+            let player2Hand;
+            let player3Hand;
+            let player4Hand;
+
+            player1Hand = playDeck.splice(0, 5);
+
+            player2Hand = playDeck.splice(0, 5);
+
+            player3Hand = playDeck.splice(0, 5);
+
+            player4Hand = playDeck.splice(0, 5);
+
+            console.log(player1Hand);
+            console.log(player2Hand);
+            console.log(player3Hand);
+            console.log(player4Hand);
+
+
+            //Switch statement to equate userHand to appropriate player Hand ??
+
+            userHand = player1Hand;
+
+            startCounter();
+            dealMeIn(userHand);
+
+            drawCard();
+
+        };
+
+
+        //Displays the player's hand in the HTML
+        function dealMeIn(myHand) {
+
+            for (let c in myHand) {
+
+                let handCard = document.createElement('div');
+                handCard.id = `card${c}`;
+                handCard.className = "cards"
+                handCard.textContent = myHand[c];
+                hand.appendChild(handCard);
+            };
+
+        };
+
+
+
+
+
+        //On player's turn, draws a card and displays it in the HTML
+        function drawCard() {
+
+            let drawCard = userHand.push(playDeck.splice(0, 1));
+
+            let handCard = document.createElement('div');
+            handCard.id = 'card5';
+            handCard.className = "cards"
+            handCard.textContent = drawCard;
+            hand.appendChild(handCard);
+        };
+
+
+
+        //Removes token from userTokens when a piece moves out of start position
+        //Also removes counter from header
+        function comeOut() {
+
+            const emergePiece = userTokens.splice(0, 1);
+            const token = emergePiece.find(el => el);
+            userTokensOnBoard.push(token);
+
+            bCounter[0].remove();
+        };
+
+
+        //Displays the played card to the header for a few seconds
+        function cardPlayed(showAll) {
+
+            const playPlayer = document.querySelector('.numHere');
+            const playCard = document.createElement('div');
+            playCard.textContent = showAll;
+            playCard.classList.add('showMe');
+            playPlayer.appendChild(playCard);
+
+            setTimeout(() => {
+                playCard.remove();
+            }, 5000)
+
+        };
+
+        //Removes token from the userTokensOnBoard array when it reaches Home base
+        //Adds calls homeCounter function to add home counter to header
+        function goHome() {
+
+            const exitPiece = userTokensOnBoard.splice(0, 1);
+            const byeToken = exitPiece.find(el => el);
+            userHome.push(byeToken);
+
+            homeCounter();
+        };
+
+        //If all of the user's pieces enter home base, the game ends
+        function winCondition() {
+
+            if (userHome.length = 5) {
+                //Game over message
+            };
+        };
+
+        //Starts game on page load
+        gameStart(cardArray);
+
+        const card1 = document.querySelector('#card0');
+        const card2 = document.querySelector('#card1');
+        const card3 = document.querySelector('#card2');
+        const card4 = document.querySelector('#card3');
+        const card5 = document.querySelector('#card4');
+        const card6 = document.querySelector('#card5');
+
+        const cards = document.querySelectorAll('.cards');
+
+
+        //Highlights a given card on click, or removes highlighting on second click
+        //When highlighted, also calls iLikeToMoveItMoveIt function to display possible moves from card selection
+        function addSelectClass(event) {
+
+            if (!event.target.classList.contains("selectedCard")) {
+                // cards.classList.remove("selectedCard");
+                event.target.classList.add("selectedCard");
+
+                for (i = 0; i < cards.length; i++) {
+                    if (cards[i] != event.target) {
+                        cards[i].classList.remove("selectedCard")
+                        //dehighlight();
+                    };
+                };
+
+                clearYellowSpaces();
+
+                iLikeToMoveItMoveIt(event.target.textContent);
+
+            }
+            else {
+                event.target.classList.remove("selectedCard");
+                //dehighlight();
+
+                // console.log(JSON.stringify(event.target.textContent))
+
+                for (let i = 0; i < pegHoles.length; i++) {
+
+                    if (pegHoles[i].tint === yellow) {
+                        pegHoles[i].tint = NORMAL;
+                    };
+
+                };
+            };
+
+
+        };
+
+        card1.addEventListener('click', addSelectClass);
+        card2.addEventListener('click', addSelectClass);
+        card3.addEventListener('click', addSelectClass);
+        card4.addEventListener('click', addSelectClass);
+        card5.addEventListener('click', addSelectClass);
+        card6.addEventListener('click', addSelectClass);
+
+        //Removes the played card to the discard pile upon piece click
+        //Reassigns ids of remaining cards in hand
+        function discardDatCard() {
+
+            let cardSelect = document.querySelector('.selectedCard');
+            let discardCard = userHand.find((el) => el === cardSelect.textContent.toString());
+            discard.push(discardCard);
+
+            cardPlayed(discardCard);
+
+            cardSelect.classList.add('smokeIt');
+
+
+            // cards.classList.add('slide');
+            setTimeout(() => {
+                cardSelect.remove();
+
+            }, 1500)
+
+            for (let c in cards) {
+                cards[c].id = `card${c}`;
+            };
+        };
 
     </script>
-
-</body>
-
-</html>
