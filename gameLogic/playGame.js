@@ -1,16 +1,17 @@
 const GameBoard = require('../models/GameBoard.model');
 const drawPile = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+const gameRoomPinger = async() => { await GameBoard.findOne({ where: { gameID: gameID } })}
 
 module.exports = {
   getGameData: async(gameID) => {
-    const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
+    const gameRoom = gameRoomPinger();
     return gameRoom
   },
   initDealCards: async(gameID) => {
-    const gameRoomData = await GameBoard.findOne({ where: { gameID: gameID } });
+    const gameRoom = gameRoomPinger();
 
     // ref array for easier
-    gamePlayers = gameRoomData.gamePlayers;
+    gamePlayers = gameRoom.gamePlayers;
     
     // nested for loop to create 5 cards and push them to each players hand
     for (let i = 0; i < gamePlayers.length; i++) {
@@ -26,7 +27,7 @@ module.exports = {
     }
 
     // updates the database with the new hands for everyone
-    const updatedGameRoom = await gameRoomData.update({
+    const updatedGameRoom = await gameRoom.update({
       gamePlayers: gamePlayers 
     },
     {
@@ -36,13 +37,140 @@ module.exports = {
     });
 
     return updatedGameRoom.gamePlayers;
+  },
+  movePeg: async(gameID, pegID, pegLoc) => {
+    const gameRoom = gameRoomPinger(gameID);
+    let gamePlayers = gameRoom.gamePlayers;
+    let playerI, pegI;
+
+    // then iterates through and finds the mathing pegID to update its location
+    for (let i = 0; i < gamePlayers.length; i++) {
+      for (let j = 0; j < gamePlayers[i].pegs.length; j++) {
+        if ( gamePlayers[i].pegs[j].pegID == pegID ) {
+          playerI = i;
+          pegI = j;
+        } 
+      }
+    }
+
+
+    // if the peg is in the finish location of any of the players
+    switch (playerI) {
+      case 0:
+      if (pegLoc >= 72 && pegLoc <= 76) {
+        gamePlayers[playerI].pegs[pegI].pegLocation = null;
+        gamePlayers[playerI].pegs[pegI].isInFinish = true;
+      } else if (gamePlayers[playerI].pegs[pegI].isAtSpawn) {
+        gamePlayers[playerI].pegs[pegI].pegLocation = 3 + pegLoc;
+        gamePlayers[playerI].pegs[pegI].isAtSpawn = false;
+      }
+        break;
+      case 1:
+      if (pegLoc >= 77 && pegLoc <= 81) {
+        gamePlayers[playerI].pegs[pegI].pegLocation = null;
+        gamePlayers[playerI].pegs[pegI].isInFinish = true;
+      } else if (gamePlayers[playerI].pegs[pegI].isAtSpawn) {
+        gamePlayers[playerI].pegs[pegI].pegLocation = 21 + pegLoc;
+        gamePlayers[playerI].pegs[pegI].isAtSpawn = false;
+      }
+        break;
+      case 2:
+      if (pegLoc >= 82 && pegLoc <= 86) {
+        gamePlayers[playerI].pegs[pegI].pegLocation = null;
+        gamePlayers[playerI].pegs[pegI].isInFinish = true;
+      } else if (gamePlayers[playerI].pegs[pegI].isAtSpawn) {
+        gamePlayers[playerI].pegs[pegI].pegLocation = 39 + pegLoc;
+        gamePlayers[playerI].pegs[pegI].isAtSpawn = false;
+      }
+        break;
+      case 3:
+      if (pegLoc >= 87 && pegLoc <= 91) {
+        gamePlayers[playerI].pegs[pegI].pegLocation = null;
+        gamePlayers[playerI].pegs[pegI].isInFinish = true;
+      } else if (gamePlayers[playerI].pegs[pegI].isAtSpawn) {
+        gamePlayers[playerI].pegs[pegI].pegLocation = 57 + pegLoc;
+        gamePlayers[playerI].pegs[pegI].isAtSpawn = false;
+      }
+        break;
+      default:
+        gamePlayers[playerI].pegs[pegI].pegLocation = pegLoc;
+        gamePlayers[playerI].pegs[pegI].isAtSpawn = false;
+        break;
+    }
+
+    // first iterates through all players and pegs to find if there's one in it's spot
+    for (let i = 0; i < gamePlayers.length; i++) {
+      for (let j = 0; j < gamePlayers[i].pegs.length; j++) {
+        if ( gamePlayers[i].pegs[j].pegLocation == pegLoc) {
+          gamePlayers[i].pegs[j].pegLocation = null;
+          gamePlayers[i].pegs[j].isAtSpawn = true;
+          }
+        }
+      }
+
+    // saving updated gamePlayers to gameRoom with the gameID
+    const updatedGameRoom = await gameRoom.update({gamePlayers: gamePlayers }, {
+      where: {
+        gameID: gameID
+      }
+    });
+
+    return updatedGameRoom;
+  },
+  getAllPegs: (gameID) => {
+    const gameRoom = gameRoomPinger(gameID);
+
+    let pegList = [];
+    // first looping through all the players
+    for (let i = 0; i < gameRoom.gamePlayers.length; i++) {
+      // for each player, loop through all the pegs
+      for (let j = 0; j < gameRoom.gamePlayer[i].pegs.length; j++) {
+        pegList.push({ // push each peg data to the peg array for easy rendering
+          userID: gameRoom.gamePlayer[i].pegs[j].pegID,
+          pegLoc: gameRoom.gamePlayer[i].pegs[j].pegLocation,
+          atSpawn: gameRoom.gamePlayer[i].pegs[j].isAtSpawn,
+          inFinish: gameRoom.gamePlayer[i].pegs[j].isInFinish,
+          pegColor: gameRoom.gamePlayers[i].userColor
+        });
+      }
+    }
+    return pegList;
+  },
+  dealCard: (gameID, player, cardPlayed) => {
+    const gameRoom = gameRoomPinger();
+    let gamePlayers = gameRoom.gamePlayers;
+
+
+    let tempHand = [];
+    let playerIndex;
+    
+    // grabs the hand from the player
+    for (let i = 0; i < gamePlayers.length; i++) {
+      if ( gamePlayers[i].username == player) {
+        tempHand = gamePlayers[i].hand;
+        playerIndex = i;
+      }
+    }
+
+    // grabs index of played card and slices from array
+    let cardIndex = tempHand.indexOf(cardPlayed);
+    tempHand.splice(cardIndex, 1);
+
+    // generate index for card
+    newCardIndex = Math.floor(Math.random() * drawPile.length);
+    // push to tempcard array
+    tempHand.push(drawPile[cardIndex]);
+    // setting hand in JSON data
+    gamePlayers.playerIndex.hand = tempHand;
+
+    const updatedGameRoom = gameRoom.update({gamePlayers: gamePlayers}, {
+      where: {
+        gameID: gameID
+      }
+    });
+
+    return updatedGameRoom;
   }
-
-
-
-
-
-
 }
 
 

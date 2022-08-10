@@ -14,10 +14,11 @@ exports.loggedIn = (req, res, next) => {
       }
 
       break;
-    case '/sign_in':
-
-      return res.render('lobby', { layout: 'game_center.hbs' });
-
+    case '/login':
+      if (!user_id) {
+        return res.redirect('/dashboard');
+      }
+      break;
     case '/dashboard':
       if (!user_id) {
         return res.redirect('/');
@@ -25,7 +26,9 @@ exports.loggedIn = (req, res, next) => {
 
       break;
     case '/lobby':
-      // code block
+      if (!user_id) {
+        return res.redirect('/');
+      }
       break;
     case '/sign_out':
       // code block
