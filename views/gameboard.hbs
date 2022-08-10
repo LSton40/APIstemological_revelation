@@ -1,60 +1,54 @@
 <body>
     <main id="game-display">
         <section id="top_player" class="player">
-            <div id="player1" class="player-1 players thisPlayer">
-                <p class="user">Chippy</p>
-                <div class="numHere"></div>
-                <div class="counters">
-                    <div id="sCounter" class="sCounters">Start:</div>
-                    <div id="hCounter" class="hCounters">Home:</div>
+                <div id="player1" class="player-1 players thisPlayer">
+                    <p class="user">Chippy</p>
+                    <div class="numHere"></div>
+                    <div class="counters">
+                        <div id="sCounter" class="sCounters">Start:</div>
+                        <div id="hCounter" class="hCounters">Home:</div>
+                    </div>
                 </div>
-            </div>
 
-            <div id="player2" class="player-2 players">
-                <p class="user">Vladivastok</p>
-                <div class="numHere"></div>
-                <div class="counters">
-                    <div id="sCounter2" class="sCounters">Start:</div>
-                    <div id="hCounter2" class="hCounters">Home:</div>
+                <div id="player2" class="player-2 players">
+                    <p class="user">Vladivastok</p>
+                    <div class="numHere"></div>
+                    <div class="counters">
+                        <div id="sCounter2" class="sCounters">Start:</div>
+                        <div id="hCounter2" class="hCounters">Home:</div>
+                    </div>
                 </div>
-            </div>
 
-            <div id="player3" class="player-3 players">
-                <p class="user">Dufus69</p>
-                <div class="numHere"></div>
-                <div class="counters">
-                    <div id="sCounter3" class="sCounters">Start:</div>
-                    <div id="hCounter3" class="hCounters">Home:</div>
+                <div id="player3" class="player-3 players">
+                    <p class="user">Dufus69</p>
+                    <div class="numHere"></div>
+                    <div class="counters">
+                        <div id="sCounter3" class="sCounters">Start:</div>
+                        <div id="hCounter3" class="hCounters">Home:</div>
+                    </div>
                 </div>
-            </div>
 
-            <div id="player4" class="player-4 players">
-                <p class="user">straightEdge420</p>
-                <div class="numHere"></div>
-                <div class="counters">
-                    <div id="sCounter4" class="sCounters">Start:</div>
-                    <div id="hCounter4" class="hCounters">Home:</div>
+                <div id="player4" class="player-4 players">
+                    <p class="user">straightEdge420</p>
+                    <div class="numHere"></div>
+                    <div class="counters">
+                        <div id="sCounter4" class="sCounters">Start:</div>
+                        <div id="hCounter4" class="hCounters">Home:</div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
+        </section>
     
-    <section id="left_player" class="player"></section>
+        <section id="left_player" class="player">
+        </section>
 
-    <section id="gameboard-canvas">
-        <div id="gameDiv"></div>
-    </section>
-    
-    <section id="right_player" class="player"></section>
-    <section id="me_player" class="player"></section>
-
-
-
+        <section id="gameboard-canvas">
+            <div id="gameDiv"></div>
+        </section>
+        
+        <section id="right_player" class="player"></section>
+        <section id="me_player" class="player"></section>
 
     </main>
-
-
-
 
 
     <script src="https://pixijs.download/release/pixi.js"></script>
@@ -67,7 +61,7 @@
         const hand = document.querySelector('#me_player');
 
         //Array of userTokens within the Starting Area
-        const userTokens = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]
+        const userTokens = [1, 2, 3, 4, 5]
 
         //Array of userTokens currently in play on the board
         const userTokensOnBoard = [];
@@ -304,7 +298,7 @@
             console.log(`name ${this.name}`);
 
             //This lets the user to use new peg
-            if (playerOneLocations.length < 5) {
+            if (userTokens.length > 0) {
 
                 if (this.name === pegHoles[39 + cardValue].name) {
 
@@ -313,10 +307,21 @@
                     playerOneLocations.push(pegHoles[39 + cardValue].name)
 
                     clearYellowSpaces();
+                    comeOut();
+                    discardDatCard();
                 }
 
                 console.log(playerOneLocations);
             };
+
+           if (this.name === pegHoles[39].name) {
+                pegHoles[39].tint = green;
+
+                goHome();
+                clearYellowSpaces();
+                discardDatCard();
+                winCondition();
+           }
 
             //This lets the user move a peg to a new spot
             if (this.canMove === true) {
@@ -349,7 +354,8 @@
 
                     pegHoles[newPositions[i]].tint = NORMAL;
                 };
-               
+
+                              
                 discardDatCard();
 
                 console.log(localStorage.getItem('playerOneLocations'));
@@ -402,15 +408,30 @@
                 //playerOneLocations.push(pegHoles[39 + cardValue].name);
                 console.log(playerOneLocations);
             };
+
+
+
         };
+
+
+                                //if (this.name === pegHoles[39 + cardValue].name) {
+
+                        //pegHoles[39 + cardValue].tint = red;
+
+                        //playerOneLocations.push(pegHoles[39 + cardValue].name)
+                          //  pegHoles[39 + cardValue].tint = NORMAL;
+
+                        //clearYellowSpaces();
+                        //discardDatCard();
+                        //}
 
         function clearYellowSpaces () {
             for (let i = 0; i < pegHoles.length; i++) {
 
-                        if (pegHoles[i].tint === yellow) {
-                            pegHoles[i].tint = NORMAL;
-                        };
-                    };
+                if (pegHoles[i].tint === yellow) {
+                    pegHoles[i].tint = NORMAL;
+                };
+            };
         };
 
 
@@ -443,18 +464,18 @@
         //Removes token from userTokens when a piece moves out of start position
         //Also removes counter from header
         function comeOut() {
-            const emergePiece = userTokens.splice(0, 1);
-            const token = emergePiece.find(el => el);
-            userTokensOnBoard.push(token);
-            bCounter[0].remove();
+        let tok = userTokens.shift();
+        userTokensOnBoard.push(tok);
+
+        console.log(bCounter)
+          sCounter.removeChild(sCounter.firstElementChild);
         }
 
         //Removes token from the userTokensOnBoard array when it reaches Home base
         //Adds calls homeCounter function to add home counter to header
         function goHome() {
-            const exitPiece = userTokensOnBoard.splice(0, 1);
-            const byeToken = exitPiece.find(el => el);
-            userHome.push(byeToken);
+            let leaveTokens = userTokensOnBoard.shift();
+            userHome.push(leaveTokens);
 
             homeCounter();
         }
@@ -500,7 +521,6 @@
 
             startCounter();
             dealMeIn(userHand);
-            //drawCard();
         }
 
         //Displays the player's hand in the HTML
@@ -516,13 +536,15 @@
         };
 
         //On player's turn, draws a card and displays it in the HTML
-        function drawCard() {
+        async function drawCard() {
             let drawCard = userHand.push(playDeck.splice(0, 1));
             let handCard = document.createElement('div');
-            handCard.id = 'card5';
             handCard.className = "cards"
             handCard.textContent = drawCard;
+            handCard.id = 'card5';
             hand.appendChild(handCard);
+
+            let idAssign = await assignCardIds();
         }
 
 
@@ -552,6 +574,11 @@
         const card5 = document.querySelector('#card4');
         const card6 = document.querySelector('#card5');
 
+        function assignCardIds() {
+            for (let c in cards) {
+                cards[c].id === `card${c}`;
+            }
+        }
 
         //Highlights a given card on click, or removes highlighting on second click
         //When highlighted, also calls iLikeToMoveItMoveIt function to display possible moves from card selection
@@ -567,7 +594,7 @@
                 }
                
                 for (let i =0; i < pegHoles.length; i++) {
-                        if (pegHoles[i].tint === '0xffff00') {
+                        if (pegHoles[i].tint == yellow) {
                             pegHoles[i].tint = NORMAL;
                         }
                     }
@@ -578,11 +605,11 @@
                 event.target.classList.remove("selectedCard")
 
                 for (let i =0; i < pegHoles.length; i++) {
-                        if (pegHoles[i].tint === '0xffff00') {
-                            pegHoles[i].tint = NORMAL;
-                        }
+                    if (pegHoles[i].tint == yellow) {
+                        pegHoles[i].tint = NORMAL;
                     }
                 }
+            }
         };
 
         //Removes the played card to the discard pile upon piece click
@@ -594,15 +621,17 @@
             
             cardPlayed(discardCard)
 
+            console.log(cardSelect)
+
             cardSelect.classList.add('smokeIt')
             setTimeout(() => {
                 cardSelect.remove();
+                assignCardIds();
             }, 1500)    
-            
-            for (let c in cards) {
-                cards[c].id = `card${c}`;
-            }
+        
+            drawCard();
         };
+        
 
         //Event listeners for cards
         card1.addEventListener('click', addSelectClass)

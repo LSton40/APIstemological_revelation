@@ -14,6 +14,10 @@ body, .button {
     background: linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10));
 }
 
+a, .button {
+    color: rgb(209, 206, 206);
+}
+
 a {
     text-decoration: none;
 }
@@ -111,13 +115,6 @@ h3 {
 }
 
 
-#whiskey {
-    align-self: center;
-    border-radius: 10px;
-    box-shadow: 0 0 5px 10px rgb(28, 1, 1);
-    z-index: -1;
-}
-
 /*Text directions plus buttons and form fields: Register, Login, Foyer, Lobby*/
 .choices {
     /* height: 30vh; */
@@ -192,14 +189,6 @@ li {
     text-shadow: 5px 10px 8px black;
     box-shadow: 5px 10px 8px black;
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -280,20 +269,6 @@ p#tease {
 
 
 
-/*Gameboard header and title*/
-.gb-header {
-    height: 5vh;
-}
-
-.gb-title {
-    font-size: 3vw;
-    font-family: 'Mouse Memoirs', sans-serif;
-    margin: auto;
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-}
-
 /*Gameboard section*/
 #game-display {
     display: grid;
@@ -301,9 +276,8 @@ p#tease {
     /* padding: 2vh; */
 }
 
+
 /*Player areas*/
-
-
 /*Player along top of screen*/
 #top_player {
     grid-column: 1 / 11;
@@ -323,7 +297,6 @@ p#tease {
     border-radius: 50px;
     display: grid;
     justify-content:center;
-    /* margin-left: 6vw; */
     box-shadow: 5px 10px 15px rgb(119, 89, 89);
     color: black;
     font-size: 1.5vw;
