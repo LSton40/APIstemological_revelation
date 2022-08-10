@@ -96,7 +96,7 @@
         let playerThreeLocations = [41, 17, 3];
         let playerFourLocations = [6, 31];
 
-        let p1StartPosition = 
+        let p1StartPosition;
 
         //when the start button is presses put all clientside information in local storage
         localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
@@ -306,7 +306,7 @@ function iLikeToMoveItMoveIt(select) {
                 //let blob = newPositions.splice(playerOneLocations.indexOf(originalLoc + cardValue), 1)
 
 //.splice(playerOneLocations.indexOf(originalLoc), 1)
-                console.log(playerOneLocations)
+                console.log(playerOneLocations);
                 console.log(newPositions);
 
 
@@ -476,8 +476,8 @@ function gameStart(cardArray) {
 
   for (let i = cardArray.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * i);
-    let k = cardArray[i]
-    cardArray[i] = cardArray[j]
+    let k = cardArray[i];
+    cardArray[i] = cardArray[j];
     cardArray[j] = k;
   }
 
@@ -530,12 +530,12 @@ function dealMeIn(myHand) {
 
     let handCard = document.createElement('div');
     handCard.id = `card${c}`;
-    handCard.className = "cards"
+    handCard.className = "cards";
     handCard.textContent = myHand[c];
     hand.appendChild(handCard);
   }
 
-};
+}
 
 
 
@@ -548,7 +548,7 @@ function drawCard() {
 
   let handCard = document.createElement('div');
   handCard.id = 'card5';
-  handCard.className = "cards"
+  handCard.className = "cards";
   handCard.textContent = drawCard;
   hand.appendChild(handCard);
 }
@@ -578,7 +578,7 @@ function cardPlayed(showAll) {
     
     setTimeout(() => {
         playCard.remove();
-    }, 5000)
+    }, 5000);
     
 }
 
@@ -651,7 +651,7 @@ function addSelectClass(event) {
         
     } 
     else {
-        event.target.classList.remove("selectedCard")
+        event.target.classList.remove("selectedCard");
        //dehighlight();
 
         // console.log(JSON.stringify(event.target.textContent))
@@ -675,12 +675,12 @@ function addSelectClass(event) {
 
 
 
-card1.addEventListener('click', addSelectClass)
-card2.addEventListener('click', addSelectClass)
-card3.addEventListener('click', addSelectClass)
-card4.addEventListener('click', addSelectClass)
-card5.addEventListener('click', addSelectClass)
-card6.addEventListener('click', addSelectClass)
+card1.addEventListener('click', addSelectClass);
+card2.addEventListener('click', addSelectClass);
+card3.addEventListener('click', addSelectClass);
+card4.addEventListener('click', addSelectClass);
+card5.addEventListener('click', addSelectClass);
+card6.addEventListener('click', addSelectClass);
 
 
 
@@ -692,16 +692,16 @@ function discardDatCard() {
     let discardCard = userHand.find((el) => el === cardSelect.textContent.toString());
     discard.push(discardCard);
     
-    cardPlayed(discardCard)
+    cardPlayed(discardCard);
 
-    cardSelect.classList.add('smokeIt')
+    cardSelect.classList.add('smokeIt');
     
 
     // cards.classList.add('slide');
     setTimeout(() => {
         cardSelect.remove();
 
-    }, 1500)    
+    }, 1500)    ;
     
     for (let c in cards) {
         cards[c].id = `card${c}`;

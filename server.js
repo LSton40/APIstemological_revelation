@@ -674,14 +674,14 @@ lobby.on('connection', async (socket) => {
   /* ************* */
   /* GUNGUNTESTING */
   /* ************* */
-  socket.on('testQuery', async (gameID) => {
-    // playGame.getGameData(gameID);
-    // console.log(await playGame.getGameData(gameID));
-    playGame.initDealCards(gameID);
-    console.log(await playGame.initDealCards(gameID));
+  // socket.on('testQuery', async (gameID) => {
+  //   // playGame.getGameData(gameID);
+  //   // console.log(await playGame.getGameData(gameID));
+  //   playGame.initDealCards(gameID);
+  //   console.log(await playGame.initDealCards(gameID));
 
-    socket.emit('redirect', '/lobby');
-  });
+  //   socket.emit('redirect', '/lobby');
+  // });
   /* ************* */
   /* GUNGUNTESTING */
   /* ************* */

@@ -66,17 +66,17 @@
 
 
 
-  socket.on('redirect', function (destination) {
+  //socket.on('redirect', function (destination) {
 
-    const gameIdSize = 6;
-    let gameid = '';
+    //const gameIdSize = 6;
+    //let gameid = '';
 
-    for (let i = 0; i < gameIdSize; i++) {
-      gameid += Math.floor(Math.random() * 10);
-    };
-    socket.emit('createGame', gameid);
+   // for (let i = 0; i < gameIdSize; i++) {
+    //  gameid += Math.floor(Math.random() * 10);
+   // };
+   // socket.emit('createGame', gameid);
     // window.location.href = destination;
-  });
+  //});
 
     //socket.on('errors', (error) => {
     /* append the errors somewhere!! TOAST??!?!?!?! */
@@ -85,7 +85,7 @@
 
     //fetch(url);
 
-  });
+  //});
 
   // const myCookie = await cookieStore.get('connect.sid');
   // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
@@ -94,34 +94,37 @@
 
 
 
-    /* ********************************** */
-    /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
-    /* ********************************** */
-    const queryGameSocket = async () => {
-      let name = 'epicGameName';
-      socket.emit('testQuery', name);
-      console.log('queried boii');
-    }
-    socket.on('logs', (data) => {
-      console.log(data);
-    })
-    queryGameButtonEl = document.getElementById('queryGame');
-    queryGameButtonEl.addEventListener('click', queryGameSocket);
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
+  const queryGameSocket = async () => {
+    let name = 'epicGameName';
+    socket.emit('testQuery', name);
+    console.log('queried boii');
+  }
+  socket.on('logs', (data) => {
+    console.log(data);
+  })
+  queryGameButtonEl = document.getElementById('queryGame');
+  queryGameButtonEl.addEventListener('click', queryGameSocket);
 
 
-    socket.on('redirect', (url) => {
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
+  //socket.on('redirect', (url) => {
 
-      redirectMe(lank);
+  //redirectMe(lank);
 
-    });
-    const redirectMe = (lank) => {
-      
-    }
+  //});
+  //const redirectMe = (lank) => {
+
+  //}
 
 
-    /* ********************************** */
-    /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
-    /* ********************************** */
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
 
 
 
@@ -146,7 +149,7 @@
   });
 
 
-  function startGame(){
+  function startGame() {
     console.log('pressedButton');
     console.log(`STARTING GAME: PREPARE!`)
     socket.emit('startGame', socket.id);
@@ -157,5 +160,5 @@
 
 
 </script>
-    <script src="../front/js/play.js"></script>
-    <script src="../front/js/front.js"></script>
+<script src="../front/js/play.js"></script>
+<script src="../front/js/front.js"></script>
