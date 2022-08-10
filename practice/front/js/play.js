@@ -10,13 +10,7 @@
     Handled automatically through the sockets connection???
     */
 
-   //JOKER FUNCTION
-
-   
-
-
-
-
+//JOKER FUNCTION
 
 
 /************************
@@ -41,51 +35,52 @@
 //Function that highlights the possible moves given the value of the card selection
 function iLikeToMoveItMoveIt(select) {
 
-    switch(select) {
-        case "A":
-            x + 1
-            break;
-        // case 'J':
-    
-        //     break;
-        // case 'Q':
-    
-        //     break;
-        // case 'K':
-    
-        //     break;
-        case "2":
-            x + 2
-            break;
-        case "3":
-            x + 3
-            break;
-        case "4":
-            x + 4
-            break;
-        case "5":
-            x + 5
-            break;
-        case "6":
-            x + 6
-            break;
-        case "7":
-            x + 7
-            break;
-        case "8":
-            x + 8
-            break;
-        case "9":
-            x + 9
-            break;
-        // case 10:
-    
-        //     break;
-        default:
-            x + 10
-    
-    }
+  switch (select) {
+    case "A":
+      x + 1
+      break;
+    // case 'J':
+
+    //     break;
+    // case 'Q':
+
+    //     break;
+    // case 'K':
+
+    //     break;
+    case "2":
+      x + 2
+      break;
+    case "3":
+      x + 3
+      break;
+    case "4":
+      x + 4
+      break;
+    case "5":
+      x + 5
+      break;
+    case "6":
+      x + 6
+      break;
+    case "7":
+      x + 7
+      break;
+    case "8":
+      x + 8
+      break;
+    case "9":
+      x + 9
+      break;
+    // case 10:
+
+    //     break;
+    default:
+      x + 10
+
+  }
 }
+
 
 
 
@@ -117,10 +112,8 @@ const hand = document.querySelector('#me_player');
 
 
 
-
-
 //Array of userTokens within the Starting Area
-const userTokens = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]
+const userTokens = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]
 
 //Array of userTokens currently in play on the board
 const userTokensOnBoard = [];
@@ -148,21 +141,21 @@ Token Ticker Counters
 //Displays number of tokens in starting area at beginning of game
 function startCounter() {
 
-    for (let c in userTokens) {
-        let basecounter = document.createElement('span');
-        basecounter.className = "basecounters"
-        basecounter.textContent = '|';
-        sCounter.appendChild(basecounter);
-    };
+  for (let c in userTokens) {
+    let basecounter = document.createElement('span');
+    basecounter.className = "basecounters"
+    basecounter.textContent = '|';
+    sCounter.appendChild(basecounter);
+  };
 }
 
 //Displays number of tokens that have reached home base
 function homeCounter() {
 
-    let hometokens = document.createElement('span');
-    hometokens.className = "homecounters"
-    hometokens.textContent = '|';
-    hCounter.appendChild(hometokens);
+  let hometokens = document.createElement('span');
+  hometokens.className = "homecounters"
+  hometokens.textContent = '|';
+  hCounter.appendChild(hometokens);
 }
 
 
@@ -172,22 +165,23 @@ function homeCounter() {
 //Starts game: shuffles cards, pushes into playDeck, then passes to the dealCards function
 function gameStart(cardArray) {
 
-    for (let i = cardArray.length -1; i > 0; i--) {
-        let j = Math.floor(Math.random() * i);
-        let k = cardArray[i]
-        cardArray[i] = cardArray[j]
-        cardArray[j] = k;
-    }
-        
-    playDeck = cardArray.map(value => value);
+  for (let i = cardArray.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * i);
+    let k = cardArray[i]
+    cardArray[i] = cardArray[j]
+    cardArray[j] = k;
+  }
 
-    dealCards();
+  playDeck = cardArray.map(value => value);
+
+  dealCards();
 }
 
 //Populates all players' hands from shuffled playDeck and equates the userHand with their player id
 //Calls the counter for the tokens in the start area
 //Calls the dealMeIn function
 function dealCards() {
+
     
     let player1Hand;
     let player2Hand;
@@ -216,37 +210,38 @@ function dealCards() {
         dealMeIn(userHand);
         
         drawCard();
+
 }
-    
-    
+
+
 //Displays the player's hand in the HTML
 function dealMeIn(myHand) {
-    
-    for (let c in myHand) {
-        
-        let handCard = document.createElement('div');
-        handCard.id = `card${c}`;
-        handCard.className = "cards"
-        handCard.textContent = myHand[c];
-        hand.appendChild(handCard);
-    }
+
+  for (let c in myHand) {
+
+    let handCard = document.createElement('div');
+    handCard.id = `card${c}`;
+    handCard.className = "cards"
+    handCard.textContent = myHand[c];
+    hand.appendChild(handCard);
+  }
 
 };
 
 
 
- 
+
 
 //On player's turn, draws a card and displays it in the HTML
 function drawCard() {
-    
-    let drawCard = userHand.push(playDeck.splice(0, 1));
 
-    let handCard = document.createElement('div');
-    handCard.id = 'card5';
-    handCard.className = "cards"
-    handCard.textContent = drawCard;
-    hand.appendChild(handCard);
+  let drawCard = userHand.push(playDeck.splice(0, 1));
+
+  let handCard = document.createElement('div');
+  handCard.id = 'card5';
+  handCard.className = "cards"
+  handCard.textContent = drawCard;
+  hand.appendChild(handCard);
 }
 
 
@@ -255,11 +250,11 @@ function drawCard() {
 //Also removes counter from header
 function comeOut() {
 
-    const emergePiece = userTokens.splice(0, 1);
-    const token = emergePiece.find(el => el);
-    userTokensOnBoard.push(token);
+  const emergePiece = userTokens.splice(0, 1);
+  const token = emergePiece.find(el => el);
+  userTokensOnBoard.push(token);
 
-    bCounter[0].remove();
+  bCounter[0].remove();
 }
 
 
@@ -283,27 +278,26 @@ function cardPlayed(showAll) {
 //Adds calls homeCounter function to add home counter to header
 function goHome() {
 
-    const exitPiece = userTokensOnBoard.splice(0, 1);
-    const byeToken = exitPiece.find(el => el);
-    userHome.push(byeToken);
+  const exitPiece = userTokensOnBoard.splice(0, 1);
+  const byeToken = exitPiece.find(el => el);
+  userHome.push(byeToken);
 
-    homeCounter();
+  homeCounter();
 }
 
 
 //If all of the user's pieces enter home base, the game ends
 function winCondition() {
 
-    if (userHome.length = 5) {
-        //Game over message
-    }
+  if (userHome.length = 5) {
+    //Game over message
+  }
 }
 
 
 
 //Starts game on page load
 gameStart(cardArray);
-
 
 
 const card1 = document.querySelector('#card0');
@@ -356,6 +350,7 @@ card5.addEventListener('click', addSelectClass)
 card6.addEventListener('click', addSelectClass)
 
 
+
 //Removes the played card to the discard pile upon piece click
 //Reassigns ids of remaining cards in hand
 function discardDatCard() {
@@ -385,7 +380,7 @@ killIt.addEventListener('click', discardDatCard);
 
 // for (let i = 0; i < userHand.length; i++) {
 //     if (userHand[i] = ) {
-    //         //send to discard deck if selected 
+    //         //send to discard deck if selected
 //     }
 // }
 
