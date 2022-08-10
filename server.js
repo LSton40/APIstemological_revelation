@@ -430,8 +430,8 @@ const lobby = io.of('/lobby');
 lobby.on('connection', async (socket) => {
 
 
-  const destination = '/index.html';
-  socket.emit('redirect', destination);
+  //const destination = '/index.html';
+  //socket.emit('redirect', destination);
 
 
 
@@ -494,6 +494,7 @@ lobby.on('connection', async (socket) => {
     console.log('caught join game call');
     const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
 
+    console.log(gameRoom);
 
     if (gameRoom) {
       // grabbing gamePlayers from the game
@@ -511,6 +512,11 @@ lobby.on('connection', async (socket) => {
 
       // setting the gamePlayers array after updating
       gameRoom.gamePlayers = roomPlayers;
+
+      // updating the gamePlayers array in the database
+      await gameRoom.update({ gamePlayers: roomPlayers });
+
+
 
     } else {
       // emitting any errors that occur

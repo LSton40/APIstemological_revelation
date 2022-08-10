@@ -75,7 +75,8 @@
 
 
 
-  server.on('redirect', function (destination) {
+  socket.on('redirect', function (destination) {
+
     const gameIdSize = 6;
     let gameid = '';
 
@@ -83,41 +84,44 @@
       gameid += Math.floor(Math.random() * 10);
     };
     socket.emit('createGame', gameid);
-    window.location.href = destination;
+    // window.location.href = destination;
   });
 
   socket.on('errors', (error) => {
-     append the errors somewhere!! TOAST ?? !? !? !? ! * /
+    //append the errors somewhere!! TOAST ?? !? !? !? ! * /
+  });
+  socket.on('redirect', (url) => {
 
-    socket.on('redirect', (url) => {
-
-    fetch(url);
+    //fetch(url);
 
   });
 
-    // const myCookie = await cookieStore.get('connect.sid');
-    // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
-    socket.emit('cookie time', username);
+  // const myCookie = await cookieStore.get('connect.sid');
+  // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
+  socket.emit('cookie time', username);
 
 
 
 
-    /* ********************************** */
-    /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
-    /* ********************************** */
-    const queryGameSocket = async () => {
-      let name = 'epicGameName';
-      socket.emit('testQuery', name);
-      console.log('queried boii');
-    }
-    socket.on('logs', (data) => {
-      console.log(data);
-    })
-    queryGameButtonEl = document.getElementById('queryGame');
-    queryGameButtonEl.addEventListener('click', queryGameSocket);
-    /* ********************************** */
-    /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
-    /* ********************************** */
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
+
+  //const queryGameSocket = async () => {
+  //  let name = 'epicGameName';
+  //  socket.emit('testQuery', name);
+  //  console.log('queried boii');
+  //}
+
+
+  socket.on('logs', (data) => {
+    console.log(data);
+  })
+  queryGameButtonEl = document.getElementById('queryGame');
+  queryGameButtonEl.addEventListener('click', queryGameSocket);
+  /* ********************************** */
+  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
+  /* ********************************** */
 
 
 
@@ -126,24 +130,28 @@
 
 
 
-    let joinGameFormEl = document.getElementById('joinForm');
-    let joinGameInput = document.getElementById('roomCode');
+  let joinGameFormEl = document.getElementById('joinForm');
+  let joinGameInput = document.getElementById('roomCode');
 
-    joinGameFormEl.addEventListener('submit', (e) => {
-      console.log('clicked')
-      e.preventDefault();
-      if (joinGameInput.value) {
-        console.log(`sending request to join ${joinGameInput.value}`)
-        socket.emit('joinGame', joinGameInput.value);
-        joinGameInput.value = '';
-      }
-
+  joinGameFormEl.addEventListener('submit', (e) => {
+    console.log('clicked')
+    e.preventDefault();
+    if (joinGameInput.value) {
+      console.log(`sending request to join ${joinGameInput.value}`)
+      socket.emit('joinGame', joinGameInput.value);
+      joinGameInput.value = '';
       window.location.assign("/lobby")
+    }
+    joinGameInput.value = '';
+  });
 
 
-    });
-
-
+  function startGame(){
+    console.log('pressedButton');
+    console.log(`STARTING GAME: PREPARE!`)
+    socket.emit('startGame', socket.id);
+    window.location.assign("/gameboard")
+  }
 
 
 
