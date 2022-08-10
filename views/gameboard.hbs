@@ -111,9 +111,6 @@
         let playerThreeLocations = [41, 17, 3];
         let playerFourLocations = [6, 31];
 
-        //when the start button is pressed put all clientside information in local storage
-        localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
-
         window.onload = function () {
             app = new PIXI.Application({
                 width: window.innerWidth,
@@ -407,25 +404,10 @@
                 //We'll need to add this to the array if they click it    
                 //playerOneLocations.push(pegHoles[39 + cardValue].name);
                 console.log(playerOneLocations);
-            };
-
-
 
         };
 
-
-                                //if (this.name === pegHoles[39 + cardValue].name) {
-
-                        //pegHoles[39 + cardValue].tint = red;
-
-                        //playerOneLocations.push(pegHoles[39 + cardValue].name)
-                          //  pegHoles[39 + cardValue].tint = NORMAL;
-
-                        //clearYellowSpaces();
-                        //discardDatCard();
-                        //}
-
-        function clearYellowSpaces () {
+        function clearYellowSpaces() {
             for (let i = 0; i < pegHoles.length; i++) {
 
                 if (pegHoles[i].tint === yellow) {
@@ -433,6 +415,8 @@
                 };
             };
         };
+
+
 
 
         /********************
@@ -495,8 +479,8 @@
 
             for (let i = cardArray.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * i);
-                let k = cardArray[i]
-                cardArray[i] = cardArray[j]
+                let k = cardArray[i];
+                cardArray[i] = cardArray[j];
                 cardArray[j] = k;
             }
             playDeck = cardArray.map(value => value);
@@ -529,11 +513,12 @@
             for (let c in myHand) {
                 let handCard = document.createElement('div');
                 handCard.id = `card${c}`;
-                handCard.className = "cards"
+                handCard.className = "cards";
                 handCard.textContent = myHand[c];
                 hand.appendChild(handCard);
             }
         };
+
 
         //On player's turn, draws a card and displays it in the HTML
         async function drawCard() {
@@ -561,6 +546,7 @@
                 playCard.remove();
             }, 5000)
         }
+
 
         //Starts game on page load
         gameStart(cardArray);
@@ -620,8 +606,8 @@
             discard.push(discardCard);
             
             cardPlayed(discardCard)
-
             console.log(cardSelect)
+
 
             cardSelect.classList.add('smokeIt')
             setTimeout(() => {
