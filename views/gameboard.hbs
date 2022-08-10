@@ -1,39 +1,40 @@
 <body>
-<main id="game-display">
-    <section id="top_player" class="player">
-        <div id="player1" class="player-1 players thisPlayer">
-            <p class="user">Chippy</p>
-            <div class="numHere"></div>
-            <div class="counters">
-                <div id="sCounter" class="sCounters">Start:</div>
-                <div id="hCounter" class="hCounters">Home:</div>
+    <main id="game-display">
+        <section id="top_player" class="player">
+            <div id="player1" class="player-1 players thisPlayer">
+                <p class="user">Chippy</p>
+                <div class="numHere"></div>
+                <div class="counters">
+                    <div id="sCounter" class="sCounters">Start:</div>
+                    <div id="hCounter" class="hCounters">Home:</div>
+                </div>
             </div>
-        </div>
 
-        <div id="player2" class="player-2 players">
-            <p class="user">Vladivastok</p>
-            <div class="numHere"></div>
-            <div class="counters">
-                <div id="sCounter2" class="sCounters">Start:</div>
-                <div id="hCounter2" class="hCounters">Home:</div>
+            <div id="player2" class="player-2 players">
+                <p class="user">Vladivastok</p>
+                <div class="numHere"></div>
+                <div class="counters">
+                    <div id="sCounter2" class="sCounters">Start:</div>
+                    <div id="hCounter2" class="hCounters">Home:</div>
+                </div>
             </div>
-        </div>
 
-        <div id="player3" class="player-3 players">
-            <p class="user">Dufus69</p>
-            <div class="numHere"></div>
-            <div class="counters">
-                <div id="sCounter3" class="sCounters">Start:</div>
-                <div id="hCounter3" class="hCounters">Home:</div>
+            <div id="player3" class="player-3 players">
+                <p class="user">Dufus69</p>
+                <div class="numHere"></div>
+                <div class="counters">
+                    <div id="sCounter3" class="sCounters">Start:</div>
+                    <div id="hCounter3" class="hCounters">Home:</div>
+                </div>
             </div>
-        </div>
 
-        <div id="player4" class="player-4 players">
-            <p class="user">straightEdge420</p>
-            <div class="numHere"></div>
-            <div class="counters">
-                <div id="sCounter4" class="sCounters">Start:</div>
-                <div id="hCounter4" class="hCounters">Home:</div>
+            <div id="player4" class="player-4 players">
+                <p class="user">straightEdge420</p>
+                <div class="numHere"></div>
+                <div class="counters">
+                    <div id="sCounter4" class="sCounters">Start:</div>
+                    <div id="hCounter4" class="hCounters">Home:</div>
+                </div>
             </div>
         </div>
     </section>
@@ -49,7 +50,8 @@
 
 
 
-</main>
+
+    </main>
 
 
 
@@ -93,6 +95,7 @@
         const blue = 0x0000FF;
         const green = 0x008000;
         const black = 0x000000;
+        const yellow = 0xffff00;
         const RECT_W = 100;
         const RECT_H = 100;
         let offsetX = 650;
@@ -109,13 +112,14 @@
         let gameContainer;
         let cardValue;
         const playerLocation = 2 + 1;
-        let playerOneLocations = [4, 25, 52, 64];
+        let playerOneLocations = [];
         let playerTwoLocations = [7];
         let playerThreeLocations = [41, 17, 3];
         let playerFourLocations = [6, 31];
 
         //when the start button is pressed put all clientside information in local storage
         localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
+
         window.onload = function () {
             app = new PIXI.Application({
                 width: window.innerWidth,
@@ -258,39 +262,38 @@
 
         //Function that assigns movement values to cards and passes the information to the showPossibleMoves function, which highlights all possible moves for that card value
         function iLikeToMoveItMoveIt(select) {
-
-        switch (select) {
-            case "A":
-            cardValue = 1
-            return showPossibleMoves(cardValue);
-            case "2":
-            cardValue = 2
-            return showPossibleMoves(cardValue);
-            case "3":
-            cardValue = 3
-            return showPossibleMoves(cardValue);
-            case "4":
-            cardValue = 4
-            return showPossibleMoves(cardValue);
-            case "5":
-            cardValue = 5
-            return showPossibleMoves(cardValue);
-            case "6":
-            cardValue = 6
-            return showPossibleMoves(cardValue);
-            case "7":
-            cardValue = 7
-            return showPossibleMoves(cardValue);
-            case "8":
-            cardValue = 8
-            return showPossibleMoves(cardValue);
-            case "9":
-            cardValue = 9
-            return showPossibleMoves(cardValue);
-            default:
-            cardValue = 10
-            return showPossibleMoves(cardValue);
-        }
+            switch (select) {
+                case "A":
+                    cardValue = 1
+                    return showPossibleMoves(cardValue);
+                case "2":
+                    cardValue = 2
+                    return showPossibleMoves(cardValue);
+                case "3":
+                    cardValue = 3
+                    return showPossibleMoves(cardValue);
+                case "4":
+                    cardValue = 4
+                    return showPossibleMoves(cardValue);
+                case "5":
+                    cardValue = 5
+                    return showPossibleMoves(cardValue);
+                case "6":
+                    cardValue = 6
+                    return showPossibleMoves(cardValue);
+                case "7":
+                    cardValue = 7
+                    return showPossibleMoves(cardValue);
+                case "8":
+                    cardValue = 8
+                    return showPossibleMoves(cardValue);
+                case "9":
+                    cardValue = 9
+                    return showPossibleMoves(cardValue);
+                default:
+                    cardValue = 10
+                    return showPossibleMoves(cardValue);
+            }
         }
 
         //Move a given game piece to the selected possible move position
@@ -299,6 +302,23 @@
             console.log(`type: ${this.canMove}`);
             console.log(`this output ${this}`);
             console.log(`name ${this.name}`);
+
+            //This lets the user to use new peg
+            if (playerOneLocations.length < 5) {
+
+                if (this.name === pegHoles[39 + cardValue].name) {
+
+                    pegHoles[39 + cardValue].tint = red;
+
+                    playerOneLocations.push(pegHoles[39 + cardValue].name)
+
+                    clearYellowSpaces();
+                }
+
+                console.log(playerOneLocations);
+            };
+
+            //This lets the user move a peg to a new spot
             if (this.canMove === true) {
                 this.tint = red;
 
@@ -316,25 +336,20 @@
                 playerOneLocations[playerOneLocations.indexOf(originalLoc)] = this.name;
                 pegHoles[pegLoc].tint = NORMAL;
 
-                let newPositions = playerOneLocations.map((pos) => {return pos + cardValue}); 
-                
-                for (let i =0; i < newPositions.length; i++) {
+                let newPositions = playerOneLocations.map((pos) => { return pos + cardValue });
+
+                clearYellowSpaces();
+
+                for (let i = 0; i < newPositions.length; i++) {
+                    console.log(pegHoles[i])
 
                     if (newPositions[i] > 71) {
                         newPositions[i] = newPositions[i] - 72;
                     };
-                        pegHoles[newPositions[i]].tint = NORMAL;
-                }
 
-                if (playerOneLocations.length < 5) {
-                
-                    if (this.name = pegHoles[39 + cardValue].name) {
-
-                        pegHoles[39 + cardValue].tint = red;
-                        playerOneLocations.push(pegHoles[39 + cardValue].name)
-                    }
+                    pegHoles[newPositions[i]].tint = NORMAL;
                 };
-
+               
                 discardDatCard();
 
                 console.log(localStorage.getItem('playerOneLocations'));
@@ -376,17 +391,26 @@
                 };
                 moves = pegHoles[moveLocations];
                 moves.canMove = true;
-                moves.tint = '0xffff00';
+                moves.tint = yellow;
             };
 
             //Allow player to deploy unused peg
             if (playerOneLocations.length < 5) {
-                pegHoles[39 + cardValue].tint = '0xffff00';
+                pegHoles[39 + cardValue].tint = yellow;
 
                 //We'll need to add this to the array if they click it    
                 //playerOneLocations.push(pegHoles[39 + cardValue].name);
                 console.log(playerOneLocations);
             };
+        };
+
+        function clearYellowSpaces () {
+            for (let i = 0; i < pegHoles.length; i++) {
+
+                        if (pegHoles[i].tint === yellow) {
+                            pegHoles[i].tint = NORMAL;
+                        };
+                    };
         };
 
 
@@ -405,6 +429,7 @@
             };
         }
 
+
         //Displays number of tokens that have reached home base
         function homeCounter() {
 
@@ -412,7 +437,8 @@
             hometokens.className = "homecounters"
             hometokens.textContent = '|';
             hCounter.appendChild(hometokens);
-        }
+        };
+
 
         //Removes token from userTokens when a piece moves out of start position
         //Also removes counter from header
