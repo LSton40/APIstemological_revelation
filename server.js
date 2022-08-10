@@ -658,7 +658,7 @@ lobby.on('connection', async (socket) => {
 
     //   socket.emit('redirect', '/lobby');
 
-    socket.emit('redirect', '/lobby');
+    
 
 
     // } else {
@@ -679,6 +679,8 @@ lobby.on('connection', async (socket) => {
     // console.log(await playGame.getGameData(gameID));
     playGame.initDealCards(gameID);
     console.log(await playGame.initDealCards(gameID));
+
+    socket.emit('redirect', '/lobby');
   });
   /* ************* */
   /* GUNGUNTESTING */

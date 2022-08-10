@@ -2,26 +2,17 @@
     margin: 0;
     padding: 0;
     /* box-sizing: border-box; */
-    overflow: hidden;
-
-}
-
-#fname {
-    width: px;
-    height:40px !important ;
-    text-align: center;
 }
 
 /*Global */
-html,
-body {
+html, body {
     height: 100vh;
     color: rgb(209, 206, 206);
     display: grid;
 }
 
 body {
-    background: linear-gradient(to bottom right, rgba(0, 0, 0, 1.00), rgb(60, 9, 10));
+    background: linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10));
 }
 
 #opening {
@@ -64,8 +55,7 @@ h3 {
 .button {
     margin: 20px;
     padding: 30px 100px;
-    background: linear-gradient(to bottom right, rgba(0, 0, 0, 1.00), rgb(60, 9, 10));
-    ;
+    background: linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10));;
     color: rgb(209, 206, 206);
     font-size: CALC(1.5vw + 12px);
     border-radius: 25px;
@@ -170,8 +160,7 @@ h3 {
     width: 100%;
 }
 
-input[type=text],
-input[type=password] {
+input[type=text], input[type=password] {
     width: 100%;
     padding: 30px 20px;
     margin: 8px 0;
@@ -224,7 +213,7 @@ li {
 /*Index page opening teaser*/
 p#tease {
     color: #49acf4;
-    font-family: Courier, "Lucida Console", Monaco, monospace;
+    font-family: Courier, "Lucida Console", Monaco, monospace; 
     font-size: 6vw;
     font-weight: normal;
     text-shadow: 0 0 2rem #77c6ff;
@@ -236,11 +225,11 @@ p#tease {
     white-space: nowrap;
     overflow: hidden;
     visibility: hidden;
-    transform: scale(.70, 1);
+    transform:scale(.70,1);
     transform-origin: left;
     animation: type 2.1s 0s steps(41, end);
     animation-fill-mode: forwards;
-
+   
 }
 
 
@@ -300,7 +289,7 @@ p#tease {
 
 /*Gameboard header and title*/
 .gb-header {
-    height: 10vh;
+    height: 5vh;
 }
 
 .gb-title {
@@ -315,18 +304,127 @@ p#tease {
 /*Gameboard section*/
 #game-display {
     display: grid;
-    height: 90vh;
+    height: 100vh;
+    /* padding: 2vh; */
 }
 
 /*Player areas*/
-.player {
-    background-color: green;
-}
+
 
 /*Player along top of screen*/
 #top_player {
     grid-column: 1 / 11;
     grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.thisPlayer {
+    box-shadow: -10px 10px 10px white;
+}
+
+.players {
+    width: 200px;
+    margin-left: 5px;
+    border-radius: 50px;
+    display: grid;
+    justify-content:center;
+    /* margin-left: 6vw; */
+    box-shadow: 5px 10px 15px rgb(119, 89, 89);
+    color: black;
+    font-size: 1.5vw;
+    padding: 10px 10px 0px 10px;
+    max-height: 300px;
+    min-width: fit-content;
+    width: 15vw;
+}
+
+.players:not(:first-child) {
+    margin-left: 6vw;
+}
+
+.players p {
+    margin: 0 auto;
+    padding-bottom: 0;
+    max-height: max-content;
+    font-family: 'Mouse Memoirs', sans-serif;
+    text-shadow: 5px 5px 5px rgb(63, 63, 63);
+}
+
+
+.numHere {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 1.5vh;
+    max-height: max-content;
+}
+
+.counters {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 12vw;
+    margin: 0 auto;
+    /* margin-top: 0;
+    padding-top: 0; */
+    /* height: max-content; */
+}
+
+/* .counters:: {
+    /* margin-left: 5vw; */
+
+.sCounters {
+    font-size: 1.1vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    width: 3vw;
+    margin: auto;
+}
+
+.hCounters {
+    font-size: 1.1vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    width: 3vw;
+    margin: auto;
+}
+
+
+.showMe {
+    color: rgb(60, 9, 10);
+    font-size: 2vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    padding: 0;
+    margin: 0;
+    height: max-content;
+}
+
+.player-1 {
+    background-color: blue;
+}
+
+.player-2 {
+    background-color: darkmagenta;
+}
+
+.player-3 {
+    background-color: orange;
+}
+
+.player-4 {
+    background-color: yellow;
+}
+
+
+
+.thisPlayer {
+    box-shadow:
+        inset 0 0 50px #fff,
+        0 0 50px #fff,
+        -10px 0 80px #f0f,
+        10px 0 80px #0ff;
 }
 
 /*Player on left side of screen (from user perspective)*/
@@ -337,7 +435,7 @@ p#tease {
 
 /*Gameboard itself*/
 #gameboard-canvas {
-    background-color: aqua;
+    /* background-color: aqua; */
     grid-column: 2 / 10;
     grid-row: 2 / 10;
 }
@@ -352,68 +450,117 @@ p#tease {
 #me_player {
     grid-column: 1 / 11;
     grid-row: 10 / 11;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    overflow: hidden;
 }
+
+.cards {
+    background-image: linear-gradient(45deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
+    width: 150px;
+    margin-left: 2vw;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    color: rgb(60, 9, 10);
+    box-shadow: 5px 5px 5px black;
+    cursor: grab;
+
+    /* overflow: hidden;
+    transform: translateX(300px); */
+    /* transition: all 0.6s ease-out; */
+}
+
+.cards:active {
+    cursor: grabbing;
+}
+
+.cards:hover {
+    box-shadow:
+        inset 0 0 50px #fff,
+        0 0 50px #fff,
+        -10px 0 80px #f0f,
+        10px 0 80px #0ff;
+}
+
+.selectedCard {
+    box-shadow:
+        inset 0 0 50px #fff,
+        0 0 50px #fff,
+        -10px 0 80px #f0f,
+        10px 0 80px #0ff;
+}
+
+
+
+.smokeIt {
+    /* transform: translateX(100vw); */
+    /* text-shadow: 0 0 0 whitesmoke;
+    animation: smoky 5s; */
+    /* overflow: clip; */
+    padding: 0;
+    margin: 0;
+    width: 0px;
+    opacity: 0;
+    transform: translateY(0);
+    /* transition: all 1s ease-out; */
+    animation: smoky 1.5s;
+}
+
+/* .slide {
+    margin-left: 0;
+    transition: 0.6s all ease-out;
+} */
+
+
+@keyframes smoky {
+    0% {
+        width: 150px;
+    }
+    100% {
+        width: 0;
+        z-index: 2;
+        display: none;
+    }
+}
+
+
+
+
+
+
 
 
 
 
 /*Keyframe for main section fade ins*/
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    25% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+    0% {opacity: 0;}
+    25% {opacity: 0;}
+    100% {opacity: 1;}
 }
 
 @keyframes fadeIn2 {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
 
 /*Keyframe for main section fade ins*/
 @keyframes fadeOut {
-    0% {
-        background: black;
-    }
-
-    100% {
-        background: transparent;
-    }
+    0% {background: black;}
+    100% {background: transparent;}
 }
 
 /*Keyframe for opening teaser*/
-@keyframes type {
-    0% {
-        width: 0%;
-        visibility: hidden;
-    }
-
-    1% {
-        width: 1%;
-        visibility: visible;
-    }
-
-    50% {
-        width: 50%;
-        visibility: visible;
-    }
-
-    100% {
-        width: 100%;
-        visibility: visible;
-    }
+@keyframes type{
+    0%{width: 0%; visibility: hidden;}
+    1%{width: 1%; visibility: visible;}
+    50%{width: 50%; visibility: visible;}
+    100%{width: 100%; visibility: visible;}
 }
 
 /*Keyframe for Title movement*/
@@ -426,411 +573,116 @@ p#tease {
         background-image: linear-gradient(0deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
     }
 
-    1% {
-        background-image: linear-gradient(3.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    2% {
-        background-image: linear-gradient(7.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    3% {
-        background-image: linear-gradient(10.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    4% {
-        background-image: linear-gradient(14.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    5% {
-        background-image: linear-gradient(18deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    6% {
-        background-image: linear-gradient(21.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    7% {
-        background-image: linear-gradient(25.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    8% {
-        background-image: linear-gradient(28.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    9% {
-        background-image: linear-gradient(32.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    10% {
+    1% {background-image: linear-gradient(3.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    2% {background-image: linear-gradient(7.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    3% {background-image: linear-gradient(10.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    4% {background-image: linear-gradient(14.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    5% {background-image: linear-gradient(18deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    6% {background-image: linear-gradient(21.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    7% {background-image: linear-gradient(25.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    8% {background-image: linear-gradient(28.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    9% {background-image: linear-gradient(32.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    10%{
         opacity: 1;
         background-image: linear-gradient(36deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
     }
-
-    11% {
-        background-image: linear-gradient(39.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    12% {
-        background-image: linear-gradient(43.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    13% {
-        background-image: linear-gradient(46.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    14% {
-        background-image: linear-gradient(50.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    15% {
-        background-image: linear-gradient(54deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    16% {
-        background-image: linear-gradient(57.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    17% {
-        background-image: linear-gradient(61.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    18% {
-        background-image: linear-gradient(64.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    19% {
-        background-image: linear-gradient(68.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    20% {
-        background-image: linear-gradient(72deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    21% {
-        background-image: linear-gradient(75.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    22% {
-        background-image: linear-gradient(79.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    23% {
-        background-image: linear-gradient(82.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    24% {
-        background-image: linear-gradient(86.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    25% {
+    11% {background-image: linear-gradient(39.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    12% {background-image: linear-gradient(43.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    13% {background-image: linear-gradient(46.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    14% {background-image: linear-gradient(50.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    15% {background-image: linear-gradient(54deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    16% {background-image: linear-gradient(57.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    17% {background-image: linear-gradient(61.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    18% {background-image: linear-gradient(64.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    19% {background-image: linear-gradient(68.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    20% {background-image: linear-gradient(72deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    21% {background-image: linear-gradient(75.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    22% {background-image: linear-gradient(79.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    23% {background-image: linear-gradient(82.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    24% {background-image: linear-gradient(86.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    25%{
         font-size: 18vw;
         margin-top: 25vh;
         height: 75vh;
         background-image: linear-gradient(90deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
     }
-
-    26% {
-        background-image: linear-gradient(93.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    27% {
-        background-image: linear-gradient(97.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    28% {
-        background-image: linear-gradient(100.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    29% {
-        background-image: linear-gradient(104.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    30% {
-        background-image: linear-gradient(108deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    31% {
-        background-image: linear-gradient(111.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    32% {
-        background-image: linear-gradient(115.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    33% {
-        background-image: linear-gradient(118.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    34% {
-        background-image: linear-gradient(122.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    35% {
-        background-image: linear-gradient(126deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    36% {
-        background-image: linear-gradient(129.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    37% {
-        background-image: linear-gradient(133.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    38% {
-        background-image: linear-gradient(136.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    39% {
-        background-image: linear-gradient(140.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    40% {
-        background-image: linear-gradient(144deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    41% {
-        background-image: linear-gradient(147.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    42% {
-        background-image: linear-gradient(151.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    43% {
-        background-image: linear-gradient(154.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    44% {
-        background-image: linear-gradient(158.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    45% {
-        background-image: linear-gradient(162deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    46% {
-        background-image: linear-gradient(165.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    47% {
-        background-image: linear-gradient(169.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    48% {
-        background-image: linear-gradient(172.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    49% {
-        background-image: linear-gradient(176.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    50% {
-        background-image: linear-gradient(180deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    51% {
-        background-image: linear-gradient(183.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    52% {
-        background-image: linear-gradient(187.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    53% {
-        background-image: linear-gradient(190.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    54% {
-        background-image: linear-gradient(194.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    55% {
-        background-image: linear-gradient(198deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    56% {
-        background-image: linear-gradient(201.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    57% {
-        background-image: linear-gradient(205.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    58% {
-        background-image: linear-gradient(208.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    59% {
-        background-image: linear-gradient(212.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    60% {
-        background-image: linear-gradient(216deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    61% {
-        background-image: linear-gradient(219.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    62% {
-        background-image: linear-gradient(223.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    63% {
-        background-image: linear-gradient(226.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    64% {
-        background-image: linear-gradient(230.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    65% {
-        background-image: linear-gradient(234deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    66% {
-        background-image: linear-gradient(237.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    67% {
-        background-image: linear-gradient(241.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    68% {
-        background-image: linear-gradient(244.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    69% {
-        background-image: linear-gradient(248.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    70% {
-        background-image: linear-gradient(252deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    71% {
-        background-image: linear-gradient(255.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    72% {
-        background-image: linear-gradient(259.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    73% {
-        background-image: linear-gradient(262.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    74% {
-        background-image: linear-gradient(266.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    75% {
-        background-image: linear-gradient(270deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    76% {
-        background-image: linear-gradient(273.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    77% {
-        background-image: linear-gradient(277.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    78% {
-        background-image: linear-gradient(280.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    79% {
-        background-image: linear-gradient(284.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    80% {
-        background-image: linear-gradient(288deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    81% {
-        background-image: linear-gradient(291.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    82% {
-        background-image: linear-gradient(295.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    83% {
-        background-image: linear-gradient(298.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    84% {
-        background-image: linear-gradient(302.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    85% {
-        background-image: linear-gradient(306deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    86% {
-        background-image: linear-gradient(309.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    87% {
-        background-image: linear-gradient(313.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    88% {
-        background-image: linear-gradient(316.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    89% {
-        background-image: linear-gradient(320.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    90% {
-        background-image: linear-gradient(324deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    91% {
-        background-image: linear-gradient(327.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    92% {
-        background-image: linear-gradient(331.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    93% {
-        background-image: linear-gradient(334.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    94% {
-        background-image: linear-gradient(338.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    95% {
-        background-image: linear-gradient(342deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    96% {
-        background-image: linear-gradient(345.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    97% {
-        background-image: linear-gradient(349.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    98% {
-        background-image: linear-gradient(352.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
-    99% {
-        background-image: linear-gradient(356.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
-    }
-
+    26% {background-image: linear-gradient(93.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    27% {background-image: linear-gradient(97.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    28% {background-image: linear-gradient(100.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    29% {background-image: linear-gradient(104.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    30% {background-image: linear-gradient(108deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    31% {background-image: linear-gradient(111.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    32% {background-image: linear-gradient(115.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    33% {background-image: linear-gradient(118.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    34% {background-image: linear-gradient(122.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    35% {background-image: linear-gradient(126deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    36% {background-image: linear-gradient(129.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    37% {background-image: linear-gradient(133.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    38% {background-image: linear-gradient(136.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    39% {background-image: linear-gradient(140.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    40% {background-image: linear-gradient(144deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    41% {background-image: linear-gradient(147.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    42% {background-image: linear-gradient(151.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    43% {background-image: linear-gradient(154.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    44% {background-image: linear-gradient(158.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    45% {background-image: linear-gradient(162deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    46% {background-image: linear-gradient(165.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    47% {background-image: linear-gradient(169.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    48% {background-image: linear-gradient(172.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    49% {background-image: linear-gradient(176.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    50% {background-image: linear-gradient(180deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    51% {background-image: linear-gradient(183.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    52% {background-image: linear-gradient(187.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    53% {background-image: linear-gradient(190.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    54% {background-image: linear-gradient(194.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    55% {background-image: linear-gradient(198deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    56% {background-image: linear-gradient(201.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    57% {background-image: linear-gradient(205.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    58% {background-image: linear-gradient(208.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    59% {background-image: linear-gradient(212.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    60% {background-image: linear-gradient(216deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    61% {background-image: linear-gradient(219.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    62% {background-image: linear-gradient(223.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    63% {background-image: linear-gradient(226.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    64% {background-image: linear-gradient(230.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    65% {background-image: linear-gradient(234deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    66% {background-image: linear-gradient(237.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    67% {background-image: linear-gradient(241.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    68% {background-image: linear-gradient(244.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    69% {background-image: linear-gradient(248.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    70% {background-image: linear-gradient(252deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    71% {background-image: linear-gradient(255.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    72% {background-image: linear-gradient(259.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    73% {background-image: linear-gradient(262.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    74% {background-image: linear-gradient(266.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    75% {background-image: linear-gradient(270deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    76% {background-image: linear-gradient(273.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    77% {background-image: linear-gradient(277.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    78% {background-image: linear-gradient(280.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    79% {background-image: linear-gradient(284.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    80% {background-image: linear-gradient(288deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    81% {background-image: linear-gradient(291.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    82% {background-image: linear-gradient(295.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    83% {background-image: linear-gradient(298.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    84% {background-image: linear-gradient(302.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    85% {background-image: linear-gradient(306deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    86% {background-image: linear-gradient(309.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    87% {background-image: linear-gradient(313.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    88% {background-image: linear-gradient(316.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    89% {background-image: linear-gradient(320.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    90% {background-image: linear-gradient(324deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    91% {background-image: linear-gradient(327.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    92% {background-image: linear-gradient(331.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    93% {background-image: linear-gradient(334.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    94% {background-image: linear-gradient(338.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    95% {background-image: linear-gradient(342deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    96% {background-image: linear-gradient(345.6deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    97% {background-image: linear-gradient(349.2deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    98% {background-image: linear-gradient(352.8deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
+    99% {background-image: linear-gradient(356.4deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));}
     100% {
         font-size: 6vw;
         height: 15vh;
         background-image: linear-gradient(360deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
     }
-}
-
-;
+};
