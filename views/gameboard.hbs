@@ -98,10 +98,10 @@
         let playerThreeLocations = [41, 17, 3];
         let playerFourLocations = [6, 31];
 
-        let p1StartPosition =
+        let p1StartPosition;
 
-            //when the start button is presses put all clientside information in local storage
-            localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
+        //when the start button is presses put all clientside information in local storage
+        localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
         window.onload = function () {
             app = new PIXI.Application({
                 width: window.innerWidth,
@@ -413,13 +413,13 @@
             };
         };
 
-        function clearYellowSpaces () {
+        function clearYellowSpaces() {
             for (let i = 0; i < pegHoles.length; i++) {
 
-                        if (pegHoles[i].tint === yellow) {
-                            pegHoles[i].tint = NORMAL;
-                        };
-                    };
+                if (pegHoles[i].tint === yellow) {
+                    pegHoles[i].tint = NORMAL;
+                };
+            };
         };
 
         //cardBtn.addEventListener('click', showPossibleMoves); --}}
@@ -552,15 +552,12 @@
 
         };
 
-<<<<<<< HEAD
-  let handCard = document.createElement('div');
-  handCard.id = 'card5';
-  handCard.className = "cards";
-  handCard.textContent = drawCard;
-  hand.appendChild(handCard);
-}
-=======
->>>>>>> 5c256aa08a60a88ee21e42e148b0c0971ac7ba45
+        let handCard = document.createElement('div');
+        handCard.id = 'card5';
+        handCard.className = "cards";
+        handCard.textContent = drawCard;
+        hand.appendChild(handCard);
+
 
 
 
