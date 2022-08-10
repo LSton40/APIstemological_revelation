@@ -434,7 +434,7 @@ lobby.on('connection', async (socket) => {
   //const destination = '/index.html';
   //socket.emit('redirect', destination);
   console.log('WAAAAAAY');
-  
+
 
   /* declares all games being played */
 
@@ -489,12 +489,13 @@ lobby.on('connection', async (socket) => {
   /* ************************* */
   /* join game socket listener */
   /* ************************* */
-  socket.on('joinRequest', async (gameID) => {
+  socket.on('joinRequest', async (userData) => {
     // finding game with gameID
     console.log('clicked2')
-
+    console.log(userData);
+    //gameID
     console.log('caught join game call');
-    const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
+    const gameRoom = await GameBoard.findOne({ where: { gameID: userData.username } });
 
     console.log(`gameRoom: ${gameRoom}`);
 
@@ -503,8 +504,8 @@ lobby.on('connection', async (socket) => {
       let roomPlayers = gameRoom.gamePlayers || [];
 
       //if the gameRoom exists, then add the socket user to the gameID room
-      socket.join('gameID');
-      console.log(`${currUser} has joined the ${gameID}`);
+      socket.join('userData.username');
+      console.log(`${currUser} has joined the game of ${userData.username}`);
 
       // pushing user to gamePlayers
       roomPlayers.push({
@@ -533,143 +534,19 @@ lobby.on('connection', async (socket) => {
   /* ******************** */
   /* create game listener */
   /* ******************** */
-  socket.on('createGame', async (gameID) => {
+  socket.on('createGame', async (userData) => {
     /* board exists ? created = false : created = true && return newGame */
-    let currUser = socket.handshake.query['username'] || null;
-    console.log('test2');
-
-
-
-
-    /* TEST DATA */
-    let testGameID = 'epicGameName';
-    let testUserList = [
-      {
-        username: 'bryan',
-        userColor: '0xF78DA7'
-      },
-      {
-        username: 'datboi',
-        userColor: '0x8ED1FC'
-      },
-      {
-        username: 'jewishMom',
-        userColor: '0xFF6900'
-      },
-      {
-        username: 'ordinateur',
-        userColor: '0xABB8C3'
-      }
-    ];
-
-    const GameData = new GameDataClass(testGameID, testUserList, testUserList[0].username);
-
-    console.log(GameData.gamePlayers);
-    console.log('test3');
-
-    /* game exists ? created = false : created = true && return game */
-    const game = await GameBoard.create({
-      gameID: GameData.gameID,
-      gameCreator: GameData.gameCreator,
-      gameStatus: GameData.gameStatus,
-      gamePlayers: GameData.gamePlayers,
-      gameTurn: GameData.gameTurn
-    });
+    console.log(userData);
+    let currUser = userData.username || null;
+    
     gameLister();
+
+    socket.join(currUser);
+    // console.log(socket);
 
     socket.emit('logs', {
       game: game,
     });
-
-    // console.log(GameData);
-    // console.log(GameData.returnUsers());
-
-    // console.log(`current turn: ${GameData.gameTurn}`);
-    // console.log(`nextUserTurn called and the next player turn is: ${GameData.nextUserTurn()}`);
-
-
-
-
-    // try {
-    //   const [newGame, created] = await GameBoard.findOrCreate({
-    //     where: { // finding query looking for the gameID
-    //       gameID: gameID
-    //     },
-    //     defaults: { // if there isn't a game, it will save user to host variable
-    //       gameCreator: currUser,
-    //       gamePlayers: roomPlayers,
-    //       gameTurn: currUser
-    //     }
-    //   });
-    // } catch (err) {
-    //   socket.emit('errors', {
-    //     error: 'There was an error creating the game!',
-    //     errorData: err
-    //   });
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //find game by gameID and create it if it doesn't exist
-
-    // GameBoard.findOrCreate({
-    //   where: {
-    //     gameID: gameID
-    //   },
-    //   defaults: {
-    //     gameCreator: currUser,
-    //     gamePlayers: JSON.stringify([{
-    //       username: currUser
-    //     }])
-    //   }
-    // }).then(game => {
-    //   console.log(game);
-    // });
-
-
-
-
-
-
-    // if (created) {
-    //   // defining the playerList to include the host
-    //   let roomPlayers = [];
-    //   roomPlayers.push({
-    //     username: currUser,
-    //     userColor: currUserColor
-    //   });
-
-    //   // setting the gamePlayers array after updating
-    //   gameRoom.gamePlayers = roomPlayers;
-
-    //   gameLister();
-
-
-
-
-    //   socket.emit('redirect', '/lobby');
-
-    
-
-
-    // } else {
-    //   socket.emit('errors', {
-    //     error: 'Error creating room - room with that name must already exist!'
-    //   });
-    // }
-
 
   });
 
@@ -691,13 +568,13 @@ lobby.on('connection', async (socket) => {
 
 
   //socket.on('joinRequestReturn', async (gameID) => {
-    
-    //check to see if game exists
+
+  //check to see if game exists
 
 
 
 
- // });
+  // });
 
 
 

@@ -16,10 +16,6 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-  // checking to see if we are in the right html page to load the js
-  console.log('test1');
-
-
 
   /* calling in the username that was passed in view_routes */
   const username = "{{username}}";
@@ -31,6 +27,7 @@
     username: username,
     userColor: userColor
   }
+
 
   /* joining the lobby room && carrying over the username & color */
   const socket = io('/lobby', { query: query });
@@ -165,6 +162,28 @@
     window.location.assign("/gameboard");
   }
 
+  function createGame() {
+    console.log(query);
+    socket.emit('createGame', query);
+
+    window.location.assign("/lobby");
+  }
+
+
+  function joinGame() {
+    let joinGameInput = document.getElementById('roomCode');
+
+    console.log('clicked');
+
+    if (joinGameInput.value) {
+      console.log(`sending request to join ${joinGameInput.value}`)
+      socket.emit('joinRequest', query);
+      console.log('clicked')
+
+    }
+    joinGameInput.value = '';
+
+  }
 
 
 
