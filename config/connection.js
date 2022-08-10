@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const logging = process.env.LOG ? true : false;
 
-module.exports = new Sequelize('jegs_pokers_db', 'root', '', {
+module.exports = new Sequelize('jegs_pokers_db', 'root', 'MarkUstby555', {
 
   host: 'localhost',
   dialect: 'mysql',

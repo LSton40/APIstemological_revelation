@@ -25,7 +25,7 @@ exports.loggedIn = (req, res, next) => {
 
       break;
     case '/lobby':
-      // code block
+      
       break;
     case '/sign_out':
       // code block
