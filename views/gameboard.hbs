@@ -175,7 +175,7 @@
             circle.buttonMode = true;
 
             //circle.on("pointerup", doPointerUp);
-            //circle.on("pointerdown", doPointerDown);
+            //circle.on("pointerdown", movePiece);
             //circle.on("pointerover", doPointerOver);
             //circle.on("pointerout", doPointerOut);
             //circle.on("pointerupoutside", doPointerUpOutside);
@@ -286,18 +286,36 @@
         function showPossibleMoves () {
 
             for(i = 0; i < playerOneLocations.length; i ++) {
+                
+                let currLocs = pegHoles[playerOneLocations[i]];
                 let moves = pegHoles[playerOneLocations[i] + cardValue];
                 moves.tint = '0xffff00';
             }
             
-            moves.addEventListener('click', movePiece);
+            //moves.addEventListener('click', movePiece(currLocs, moves));
         }
         
-        // We need to figure out how to move the piece to the clicked location
-        function movePiece () {
-            
-            console.log('click');
+       let markedPossibilities = pegHoles.tint = '0xffff00';
+        console.log(markedPossibilities)
+
+            function moveIt() {
+
+            let newPlace = markedPossibilities.indexOf(event.target)
+            let oldLoc = playerOneLocations.find(newPlace - cardValue);
+            let arraySpot = playerOneLocations.indexOf(oldLoc)
+
+            playerOneLocations.splice(arraySpot, 1, newLoc)
+
+
         }
+
+        markedPossibilities.addEventListener('click', moveIt);
+
+        
+ 
+        
+        // We need to figure out how to move the piece to the clicked location
+   
 
         
 

@@ -11,9 +11,9 @@
 </head>
 
 <body>
-  <header class="fades gb-header">
+  <!-- <header class="fades gb-header">
     <h1 class="gb-title">Jegs and Pokers</h1>
-  </header>
+  </header> -->
 
   <main id="game-display">
 
@@ -21,11 +21,12 @@
     <section id="top_player" class="player">
       <!-- {{#if userAcc}} -->
       <div id="player1" class="player-1 players thisPlayer">
-        <p>USERNAME1</p>
-        <p>#</p>
-
-        <div id="sCounter"></div>
-        <div id="hCounter"></div>
+        <p class="user">Chippy</p>
+        <div class="numHere"></div>
+        <div class="counters">
+          <div id="sCounter" class="sCounters">Start:</div>
+          <div id="hCounter" class="hCounters">Home:</div>
+        </div>
       </div>
       <!-- {{else}} -->
       <!-- <div id="player1" class="player-1 players">
@@ -37,22 +38,32 @@
 
       <!-- {{#if userAcc}} -->
       <div id="player2" class="player-2 players">
-        <p>USERNAME2</p>
-        <p>#</p>
-
+        <p class="user">Vladivastok</p>
+        <div class="numHere"></div>
+        <div class="counters">
+          <div id="sCounter2" class="sCounters">Start:</div>
+          <div id="hCounter2" class="hCounters">Home:</div>
+        </div>
       </div>
 
       <!-- {{#if userAcc}} -->
       <div id="player3" class="player-3 players">
-        <p>USERNAME3</p>
-        <p>#</p>
-
-      </div>
+        <p class="user">Dufus69</p>
+        <div class="numHere"></div>
+        <div class="counters">
+          <div id="sCounter3" class="sCounters">Start:</div>
+          <div id="hCounter3" class="hCounters">Home:</div>
+        </div>
+        </div>
 
       <!-- {{#if userAcc}} -->
       <div id="player4" class="player-4 players">
-        <p>USERNAME4</p>
-        <p>#</p>
+        <p class="user">straightEdge420</p>
+        <div class="numHere"></div>
+        <div class="counters">
+          <div id="sCounter4" class="sCounters">Start:</div>
+          <div id="hCounter4" class="hCounters">Home:</div>
+        </div>
       </div>
 
 
@@ -61,28 +72,20 @@
 
 
     <section id="left_player" class="player">
-      <p>blah</p>
+      
     </section>
 
     <section id="gameboard-canvas">
-      <p>blah</p>
+      
 
     </section>
     
     <section id="right_player" class="player">
-      <p>blah</p>
+      
   </section>
 
   <section id="me_player" class="player">
-      
-    <!-- <div id="card1" class="cards">1</div>
-    <div id="card2" class="cards">2</div>
-    <div id="card3" class="cards">3</div>
-    <div id="card4" class="cards">4</div>
-    <div id="card5" class="cards">5</div> -->
-    <!-- <div id="drawCard" class="cards">6</div> -->
-
-
+     
   </section>
 
 
