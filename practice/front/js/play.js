@@ -87,22 +87,17 @@ function iLikeToMoveItMoveIt(select) {
 
 
 
-//Highlights a given card on click, or removes highlighting on second click
-//When highlighted, also calls iLikeToMoveItMoveIt function to display possible moves from card selection
-function addSelectClass(event) {
-  // first grabs clicked card from event
-  clickedCard = document.getElementById(event.target.id);
 
-  // if card was clicked, just make it unselected
-  if (clickedCard.getAttribute('class') == "selectedCard cards") {
-    clickedCard.setAttribute('class', 'cards');
-  } else { // otherwise unselect everyone and just select the one
-    for (let i = 0; i < hand.childNodes.length; i++) {
-      hand.childNodes[i].className = "cards";
-    }
-    clickedCard.setAttribute("class", "selectedCard cards");
-  }
-}
+   
+
+const hCounter = document.querySelector('#hCounter');
+const sCounter = document.querySelector('#sCounter');
+const bCounter = document.querySelectorAll('.basecounters');
+const hand = document.querySelector('#me_player');
+
+
+
+
 
 
 
@@ -114,24 +109,6 @@ function addSelectClass(event) {
 
 
 
-
-
-
-
-
-const cardSelect = document.querySelector('.selectedCard');
-const hCounter = document.querySelector('#hCounter');
-const sCounter = document.querySelector('#sCounter');
-const bCounter = document.querySelectorAll('.basecounters');
-const hand = document.querySelector('#me_player');
-const card1 = document.querySelector('#card0');
-const card2 = document.querySelector('#card1');
-const card3 = document.querySelector('#card2');
-const card4 = document.querySelector('#card3');
-const card5 = document.querySelector('#card4');
-const card6 = document.querySelector('#card5');
-
-const cards = document.querySelectorAll('.cards');
 
 
 
@@ -205,31 +182,34 @@ function gameStart(cardArray) {
 //Calls the dealMeIn function
 function dealCards() {
 
-  let player1Hand;
-  let player2Hand;
-  let player3Hand;
-  let player4Hand;
+    
+    let player1Hand;
+    let player2Hand;
+    let player3Hand;
+    let player4Hand;
 
-  player1Hand = playDeck.splice(0, 5);
+        player1Hand = playDeck.splice(0, 5);
+    
+        player2Hand = playDeck.splice(0, 5);
+    
+        player3Hand = playDeck.splice(0, 5);
+    
+        player4Hand = playDeck.splice(0, 5);
 
-  player2Hand = playDeck.splice(0, 5);
+        console.log(player1Hand);
+        console.log(player2Hand);
+        console.log(player3Hand);
+        console.log(player4Hand);
+    
 
-  player3Hand = playDeck.splice(0, 5);
+        //Switch statement to equate userHand to appropriate player Hand ??
 
-  player4Hand = playDeck.splice(0, 5);
+        userHand = player1Hand;
 
-  console.log(player1Hand);
-  console.log(player2Hand);
-  console.log(player3Hand);
-  console.log(player4Hand);
-
-
-  //Switch statement to equate userHand to appropriate player Hand ??
-
-  userHand = player1Hand;
-
-  startCounter();
-  dealMeIn(userHand);
+        startCounter();
+        dealMeIn(userHand);
+        
+        drawCard();
 
 }
 
@@ -277,34 +257,20 @@ function comeOut() {
   bCounter[0].remove();
 }
 
-//Removes the played card to the discard pile upon piece click
-//Reassigns ids of remaining cards in hand
-function discardDatCard() {
-
-  const discardCard = userHand.find(cardSelect.textContent);
-  discard.push(discardCard);
-
-  cardPlayed(discardCard)
-
-  cardSelect.remove();
-
-  for (let c in cards) {
-    cards[c].id = `card${c}`;
-  }
-}
 
 //Displays the played card to the header for a few seconds
 function cardPlayed(showAll) {
-
-  const playPlayer = document.querySelector('#player1');
-  const playCard = document.createElement('div');
-  playCard.textContent = showAll;
-  playPlayer.appendChild(playCard);
-
-  setTimeout(() => {
-    playCard.remove();
-  }, 5000)
-
+    
+    const playPlayer = document.querySelector('.numHere');
+    const playCard = document.createElement('div');
+    playCard.textContent = showAll;
+    playCard.classList.add('showMe');
+    playPlayer.appendChild(playCard);
+    
+    setTimeout(() => {
+        playCard.remove();
+    }, 5000)
+    
 }
 
 
@@ -329,18 +295,88 @@ function winCondition() {
 }
 
 
+
 //Starts game on page load
 gameStart(cardArray);
 
 
-// card1.addEventListener('click', addSelectClass)
-// card2.addEventListener('click', addSelectClass)
-// card3.addEventListener('click', addSelectClass)
-// card4.addEventListener('click', addSelectClass)
-// card5.addEventListener('click', addSelectClass)
-// card6.addEventListener('click', addSelectClass)
-hand.addEventListener('click', addSelectClass);
+const card1 = document.querySelector('#card0');
+const card2 = document.querySelector('#card1');
+const card3 = document.querySelector('#card2');
+const card4 = document.querySelector('#card3');
+const card5 = document.querySelector('#card4');
+const card6 = document.querySelector('#card5');
 
+const cards = document.querySelectorAll('.cards');
+
+
+//Highlights a given card on click, or removes highlighting on second click
+//When highlighted, also calls iLikeToMoveItMoveIt function to display possible moves from card selection
+function addSelectClass(event) {
+
+    if (!event.target.classList.contains("selectedCard")) {
+        // cards.classList.remove("selectedCard");
+        event.target.classList.add("selectedCard")
+
+        for (i = 0; i < cards.length; i++) {
+            if (cards[i] != event.target) {
+                cards[i].classList.remove("selectedCard")
+            }
+        }
+        //remove highlighting from pieces
+        //remove highlighting from target game spaces
+        
+    } 
+    else {
+        event.target.classList.remove("selectedCard")
+
+        console.log(JSON.stringify(event.target.textContent))
+
+        // iLikeToMoveItMoveIt(JSON.stringify(event.target.textContent));
+    }
+    
+    
+}
+
+const killIt = document.querySelector('#gameboard-canvas');
+
+
+
+card1.addEventListener('click', addSelectClass)
+card2.addEventListener('click', addSelectClass)
+card3.addEventListener('click', addSelectClass)
+card4.addEventListener('click', addSelectClass)
+card5.addEventListener('click', addSelectClass)
+card6.addEventListener('click', addSelectClass)
+
+
+
+//Removes the played card to the discard pile upon piece click
+//Reassigns ids of remaining cards in hand
+function discardDatCard() {
+
+    let cardSelect = document.querySelector('.selectedCard');
+    let discardCard = userHand.find((el) => el === cardSelect.textContent.toString());
+    discard.push(discardCard);
+    
+    cardPlayed(discardCard)
+
+    cardSelect.classList.add('smokeIt')
+    
+
+    // cards.classList.add('slide');
+    setTimeout(() => {
+        cardSelect.remove();
+
+    }, 1500)    
+    
+    for (let c in cards) {
+        cards[c].id = `card${c}`;
+    }
+}
+
+
+killIt.addEventListener('click', discardDatCard);
 
 // for (let i = 0; i < userHand.length; i++) {
 //     if (userHand[i] = ) {
