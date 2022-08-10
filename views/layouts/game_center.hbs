@@ -16,11 +16,11 @@
 <div id="mmmToast"></div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-
+  
 
   /* calling in the username that was passed in view_routes */
-  const username = "{{username}}";
-  const userColor = "0xF78DA7";
+  let username = "{{username}}";
+  let userColor = "0xF78DA7";
   /* maybe let user pick their or theme?  NTH VERYLOW PRIORITY */
 
   /* setting query to pass to the socket */
@@ -64,6 +64,8 @@
     
   });
 
+  
+
 
   //socket.on('redirect', function (destination) {
 
@@ -88,7 +90,7 @@
 
   // const myCookie = await cookieStore.get('connect.sid');
   // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
-  socket.emit('cookie time', username);
+  // socket.emit('cookie time', username);
 
 
 
@@ -96,14 +98,27 @@
   /* ********************************** */
   /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
   /* ********************************** */
+  /*
   const queryGameSocket = async () => {
     let name = {
     username: 'bobbyfillets',
     userColor: "0xF78DA7"
   }
-    
-    socket.emit('joinRequest', name, 'sql');
+        let joinGameFormEl = document.getElementById('joinForm');
+    let joinGameInput = document.getElementById('roomCode');
 
+    joinGameFormEl.addEventListener('submit', async (e) => {
+      console.log(`IM STILL HERE ${socket.id}`);
+      console.log('clicked')
+      e.preventDefault();
+      if (joinGameInput.value) {
+        console.log(`sending request to join ${joinGameInput.value}`)
+        socket.emit('joinRequest', socket.id);
+        console.log('clicked')
+
+      }
+      joinGameInput.value = '';
+    });
 
 
     console.log('queried boii');
@@ -115,40 +130,92 @@
 
   queryGameButtonEl = document.getElementById('queryGame');
   queryGameButtonEl.addEventListener('click', queryGameSocket);
+  */
   /* ********************************** */
   /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
   /* ********************************** */
 
+  
+    socket.on('currentPlayers', (players) => {
+      console.log('currplaycalled');
+      playerHolderEl = document.getElementById('currentPlayers');
+
+      for (let i = 0; i < players.length; i++) {
+        playerHolderEl.insertAdjacentHTML('beforeend', `
+        <div class="cards">
+          <h3>${players[i].username}</h3>
+        </div>
+        `);
+      }
+    });
+
+
+
+  
 
 
 
 
 
+ 
+
+    function createGame() {
+    console.log(query);
+    socket.emit('createGame', query);
+
+    window.location.assign("/lobby");
+  }
 
 
-  let joinGameFormEl = document.getElementById('joinForm');
-  let joinGameInput = document.getElementById('roomCode');
+  function joinGame() {
+    let joinGameInput = document.getElementById('roomCode').value;
 
-  joinGameFormEl.addEventListener('submit', async (e) => {
-    console.log(`IM STILL HERE ${socket.id}`);
-    console.log('clicked')
-    e.preventDefault();
-    if (joinGameInput.value) {
-      console.log(`sending request to join ${joinGameInput.value}`)
-      socket.emit('joinRequest', socket.id);
-      console.log('clicked')
 
+
+    console.log(joinGameInput);
+
+    if (joinGameInput) {
+      console.log(`sending request to join ${joinGameInput}`)
+      socket.emit('joinRequest', query, joinGameInput);
+      window.location.assign("/lobby");
     }
-    joinGameInput.value = '';
-  });
+    joinGameInput = '';
+
+  }
 
 
 
-  socket.on('joinRequestReturn', (ans) => {
+
+    {{!-- let joinGameFormEl = document.getElementById('joinForm');
+    let joinGameInput = document.getElementById('roomCode');
+
+    joinGameFormEl.addEventListener('submit', async (e) => {
+      console.log(`IM STILL HERE ${socket.id}`);
+      console.log('clicked')
+      e.preventDefault();
+      if (joinGameInput.value) {
+        console.log(`sending request to join ${joinGameInput.value}`)
+        socket.emit('joinRequest', socket.id);
+        console.log('clicked')
+
+      }
+      joinGameInput.value = '';
+    }); --}}
+
+
+
+
+
+
+
+  
+
+
+  {{!-- socket.on('joinRequestReturn', (ans) => {
     //maybe add /lobby:gameid
     window.location.assign("/lobby")
 
-  });
+  }); --}}
 
 
   function startGame() {
@@ -158,31 +225,10 @@
     window.location.assign("/gameboard");
   }
 
-  function createGame() {
-    console.log(query);
-    socket.emit('createGame', query);
-
-    window.location.assign("/lobby");
-  }
-
-
-  function joinGame() {
-    let joinGameInput = document.getElementById('roomCode');
-
-    console.log('clicked');
-
-    if (joinGameInput.value) {
-      console.log(`sending request to join ${joinGameInput.value}`)
-      socket.emit('joinRequest', query);
-      console.log('clicked')
-
-    }
-    joinGameInput.value = '';
-
-  }
+  
 
 
 
 </script>
-<script src="../front/js/play.js"></script>
-<script src="../front/js/front.js"></script>
+{{!-- <script src="../front/js/play.js"></script>
+<script src="../front/js/front.js"></script> --}}
