@@ -64,17 +64,6 @@
     
   });
 
-<<<<<<< HEAD
-=======
-  socket.on('errors', (err) => {
-
-    console.log(err);
-  })
-  
-
-
-
->>>>>>> main
 
   //socket.on('redirect', function (destination) {
 
@@ -108,13 +97,22 @@
   /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
   /* ********************************** */
   const queryGameSocket = async () => {
-    let name = 'epicGameName';
-    socket.emit('testQuery', name);
+    let name = {
+    username: 'bobbyfillets',
+    userColor: "0xF78DA7"
+  }
+    
+    socket.emit('joinRequest', name, 'sql');
+
+
+
     console.log('queried boii');
   }
-  socket.on('logs', (data) => {
+
+  socket.on('enoughLength', (data) => {
     console.log(data);
   })
+
   queryGameButtonEl = document.getElementById('queryGame');
   queryGameButtonEl.addEventListener('click', queryGameSocket);
   /* ********************************** */

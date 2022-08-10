@@ -422,14 +422,15 @@ auth.on('connection', (socket) => {
 //         console.log(socket.rooms);
 //     });
 
-
+// global user array for pushing users to and then creating a lobby for them
+let playerArray = [];
 
 // defining the room we're listening for
 const lobby = io.of('/lobby');
 // lobby connection func
 lobby.on('connection', async (socket) => {
 
-  let playerArray = [];
+  
 
   let i = 1;
   console.log(i++);
@@ -464,49 +465,18 @@ lobby.on('connection', async (socket) => {
   }
 
 
-
-  // // finding user from the database by its username
-  // const currDBUser = await UserAcc.findOne({ where: { username: currUser } }) || null;
-  // // setting the user to have the socket id
-  // const updatedUser = await currDBUser.update({ socket: socket.id });
-  // grabbing the username from the frontend as it's being passed. [!!]could technically be modified on front end[!!]
-  let currUser = socket.handshake.query['username'] || null;
-  // NTH: let user set their color or theme from some options? 
-  let currUserColor = socket.handshake.query['userColor'];
-
-  console.log(`${currUser} has connected to the lobby`);
-
-
-
-  // // finding user from the database by its username
-  // const currDBUser = await UserAcc.findOne({ where: { username: currUser } }) || null;
-  // // setting the user to have the socket id
-  // const updatedUser = await currDBUser.update({ socket: socket.id });
-
-
-
-
-
-
-
-
   /* ************************* */
   /* join game socket listener */
   /* ************************* */
-  socket.on('joinRequest', async (userData) => {
+  socket.on('joinRequest', async (userData, gameID) => {
 
-    playerArray.push({
-      username: userData.username,
-      userColor: userData.userColor
-    });
-
-
-
-
-
-    if (playerArray.length == 4) {
-      socket.emit('enoughLength', playerArray);
-
+    if (userData.username && gameID) {
+      playerArray.push({
+        username: userData.username,
+        userColor: userData.userColor
+      });
+      socket.join(gameID);
+      console.log(playerArray);
     } else {
       // emitting any errors that occur
       socket.emit('errors', {
@@ -514,7 +484,9 @@ lobby.on('connection', async (socket) => {
       });
     }
     
-
+    if (playerArray.length == 4) {
+      socket.emit('enoughLength', playerArray);
+    }
 
 
     
@@ -574,8 +546,11 @@ lobby.on('connection', async (socket) => {
       username: currUser,
       userColor: currUserColor
     });
+    console.log(playerArray);
     
     gameLister();
+
+    
     if (currUser) {
       socket.join(currUser);
     } else {
@@ -583,11 +558,6 @@ lobby.on('connection', async (socket) => {
         error: 'Error creating room - please try agian!'
       });
     }
-    // console.log(socket);
-
-    socket.emit('logs', {
-      game: game,
-    });
 
   });
 
