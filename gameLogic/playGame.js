@@ -34,7 +34,7 @@ module.exports = {
     const gameRoom = gameRoomPinger(gameID);
 
     // ref array for easier
-    gamePlayers = gameRoom.gamePlayers;
+    let gamePlayers = gameRoom.gamePlayers;
     
     // nested for loop to create 5 cards and push them to each players hand
     for (let i = 0; i < gamePlayers.length; i++) {
@@ -60,6 +60,18 @@ module.exports = {
     });
 
     return updatedGameRoom.gamePlayers;
+  },
+  playCard: async(gameID, player, card) => {
+    const gameRoom = gameRoomPinger(gameID);
+    let gamePlayers = gameRoom.gamePlayers;
+
+    let playerI = gamePlayers.indexOf( obj => {
+      if (obj.username == player) {
+        return true;
+      }
+    });
+
+    return gamePlayers[playerI].hand.splice(card, 1);
   },
   movePeg: async(gameID, pegID, pegLoc) => {
     const gameRoom = gameRoomPinger(gameID);
@@ -197,7 +209,7 @@ module.exports = {
   getPlayerData: async(gameID) => {
     const gameRoom = gameRoomPinger(gameID);
 
-    gamePlayers = gameRoom.gamePlayers;
+    let gamePlayers = gameRoom.gamePlayers;
     let playerData = [];
     
 
@@ -219,7 +231,20 @@ module.exports = {
     return playerData;
   },
   checkIfWin: async(gameID) => {
+    const gameRoom = gameRoomPinger(gameID);
+    let gamePlayers = gameRoom.gamePlayers;
 
+    for (let i = 0; i < gamePlayers.length; i++) {
+      currPlayerPoints = 0;
+      for (let j = 0; j < gamePlayers[i].pegs.length; j++) {
+        gamePlayers[i].pegs[j].isInFinish ? currPlayerPoints++ : false;
+      }
+      if (currPlayerPoints == 5) {
+        return gamePlayers[i].username;
+      }
+    }
+
+    return false;
   }
 }
 
