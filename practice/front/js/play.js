@@ -341,16 +341,6 @@ function addSelectClass(event) {
 const killIt = document.querySelector('#gameboard-canvas');
 
 
-
-card1.addEventListener('click', addSelectClass)
-card2.addEventListener('click', addSelectClass)
-card3.addEventListener('click', addSelectClass)
-card4.addEventListener('click', addSelectClass)
-card5.addEventListener('click', addSelectClass)
-card6.addEventListener('click', addSelectClass)
-
-
-
 //Removes the played card to the discard pile upon piece click
 //Reassigns ids of remaining cards in hand
 function discardDatCard() {
@@ -374,6 +364,16 @@ function discardDatCard() {
         cards[c].id = `card${c}`;
     }
 }
+
+card1.addEventListener('click', addSelectClass)
+card2.addEventListener('click', addSelectClass)
+card3.addEventListener('click', addSelectClass)
+card4.addEventListener('click', addSelectClass)
+card5.addEventListener('click', addSelectClass)
+card6.addEventListener('click', addSelectClass)
+
+
+
 
 
 killIt.addEventListener('click', discardDatCard);

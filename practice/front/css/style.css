@@ -15,13 +15,6 @@ body {
     background: linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10));
 }
 
-#opening {
-    background: black;
-    animation-name: fadeOut;
-    animation-delay: 8.5s;
-    animation-duration: 1.5s;
-    transition-timing-function: linear;
-}
 
 a {
     color: rgb(209, 206, 206);
@@ -67,6 +60,13 @@ h3 {
     background: rgb(60, 9, 10);
 }
 
+#opening {
+    background: black;
+    animation-name: fadeOut;
+    animation-delay: 8.5s;
+    animation-duration: 1.5s;
+    transition-timing-function: linear;
+}
 
 /*Header tag for Register, Login, Foyer, Lobby*/
 .fades {

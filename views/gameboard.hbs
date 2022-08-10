@@ -37,18 +37,14 @@
             </div>
         </div>
     </section>
-
-
+    
     <section id="left_player" class="player"></section>
 
     <section id="gameboard-canvas">
         <div id="gameDiv"></div>
-        
-        {{! Temporary Button}}
     </section>
     
     <section id="right_player" class="player"></section>
-
     <section id="me_player" class="player"></section>
 
 
@@ -61,10 +57,33 @@
 
     <script src="https://pixijs.download/release/pixi.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
-    {{!-- <script src="../views/front/js/board.js"></script> --}}
     <script>
 
+        const hCounter = document.querySelector('#hCounter');
+        const sCounter = document.querySelector('#sCounter');
+        const bCounter = document.querySelectorAll('.basecounters');
+        const hand = document.querySelector('#me_player');
 
+        //Array of userTokens within the Starting Area
+        const userTokens = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]
+
+        //Array of userTokens currently in play on the board
+        const userTokensOnBoard = [];
+
+        //Array of userTokens that have reached home base
+        const userHome = [];
+
+        //Base Array of all cards
+        const cardArray = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+        //Variable for the Shuffled Deck
+        let playDeck;
+
+        //Deck Discard pile array
+        const discard = [];
+
+        //Variable for the user's current hand of cards
+        let userHand;
 
         let app;
         const NORMAL = 0xFFFFFF;
@@ -87,7 +106,6 @@
         let startingY = 0;
         let radius = 15;
         let posTracker = 0;
-        //const cardBtn = document.querySelector('#card-btn');
         let gameContainer;
         let cardValue;
         const playerLocation = 2 + 1;
@@ -96,16 +114,13 @@
         let playerThreeLocations = [41, 17, 3];
         let playerFourLocations = [6, 31];
 
-        let p1StartPosition = 
-
-        //when the start button is presses put all clientside information in local storage
+        //when the start button is pressed put all clientside information in local storage
         localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
         window.onload = function () {
             app = new PIXI.Application({
                 width: window.innerWidth,
                 height: window.innerHeight / 1.5,
                 backgroundColor: 0x2b1515
-
             });
 
             document.querySelector('#gameDiv').appendChild(app.view);
@@ -231,7 +246,7 @@
             circle.interactive = true;
             circle.buttonMode = true;
 
-
+            //Click function assigned to the board spaces
             circle.on("pointerdown", doPointerDown);
 
             let canMove = false;
@@ -241,44 +256,44 @@
             return circle;
         }
 
-                //Function that highlights the possible moves given the value of the card selection
-function iLikeToMoveItMoveIt(select) {
+        //Function that assigns movement values to cards and passes the information to the showPossibleMoves function, which highlights all possible moves for that card value
+        function iLikeToMoveItMoveIt(select) {
 
-  switch (select) {
-    case "A":
-      cardValue = 1
-      return showPossibleMoves(cardValue);
-    case "2":
-      cardValue = 2
-      return showPossibleMoves(cardValue);
-    case "3":
-      cardValue = 3
-      return showPossibleMoves(cardValue);
-    case "4":
-      cardValue = 4
-      return showPossibleMoves(cardValue);
-    case "5":
-      cardValue = 5
-      return showPossibleMoves(cardValue);
-    case "6":
-      cardValue = 6
-      return showPossibleMoves(cardValue);
-    case "7":
-      cardValue = 7
-      return showPossibleMoves(cardValue);
-    case "8":
-      cardValue = 8
-      return showPossibleMoves(cardValue);
-    case "9":
-      cardValue = 9
-      return showPossibleMoves(cardValue);
-    default:
-      cardValue = 10
-      return showPossibleMoves(cardValue);
-  }
-}
+        switch (select) {
+            case "A":
+            cardValue = 1
+            return showPossibleMoves(cardValue);
+            case "2":
+            cardValue = 2
+            return showPossibleMoves(cardValue);
+            case "3":
+            cardValue = 3
+            return showPossibleMoves(cardValue);
+            case "4":
+            cardValue = 4
+            return showPossibleMoves(cardValue);
+            case "5":
+            cardValue = 5
+            return showPossibleMoves(cardValue);
+            case "6":
+            cardValue = 6
+            return showPossibleMoves(cardValue);
+            case "7":
+            cardValue = 7
+            return showPossibleMoves(cardValue);
+            case "8":
+            cardValue = 8
+            return showPossibleMoves(cardValue);
+            case "9":
+            cardValue = 9
+            return showPossibleMoves(cardValue);
+            default:
+            cardValue = 10
+            return showPossibleMoves(cardValue);
+        }
+        }
 
-
+        //Move a given game piece to the selected possible move position
         function doPointerDown() {
             console.log(`type: ${this.type}`);
             console.log(`type: ${this.canMove}`);
@@ -301,54 +316,28 @@ function iLikeToMoveItMoveIt(select) {
                 playerOneLocations[playerOneLocations.indexOf(originalLoc)] = this.name;
                 pegHoles[pegLoc].tint = NORMAL;
 
-
                 let newPositions = playerOneLocations.map((pos) => {return pos + cardValue}); 
-                //let blob = newPositions.splice(playerOneLocations.indexOf(originalLoc + cardValue), 1)
-
-//.splice(playerOneLocations.indexOf(originalLoc), 1)
-                console.log(playerOneLocations)
-                console.log(newPositions);
-
-
+                
                 for (let i =0; i < newPositions.length; i++) {
-                    console.log(pegHoles[i])
 
                     if (newPositions[i] > 71) {
-
                         newPositions[i] = newPositions[i] - 72;
-                    
                     };
-
                         pegHoles[newPositions[i]].tint = NORMAL;
-
                 }
 
                 if (playerOneLocations.length < 5) {
                 
-                if (this.name = pegHoles[39 + cardValue].name) {
+                    if (this.name = pegHoles[39 + cardValue].name) {
 
-                    pegHoles[39 + cardValue].tint = red;
-
-                    playerOneLocations.push(pegHoles[39 + cardValue].name)
-
-                }
-
-                //pegHoles[39 + cardValue].tint = '0xffff00';
-
-                //We'll need to add this to the array if they click it    
-                //playerOneLocations.push(pegHoles[39 + cardValue].name);
-
-                console.log(playerOneLocations);
-            };
-
-
-
+                        pegHoles[39 + cardValue].tint = red;
+                        playerOneLocations.push(pegHoles[39 + cardValue].name)
+                    }
+                };
 
                 discardDatCard();
-                //newPositions.forEach((pos) => {return pos.tint = NORMAL});
 
                 console.log(localStorage.getItem('playerOneLocations'));
-
             };
             pointerIsDown = true;
         };
@@ -374,7 +363,7 @@ function iLikeToMoveItMoveIt(select) {
 
         };
 
-        // When player clicks on card it shows the possible moves they can do
+        // When player clicks on card it shows the possible moves they can do with that card value
         function showPossibleMoves() {
 
             for (i = 0; i < playerOneLocations.length; i++) {
@@ -383,11 +372,8 @@ function iLikeToMoveItMoveIt(select) {
 
                 //If next move i > 71, it will go to the beginning of the array before counting
                 if (moveLocations > 71) {
-
-
                     moveLocations = moveLocations - 72;
                 };
-
                 moves = pegHoles[moveLocations];
                 moves.canMove = true;
                 moves.tint = '0xffff00';
@@ -395,319 +381,209 @@ function iLikeToMoveItMoveIt(select) {
 
             //Allow player to deploy unused peg
             if (playerOneLocations.length < 5) {
-                
-                
-
                 pegHoles[39 + cardValue].tint = '0xffff00';
 
                 //We'll need to add this to the array if they click it    
                 //playerOneLocations.push(pegHoles[39 + cardValue].name);
-
                 console.log(playerOneLocations);
             };
         };
 
-        //cardBtn.addEventListener('click', showPossibleMoves); --}}
 
-
-
-
-const hCounter = document.querySelector('#hCounter');
-const sCounter = document.querySelector('#sCounter');
-const bCounter = document.querySelectorAll('.basecounters');
-const hand = document.querySelector('#me_player');
-
-
-
-
-
-//Array of userTokens within the Starting Area
-const userTokens = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]
-
-//Array of userTokens currently in play on the board
-const userTokensOnBoard = [];
-
-//Array of userTokens that have reached home base
-const userHome = [];
-
-
-//Base Array of all cards
-const cardArray = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-
-//Variable for the Shuffled Deck
-let playDeck;
-
-//Deck Discard pile array
-const discard = [];
-
-//Variable for the user's current hand of cards
-let userHand;
-
-/********************
-Token Ticker Counters
-**********************/
-
-//Displays number of tokens in starting area at beginning of game
-function startCounter() {
-
-  for (let c in userTokens) {
-    let basecounter = document.createElement('span');
-    basecounter.className = "basecounters"
-    basecounter.textContent = '|';
-    sCounter.appendChild(basecounter);
-  };
-}
-
-//Displays number of tokens that have reached home base
-function homeCounter() {
-
-  let hometokens = document.createElement('span');
-  hometokens.className = "homecounters"
-  hometokens.textContent = '|';
-  hCounter.appendChild(hometokens);
-}
-
-
-
-
-
-//Starts game: shuffles cards, pushes into playDeck, then passes to the dealCards function
-function gameStart(cardArray) {
-
-  for (let i = cardArray.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * i);
-    let k = cardArray[i]
-    cardArray[i] = cardArray[j]
-    cardArray[j] = k;
-  }
-
-  playDeck = cardArray.map(value => value);
-
-  dealCards();
-}
-
-//Populates all players' hands from shuffled playDeck and equates the userHand with their player id
-//Calls the counter for the tokens in the start area
-//Calls the dealMeIn function
-function dealCards() {
-
-    
-    let player1Hand;
-    let player2Hand;
-    let player3Hand;
-    let player4Hand;
-
-        player1Hand = playDeck.splice(0, 5);
-    
-        player2Hand = playDeck.splice(0, 5);
-    
-        player3Hand = playDeck.splice(0, 5);
-    
-        player4Hand = playDeck.splice(0, 5);
-
-        console.log(player1Hand);
-        console.log(player2Hand);
-        console.log(player3Hand);
-        console.log(player4Hand);
-    
-
-        //Switch statement to equate userHand to appropriate player Hand ??
-
-        userHand = player1Hand;
-
-        startCounter();
-        dealMeIn(userHand);
-        
-        drawCard();
-
-}
-
-
-//Displays the player's hand in the HTML
-function dealMeIn(myHand) {
-
-  for (let c in myHand) {
-
-    let handCard = document.createElement('div');
-    handCard.id = `card${c}`;
-    handCard.className = "cards"
-    handCard.textContent = myHand[c];
-    hand.appendChild(handCard);
-  }
-
-};
-
-
-
-
-
-//On player's turn, draws a card and displays it in the HTML
-function drawCard() {
-
-  let drawCard = userHand.push(playDeck.splice(0, 1));
-
-  let handCard = document.createElement('div');
-  handCard.id = 'card5';
-  handCard.className = "cards"
-  handCard.textContent = drawCard;
-  hand.appendChild(handCard);
-}
-
-
-
-//Removes token from userTokens when a piece moves out of start position
-//Also removes counter from header
-function comeOut() {
-
-  const emergePiece = userTokens.splice(0, 1);
-  const token = emergePiece.find(el => el);
-  userTokensOnBoard.push(token);
-
-  bCounter[0].remove();
-}
-
-
-//Displays the played card to the header for a few seconds
-function cardPlayed(showAll) {
-    
-    const playPlayer = document.querySelector('.numHere');
-    const playCard = document.createElement('div');
-    playCard.textContent = showAll;
-    playCard.classList.add('showMe');
-    playPlayer.appendChild(playCard);
-    
-    setTimeout(() => {
-        playCard.remove();
-    }, 5000)
-    
-}
-
-
-//Removes token from the userTokensOnBoard array when it reaches Home base
-//Adds calls homeCounter function to add home counter to header
-function goHome() {
-
-  const exitPiece = userTokensOnBoard.splice(0, 1);
-  const byeToken = exitPiece.find(el => el);
-  userHome.push(byeToken);
-
-  homeCounter();
-}
-
-
-//If all of the user's pieces enter home base, the game ends
-function winCondition() {
-
-  if (userHome.length = 5) {
-    //Game over message
-  }
-}
-
-
-
-//Starts game on page load
-gameStart(cardArray);
-
-
-const card1 = document.querySelector('#card0');
-const card2 = document.querySelector('#card1');
-const card3 = document.querySelector('#card2');
-const card4 = document.querySelector('#card3');
-const card5 = document.querySelector('#card4');
-const card6 = document.querySelector('#card5');
-
-const cards = document.querySelectorAll('.cards');
-
-
-//Highlights a given card on click, or removes highlighting on second click
-//When highlighted, also calls iLikeToMoveItMoveIt function to display possible moves from card selection
-function addSelectClass(event) {
-
-    if (!event.target.classList.contains("selectedCard")) {
-        // cards.classList.remove("selectedCard");
-        event.target.classList.add("selectedCard")
-
-        for (i = 0; i < cards.length; i++) {
-            if (cards[i] != event.target) {
-                cards[i].classList.remove("selectedCard")
-                //dehighlight();
+        /********************
+        Token Ticker Counters
+        **********************/
+
+        //Displays number of tokens in starting area at beginning of game
+        function startCounter() {
+
+            for (let c in userTokens) {
+                let basecounter = document.createElement('span');
+                basecounter.className = "basecounters"
+                basecounter.textContent = '|';
+                sCounter.appendChild(basecounter);
+            };
+        }
+
+        //Displays number of tokens that have reached home base
+        function homeCounter() {
+
+            let hometokens = document.createElement('span');
+            hometokens.className = "homecounters"
+            hometokens.textContent = '|';
+            hCounter.appendChild(hometokens);
+        }
+
+        //Removes token from userTokens when a piece moves out of start position
+        //Also removes counter from header
+        function comeOut() {
+            const emergePiece = userTokens.splice(0, 1);
+            const token = emergePiece.find(el => el);
+            userTokensOnBoard.push(token);
+            bCounter[0].remove();
+        }
+
+        //Removes token from the userTokensOnBoard array when it reaches Home base
+        //Adds calls homeCounter function to add home counter to header
+        function goHome() {
+            const exitPiece = userTokensOnBoard.splice(0, 1);
+            const byeToken = exitPiece.find(el => el);
+            userHome.push(byeToken);
+
+            homeCounter();
+        }
+
+        //If all of the user's pieces enter home base, the game ends
+        function winCondition() {
+            if (userHome.length = 5) {
+                //Game over message
             }
         }
 
-        //let possiblePos = playerOneLocations.map((pos) => {return pos + cardValue});
 
-        //console.log(possiblePos);
 
-           
-        for (let i =0; i < pegHoles.length; i++) {
-                
-                if (pegHoles[i].tint === '0xffff00') {
-                    pegHoles[i].tint = NORMAL;
-                }
 
+        //Starts game: shuffles cards, pushes into playDeck, then passes to the dealCards function
+        function gameStart(cardArray) {
+
+            for (let i = cardArray.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * i);
+                let k = cardArray[i]
+                cardArray[i] = cardArray[j]
+                cardArray[j] = k;
             }
-   
-        iLikeToMoveItMoveIt(event.target.textContent);
-        
-    } 
-    else {
-        event.target.classList.remove("selectedCard")
-       //dehighlight();
-
-        // console.log(JSON.stringify(event.target.textContent))
-
-        for (let i =0; i < pegHoles.length; i++) {
-                
-                if (pegHoles[i].tint === '0xffff00') {
-                    pegHoles[i].tint = NORMAL;
-                }
-
-            }
+            playDeck = cardArray.map(value => value);
+            dealCards();
         }
+
+        //Populates all players' hands from shuffled playDeck and equates the userHand with their player id
+        //Calls the counter for the tokens in the start area
+        //Calls the dealMeIn function
+        function dealCards() {
+            let player1Hand;
+            let player2Hand;
+            let player3Hand;
+            let player4Hand;
+
+            player1Hand = playDeck.splice(0, 5);
+            player2Hand = playDeck.splice(0, 5);
+            player3Hand = playDeck.splice(0, 5);
+            player4Hand = playDeck.splice(0, 5);
+
+            userHand = player1Hand;
+
+            startCounter();
+            dealMeIn(userHand);
+            //drawCard();
+        }
+
+        //Displays the player's hand in the HTML
+        function dealMeIn(myHand) {
+
+            for (let c in myHand) {
+                let handCard = document.createElement('div');
+                handCard.id = `card${c}`;
+                handCard.className = "cards"
+                handCard.textContent = myHand[c];
+                hand.appendChild(handCard);
+            }
+        };
+
+        //On player's turn, draws a card and displays it in the HTML
+        function drawCard() {
+            let drawCard = userHand.push(playDeck.splice(0, 1));
+            let handCard = document.createElement('div');
+            handCard.id = 'card5';
+            handCard.className = "cards"
+            handCard.textContent = drawCard;
+            hand.appendChild(handCard);
+        }
+
+
+
+        //Displays the played card to the header for a few seconds
+        function cardPlayed(showAll) {       
+            const playPlayer = document.querySelector('.numHere');
+            const playCard = document.createElement('div');
+            playCard.textContent = showAll;
+            playCard.classList.add('showMe');
+            playPlayer.appendChild(playCard);
             
-    
-}
+            setTimeout(() => {
+                playCard.remove();
+            }, 5000)
+        }
 
-//function dehighlight() {
-  //  moves.tint = NORMAL;
-//}
+        //Starts game on page load
+        gameStart(cardArray);
 
-
-
-
-card1.addEventListener('click', addSelectClass)
-card2.addEventListener('click', addSelectClass)
-card3.addEventListener('click', addSelectClass)
-card4.addEventListener('click', addSelectClass)
-card5.addEventListener('click', addSelectClass)
-card6.addEventListener('click', addSelectClass)
-
-
-
-//Removes the played card to the discard pile upon piece click
-//Reassigns ids of remaining cards in hand
-function discardDatCard() {
-
-    let cardSelect = document.querySelector('.selectedCard');
-    let discardCard = userHand.find((el) => el === cardSelect.textContent.toString());
-    discard.push(discardCard);
-    
-    cardPlayed(discardCard)
-
-    cardSelect.classList.add('smokeIt')
-    
-
-    // cards.classList.add('slide');
-    setTimeout(() => {
-        cardSelect.remove();
-
-    }, 1500)    
-    
-    for (let c in cards) {
-        cards[c].id = `card${c}`;
-    }
-}
+        //Card elements that do not exist until after page load and game starts
+        const cards = document.querySelectorAll('.cards');
+        const card1 = document.querySelector('#card0');
+        const card2 = document.querySelector('#card1');
+        const card3 = document.querySelector('#card2');
+        const card4 = document.querySelector('#card3');
+        const card5 = document.querySelector('#card4');
+        const card6 = document.querySelector('#card5');
 
 
+        //Highlights a given card on click, or removes highlighting on second click
+        //When highlighted, also calls iLikeToMoveItMoveIt function to display possible moves from card selection
+        function addSelectClass(event) {
+
+            if (!event.target.classList.contains("selectedCard")) {
+                event.target.classList.add("selectedCard")
+
+                for (i = 0; i < cards.length; i++) {
+                    if (cards[i] != event.target) {
+                        cards[i].classList.remove("selectedCard")
+                    }
+                }
+               
+                for (let i =0; i < pegHoles.length; i++) {
+                        if (pegHoles[i].tint === '0xffff00') {
+                            pegHoles[i].tint = NORMAL;
+                        }
+                    }
+        
+                iLikeToMoveItMoveIt(event.target.textContent);
+            } 
+            else {
+                event.target.classList.remove("selectedCard")
+
+                for (let i =0; i < pegHoles.length; i++) {
+                        if (pegHoles[i].tint === '0xffff00') {
+                            pegHoles[i].tint = NORMAL;
+                        }
+                    }
+                }
+        };
+
+        //Removes the played card to the discard pile upon piece click
+        //Reassigns ids of remaining cards in hand
+        function discardDatCard() {
+            let cardSelect = document.querySelector('.selectedCard');
+            let discardCard = userHand.find((el) => el === cardSelect.textContent.toString());
+            discard.push(discardCard);
+            
+            cardPlayed(discardCard)
+
+            cardSelect.classList.add('smokeIt')
+            setTimeout(() => {
+                cardSelect.remove();
+            }, 1500)    
+            
+            for (let c in cards) {
+                cards[c].id = `card${c}`;
+            }
+        };
+
+        //Event listeners for cards
+        card1.addEventListener('click', addSelectClass)
+        card2.addEventListener('click', addSelectClass)
+        card3.addEventListener('click', addSelectClass)
+        card4.addEventListener('click', addSelectClass)
+        card5.addEventListener('click', addSelectClass)
+        card6.addEventListener('click', addSelectClass)
 
     </script>
