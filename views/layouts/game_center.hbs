@@ -78,11 +78,7 @@
     //socket.on('errors', (error) => {
     /* append the errors somewhere!! TOAST??!?!?!?! */
 
-    socket.on('redirect', (url) => {
-
-      fetch(url);
-
-    });
+    
 
     // const myCookie = await cookieStore.get('connect.sid');
     // console.log(`MY COOKIE STORE----> ${cookieStore.get('connect')}`);
@@ -129,6 +125,18 @@
     })
     queryGameButtonEl = document.getElementById('queryGame');
     queryGameButtonEl.addEventListener('click', queryGameSocket);
+
+
+    socket.on('redirect', (url) => {
+
+      redirectMe(lank);
+
+    });
+    const redirectMe = (lank) => {
+      
+    }
+
+
     /* ********************************** */
     /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
     /* ********************************** */
