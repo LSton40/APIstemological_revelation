@@ -430,14 +430,6 @@ const lobby = io.of('/lobby');
 // lobby connection func
 lobby.on('connection', async (socket) => {
 
-  
-
-  let i = 1;
-  console.log(i++);
-  //const destination = '/index.html';
-  //socket.emit('redirect', destination);
-  console.log('WAAAAAAY');
-
 
   /* declares all games being played */
 
@@ -469,65 +461,54 @@ lobby.on('connection', async (socket) => {
   /* join game socket listener */
   /* ************************* */
   socket.on('joinRequest', async (userData, gameID) => {
+    // grabbing user array from gameboard
+    tempGameBoard = await GameBoard.findByPk(gameID);
+    if (tempGameBoard) {
+      // setting temp array
+      let tempPlayers = tempGameBoard.tempGamePlayers;
 
-    if (userData.username && gameID) {
-      playerArray.push({
-        username: userData.username,
-        userColor: userData.userColor
-      });
-      socket.join(gameID);
-      console.log(playerArray);
+      // validating and pushing user to temp array
+      if (userData.username && gameID) {
+        tempPlayers.push({
+          username: userData.username,
+          userColor: userData.userColor
+        });
+
+        // updating the db with the new array data
+        await GameBoard.update({
+          tempGamePlayers: tempPlayers,
+        }, { where: { gameID: gameID}});
+
+        // putting user in new room
+        // socket.join(gameID);
+
+        // telling the users the current user list for renders
+        setTimeout(function() {
+          // socket.to(gameID).emit('currentPlayers', tempPlayers);
+          socket.emit('currentPlayers', tempPlayers);
+        }, 1000);
+        console.log(`tempPlayers: ${tempPlayers}`);
+      } else {
+        // emitting any errors that occur
+        socket.emit('errors', {
+          error: 'Error joining room - please try agian!'
+        });
+      }
+
+
     } else {
-      // emitting any errors that occur
       socket.emit('errors', {
-        error: 'Error joining room - please try agian!'
+        error: 'Error joining room - the lobby might not exist!'
       });
     }
+
+    
+
     
     if (playerArray.length == 4) {
       socket.emit('enoughLength', playerArray);
     }
 
-
-    
-    // // finding game with gameID
-    // console.log('clicked2')
-    // console.log(userData);
-    // //gameID
-    // console.log('caught join game call');
-    // const gameRoom = await GameBoard.findOne({ where: { gameID: userData.username } });
-
-    // console.log(`gameRoom: ${gameRoom}`);
-
-
-
-
-
-    // if (gameRoom) {
-    //   // grabbing gamePlayers from the game
-    //   let roomPlayers = gameRoom.gamePlayers || [];
-
-    //   auth.use((socket, next) => {
-    //     // auth user
-    //     next();
-        
-    //   })
-
-    //   //if the gameRoom exists, then add the socket user to the gameID room
-    //   socket.join('userData.username');
-    //   console.log(`${currUser} has joined the game of ${userData.username}`);
-
-    //   // pushing user to gamePlayers
-    //   roomPlayers.push({
-    //     username: currUser,
-    //     userColor: currUserColor
-    //   });
-
-    //   // setting the gamePlayers array after updating
-    //   gameRoom.gamePlayers = roomPlayers;
-
-    //   // updating the gamePlayers array in the database
-    //   await gameRoom.update({ gamePlayers: roomPlayers });
    
   });
 
@@ -538,15 +519,22 @@ lobby.on('connection', async (socket) => {
   /* ******************** */
   socket.on('createGame', async (userData) => {
     /* board exists ? created = false : created = true && return newGame */
-    console.log(userData);
+    
     let currUser = userData.username || null;
     let currUserColor = userData.userColor || '0xF78DA7';
-    
+
     playerArray.push({
       username: currUser,
       userColor: currUserColor
     });
-    console.log(playerArray);
+
+    let newGameRoom = await GameBoard.findOrCreate({ 
+      where: {
+        gameID: userData.username,
+    },
+    defaults: {
+      tempGamePlayers: playerArray,
+    }});
     
     gameLister();
 
@@ -589,14 +577,23 @@ lobby.on('connection', async (socket) => {
 
   // });
 
+  /* ************************* */
+  /* userInteraction listeners */
+  /* ************************* */
+  socket.on('gameCreation', async(gameID) => {
+    
 
+
+
+
+  })
 
 
   /* ******************* */
   /* disconnect listener */
   /* ******************* */
   socket.on('disconnect', () => {
-    console.log(`${currUser} has disconnected from the lobby`);
+    // console.log(`${currUser} has disconnected from the lobby`);
     // socket.socket.reconnect();
     socket.disconnect();
   });
