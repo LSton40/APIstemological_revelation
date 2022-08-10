@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
 <div id="gameDiv"></div>
 
 <button id="card-btn">7</button>
 
 <body>
 
-
     <script src="https://pixijs.download/release/pixi.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
     <script>
-        //const filters = new PIXI.filters;
         let app;
         const NORMAL = 0xFFFFFF;
         const OVER = 0x00FF00;
@@ -43,7 +39,7 @@
         let playerTwoLocations = [7];
         let playerThreeLocations = [41, 17, 3];
         let playerFourLocations = [6, 31];
-        let outlineFilter;
+
         //when the start button is presses put all clientside information in local storage
         localStorage.setItem('playerOneLocations', JSON.stringify({ playerOneLocations }));
         window.onload = function () {
@@ -53,16 +49,10 @@
                 backgroundColor: 0xAAAAAA
 
             });
-            console.log('test');
-            const outlineFilter = new PIXI.filters.OutlineFilter();
-            console.log(outlineFilter);
-            //console.log(PIXI.filters);
-            //  const outlineFilterBlue = new PIXI.filters.OutlineFilter(2, 0x99ff99);
-            //const outlineFilterRed = new PIXI.filters.GlowFilter(15, 2, 1, 0xff9999, 0.5);
+
             document.querySelector('#gameDiv').appendChild(app.view);
             gameContainer = new PIXI.Container();
             app.stage.addChild(gameContainer);
-
 
             //beginning of game drawing
             // Top column // peg hole 0 - 18
@@ -170,20 +160,9 @@
             console.log(pegHoles);
 
             app.ticker.add(gameLoop);
-
-
         }
 
         function gameLoop(delta) { }
-
-
-        function filterOn() {
-            this.filters = [outlineFilterRed];
-        }
-
-        function filterOff() {
-            this.filters = [outlineFilterBlue];
-        }
 
         function PegHole(x, y, radius, color, name) {
             let circle = new PIXI.Graphics();
@@ -191,41 +170,18 @@
             circle.drawCircle(x, y, radius, radius);
             circle.endFill();
             let type = 'peghole';
-            //console.log(circle.filters);
             circle.interactive = true;
             circle.buttonMode = true;
-            //console.log(outlineFilter);
-            //moves.filterOn();
-            //circle.on('pointerdown', filterOn);
-            //circle.filters = [];
 
-
-            // circle.on("pointerup", doPointerUp);
             circle.on("pointerdown", doPointerDown);
-            //circle.on("pointerover", doPointerOver);
-            //circle.on("pointerout", doPointerOut);
-            //circle.on("pointerupoutside", doPointerUpOutside);
-            //circle.filters = [new OutlineFilter(2, 0x99ff99)]
+
             let canMove = false;
 
             circle.name = name;
-            //circle.speed = speed;
 
             return circle;
         }
 
-
-
-
-
-
-
-
-
-
-        //  function doPointerUp() {
-        //     console.log("pointer up");
-        //}
         function doPointerDown() {
             console.log(`type: ${this.type}`);
             console.log(`type: ${this.canMove}`);
@@ -233,96 +189,81 @@
             console.log(`name ${this.name}`);
             if (this.canMove === true) {
                 this.tint = red;
-                console.log(playerOneLocations);
+
                 //get location of original peg
                 let pegLoc = this.name - cardValue;
                 //if you pass i = 0, the original peg can be located
                 if (pegLoc < 0) {
                     pegLoc = pegLoc + 72;
-                }
+                };
                 let originalLoc = playerOneLocations.find(peg => {
                     return peg == pegHoles[pegLoc].name;
                 });
-                //change the hand numbers 
+
+                //change the location numbers
                 playerOneLocations[playerOneLocations.indexOf(originalLoc)] = this.name;
                 pegHoles[pegLoc].tint = NORMAL;
-                console.log(playerOneLocations);
-                console.log(playerOneLocations);
 
                 console.log(localStorage.getItem('playerOneLocations'));
-                // this.filters.push(outlineFilter);
 
-            }
-            console.log("pointer down");
+            };
             pointerIsDown = true;
-        }
-
-
-
-
-
+        };
 
         //This generates the player pieces using piece location
         function playerPieces() {
 
             for (i = 0; i < playerOneLocations.length; i++) {
                 pegHoles[playerOneLocations[i]].tint = red;
-            }
+            };
 
             for (i = 0; i < playerTwoLocations.length; i++) {
                 pegHoles[playerTwoLocations[i]].tint = blue;
-            }
+            };
 
             for (i = 0; i < playerThreeLocations.length; i++) {
                 pegHoles[playerThreeLocations[i]].tint = green;
-            }
+            };
 
             for (i = 0; i < playerFourLocations.length; i++) {
                 pegHoles[playerFourLocations[i]].tint = black;
-            }
+            };
 
-        }
-
+        };
 
         // When player clicks on card it shows the possible moves they can do
         function showPossibleMoves() {
-
 
             for (i = 0; i < playerOneLocations.length; i++) {
                 let moveLocations = playerOneLocations[i] + cardValue;
                 let moves;
 
                 //If next move i > 71, it will go to the beginning of the array before counting
-                if(moveLocations > 71) {
+                if (moveLocations > 71) {
 
                     moveLocations = moveLocations - 72;
-
-                }
+                };
 
                 moves = pegHoles[moveLocations];
                 moves.canMove = true;
                 moves.tint = '0xffff00';
-            }
-      
+            };
+
             //Allow player to deploy unused peg
-            if(playerOneLocations.length < 5){
-                let newPeg = pegHoles[39 + cardValue];
-                newPeg.tint = '0xffff00';
-                playerOneLocations.push(newPeg.name);
+            if (playerOneLocations.length < 5) {
+
+                pegHoles[39 + cardValue].tint = '0xffff00';
+
+                //We'll need to add this to the array if they click it    
+                //playerOneLocations.push(pegHoles[39 + cardValue].name);
+
                 console.log(playerOneLocations);
-                }
-
-        }
-
-
-
+            };
+        };
 
         cardBtn.addEventListener('click', showPossibleMoves);
 
-
-
     </script>
-
 
 </body>
 
