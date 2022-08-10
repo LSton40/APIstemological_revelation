@@ -33,7 +33,7 @@
   }
 
   /* joining the lobby room && carrying over the username & color */
-  var socket = io('/lobby', { query: query });
+  const socket = io('/lobby', { query: query });
 
 
   socket.on('current games', (gameList) => {
@@ -68,22 +68,22 @@
 
   //socket.on('redirect', function (destination) {
 
-    //const gameIdSize = 6;
-    //let gameid = '';
+  //const gameIdSize = 6;
+  //let gameid = '';
 
-   // for (let i = 0; i < gameIdSize; i++) {
-    //  gameid += Math.floor(Math.random() * 10);
-   // };
-   // socket.emit('createGame', gameid);
-    // window.location.href = destination;
+  // for (let i = 0; i < gameIdSize; i++) {
+  //  gameid += Math.floor(Math.random() * 10);
+  // };
+  // socket.emit('createGame', gameid);
+  // window.location.href = destination;
   //});
 
-    //socket.on('errors', (error) => {
-    /* append the errors somewhere!! TOAST??!?!?!?! */
+  //socket.on('errors', (error) => {
+  /* append the errors somewhere!! TOAST??!?!?!?! */
 
-    //socket.on('redirect', (url) => {
+  //socket.on('redirect', (url) => {
 
-    //fetch(url);
+  //fetch(url);
 
   //});
 
@@ -136,24 +136,33 @@
   let joinGameFormEl = document.getElementById('joinForm');
   let joinGameInput = document.getElementById('roomCode');
 
-  joinGameFormEl.addEventListener('submit', (e) => {
+  joinGameFormEl.addEventListener('submit', async (e) => {
+    console.log(`IM STILL HERE ${socket.id}`);
     console.log('clicked')
     e.preventDefault();
     if (joinGameInput.value) {
       console.log(`sending request to join ${joinGameInput.value}`)
-      socket.emit('joinGame', joinGameInput.value);
-      joinGameInput.value = '';
-      window.location.assign("/lobby")
+      socket.emit('joinRequest', socket.id);
+      console.log('clicked')
+
     }
     joinGameInput.value = '';
   });
 
 
+
+  socket.on('joinRequestReturn', (ans) => {
+    //maybe add /lobby:gameid
+    window.location.assign("/lobby")
+
+  });
+
+
   function startGame() {
     console.log('pressedButton');
-    console.log(`STARTING GAME: PREPARE!`)
+    console.log(`STARTING GAME: PREPARE!`);
     socket.emit('startGame', socket.id);
-    window.location.assign("/gameboard")
+    window.location.assign("/gameboard");
   }
 
 

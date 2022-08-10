@@ -429,11 +429,12 @@ const lobby = io.of('/lobby');
 // lobby connection func
 lobby.on('connection', async (socket) => {
 
-
+  let i = 1;
+  console.log(i++);
   //const destination = '/index.html';
   //socket.emit('redirect', destination);
-
-
+  console.log('WAAAAAAY');
+  
 
   /* declares all games being played */
 
@@ -471,7 +472,6 @@ lobby.on('connection', async (socket) => {
 
   console.log(`${currUser} has connected to the lobby`);
 
-  gameLister();
 
 
   // // finding user from the database by its username
@@ -489,12 +489,14 @@ lobby.on('connection', async (socket) => {
   /* ************************* */
   /* join game socket listener */
   /* ************************* */
-  socket.on('joinGame', async (gameID) => {
+  socket.on('joinRequest', async (gameID) => {
     // finding game with gameID
+    console.log('clicked2')
+
     console.log('caught join game call');
     const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
 
-    console.log(gameRoom);
+    console.log(`gameRoom: ${gameRoom}`);
 
     if (gameRoom) {
       // grabbing gamePlayers from the game
@@ -573,6 +575,7 @@ lobby.on('connection', async (socket) => {
       gamePlayers: GameData.gamePlayers,
       gameTurn: GameData.gameTurn
     });
+    gameLister();
 
     socket.emit('logs', {
       game: game,
@@ -686,6 +689,15 @@ lobby.on('connection', async (socket) => {
   /* GUNGUNTESTING */
   /* ************* */
 
+
+  //socket.on('joinRequestReturn', async (gameID) => {
+    
+    //check to see if game exists
+
+
+
+
+ // });
 
 
 
