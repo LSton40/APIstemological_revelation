@@ -304,13 +304,12 @@ p#tease {
 /*Gameboard section*/
 #game-display {
     display: grid;
-    height: 95vh;
+    height: 100vh;
+    /* padding: 2vh; */
 }
 
 /*Player areas*/
-.player {
-    background-color: green;
-}
+
 
 /*Player along top of screen*/
 #top_player {
@@ -318,6 +317,7 @@ p#tease {
     grid-row: 1 / 2;
     display: flex;
     justify-content: center;
+    padding: 10px 0;
 }
 
 .thisPlayer {
@@ -326,26 +326,80 @@ p#tease {
 
 .players {
     width: 200px;
-    margin-left: 5px
+    margin-left: 5px;
+    border-radius: 50px;
+    display: grid;
+    justify-content:center;
+    /* margin-left: 6vw; */
+    box-shadow: 5px 10px 15px rgb(119, 89, 89);
+    color: black;
+    font-size: 1.5vw;
+    padding: 10px 10px 0px 10px;
+    max-height: 300px;
+    min-width: fit-content;
+    width: 15vw;
 }
 
-#player1 {
-
+.players:not(:first-child) {
+    margin-left: 6vw;
 }
 
-#player2 {
-    
-}
-
-#player3 {
-    
-}
-
-#player4 {
-    
+.players p {
+    margin: 0 auto;
+    padding-bottom: 0;
+    max-height: max-content;
+    font-family: 'Mouse Memoirs', sans-serif;
+    text-shadow: 5px 5px 5px rgb(63, 63, 63);
 }
 
 
+.numHere {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 1.5vh;
+    max-height: max-content;
+}
+
+.counters {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 12vw;
+    margin: 0 auto;
+    /* margin-top: 0;
+    padding-top: 0; */
+    /* height: max-content; */
+}
+
+/* .counters:: {
+    /* margin-left: 5vw; */
+
+.sCounters {
+    font-size: 1.1vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    width: 3vw;
+    margin: auto;
+}
+
+.hCounters {
+    font-size: 1.1vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    width: 3vw;
+    margin: auto;
+}
+
+
+.showMe {
+    color: rgb(60, 9, 10);
+    font-size: 2vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    padding: 0;
+    margin: 0;
+    height: max-content;
+}
 
 .player-1 {
     background-color: blue;
@@ -361,6 +415,14 @@ p#tease {
 
 .player-4 {
     background-color: yellow;
+}
+
+.thisPlayer {
+    box-shadow:
+        inset 0 0 50px #fff,
+        0 0 50px #fff,
+        -10px 0 80px #f0f,
+        10px 0 80px #0ff;
 }
 
 /*Player on left side of screen (from user perspective)*/
@@ -388,17 +450,81 @@ p#tease {
     grid-row: 10 / 11;
     display: flex;
     justify-content: center;
+    padding: 10px 0;
+    overflow: hidden;
 }
 
 .cards {
-    background-color: gray;
-    width: 100px;
-    margin-left: 5px;
+    background-image: linear-gradient(45deg, rgb(235, 212, 118) 50%, rgb(7, 109, 167));
+    width: 150px;
+    margin-left: 2vw;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4vw;
+    font-family: 'Mouse Memoirs', sans-serif;
+    color: rgb(60, 9, 10);
+    box-shadow: 5px 5px 5px black;
+    cursor: grab;
+
+    /* overflow: hidden;
+    transform: translateX(300px); */
+    /* transition: all 0.6s ease-out; */
+}
+
+.cards:active {
+    cursor: grabbing;
+}
+
+.cards:hover {
+    box-shadow:
+        inset 0 0 50px #fff,
+        0 0 50px #fff,
+        -10px 0 80px #f0f,
+        10px 0 80px #0ff;
+}
+
+.selectedCard {
+    box-shadow:
+        inset 0 0 50px #fff,
+        0 0 50px #fff,
+        -10px 0 80px #f0f,
+        10px 0 80px #0ff;
 }
 
 
 
+.smokeIt {
+    /* transform: translateX(100vw); */
+    /* text-shadow: 0 0 0 whitesmoke;
+    animation: smoky 5s; */
+    /* overflow: clip; */
+    padding: 0;
+    margin: 0;
+    width: 0px;
+    opacity: 0;
+    transform: translateY(0);
+    /* transition: all 1s ease-out; */
+    animation: smoky 1.5s;
+}
 
+/* .slide {
+    margin-left: 0;
+    transition: 0.6s all ease-out;
+} */
+
+
+@keyframes smoky {
+    0% {
+        width: 150px;
+    }
+    100% {
+        width: 0;
+        z-index: 2;
+        display: none;
+    }
+}
 
 
 

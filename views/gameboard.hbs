@@ -173,6 +173,7 @@
             circle.interactive = true;
             circle.buttonMode = true;
 
+
             circle.on("pointerdown", doPointerDown);
 
             let canMove = false;
@@ -241,6 +242,7 @@
                 //If next move i > 71, it will go to the beginning of the array before counting
                 if (moveLocations > 71) {
 
+
                     moveLocations = moveLocations - 72;
                 };
 
@@ -251,6 +253,7 @@
 
             //Allow player to deploy unused peg
             if (playerOneLocations.length < 5) {
+
 
                 pegHoles[39 + cardValue].tint = '0xffff00';
 
