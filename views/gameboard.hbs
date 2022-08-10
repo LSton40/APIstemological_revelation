@@ -75,6 +75,7 @@
         const blue = 0x0000FF;
         const green = 0x008000;
         const black = 0x000000;
+        const yellow = 0xffff00;
         const RECT_W = 100;
         const RECT_H = 100;
         let offsetX = 650;
@@ -285,21 +286,21 @@
             console.log(`type: ${this.canMove}`);
             console.log(`this output ${this}`);
             console.log(`name ${this.name}`);
-            
+
             //This lets the user to use new peg
             if (playerOneLocations.length < 5) {
 
-                    if (this.name === pegHoles[39 + cardValue].name) {
+                if (this.name === pegHoles[39 + cardValue].name) {
 
-                        pegHoles[39 + cardValue].tint = red;
+                    pegHoles[39 + cardValue].tint = red;
 
-                        playerOneLocations.push(pegHoles[39 + cardValue].name)
-                        
+                    playerOneLocations.push(pegHoles[39 + cardValue].name)
 
-                    }
+                    clearYellowSpaces();
+                }
 
-                    console.log(playerOneLocations);
-                };
+                console.log(playerOneLocations);
+            };
 
             //This lets the user move a peg to a new spot
             if (this.canMove === true) {
@@ -327,6 +328,8 @@
                 console.log(playerOneLocations);
                 console.log(newPositions);
 
+                clearYellowSpaces();
+
 
                 for (let i = 0; i < newPositions.length; i++) {
                     console.log(pegHoles[i])
@@ -341,7 +344,7 @@
 
                 };
 
-               
+
 
 
 
@@ -353,7 +356,7 @@
             };
             pointerIsDown = true;
 
-             
+
         };
 
         //This generates the player pieces using piece location
@@ -393,7 +396,7 @@
 
                 moves = pegHoles[moveLocations];
                 moves.canMove = true;
-                moves.tint = '0xffff00';
+                moves.tint = yellow;
             };
 
             //Allow player to deploy unused peg
@@ -401,13 +404,22 @@
 
 
 
-                pegHoles[39 + cardValue].tint = '0xffff00';
+                pegHoles[39 + cardValue].tint = yellow;
 
                 //We'll need to add this to the array if they click it    
                 //playerOneLocations.push(pegHoles[39 + cardValue].name);
 
                 console.log(playerOneLocations);
             };
+        };
+
+        function clearYellowSpaces () {
+            for (let i = 0; i < pegHoles.length; i++) {
+
+                        if (pegHoles[i].tint === yellow) {
+                            pegHoles[i].tint = NORMAL;
+                        };
+                    };
         };
 
         //cardBtn.addEventListener('click', showPossibleMoves); --}}
@@ -632,12 +644,7 @@
                     };
                 };
 
-                for (let i = 0; i < pegHoles.length; i++) {
-
-                    if (pegHoles[i].tint === '0xffff00') {
-                        pegHoles[i].tint = NORMAL;
-                    };
-                };
+                clearYellowSpaces();
 
                 iLikeToMoveItMoveIt(event.target.textContent);
 
@@ -650,7 +657,7 @@
 
                 for (let i = 0; i < pegHoles.length; i++) {
 
-                    if (pegHoles[i].tint === '0xffff00') {
+                    if (pegHoles[i].tint === yellow) {
                         pegHoles[i].tint = NORMAL;
                     };
 
