@@ -13,6 +13,12 @@ module.exports = class gameData {
         hand: [],
         pegs: [
           {
+            pegID: 0,
+            pegLocation: null,
+            isAtSpawn: true,
+            isInFinish: false
+          },
+          {
             pegID: 1,
             pegLocation: null,
             isAtSpawn: true,
@@ -32,12 +38,6 @@ module.exports = class gameData {
           },
           {
             pegID: 4,
-            pegLocation: null,
-            isAtSpawn: true,
-            isInFinish: false
-          },
-          {
-            pegID: 5,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
@@ -50,31 +50,31 @@ module.exports = class gameData {
         hand: [],
         pegs: [
           {
-            pegID: 1,
-            pegLocation: null,
-            isAtSpawn: true,
-            isInFinish: false
-          },
-          {
-            pegID: 2,
-            pegLocation: null,
-            isAtSpawn: true,
-            isInFinish: false
-          },
-          {
-            pegID: 3,
-            pegLocation: null,
-            isAtSpawn: true,
-            isInFinish: false
-          },
-          {
-            pegID: 4,
-            pegLocation: null,
-            isAtSpawn: true,
-            isInFinish: false
-          },
-          {
             pegID: 5,
+            pegLocation: null,
+            isAtSpawn: true,
+            isInFinish: false
+          },
+          {
+            pegID: 6,
+            pegLocation: null,
+            isAtSpawn: true,
+            isInFinish: false
+          },
+          {
+            pegID: 7,
+            pegLocation: null,
+            isAtSpawn: true,
+            isInFinish: false
+          },
+          {
+            pegID: 8,
+            pegLocation: null,
+            isAtSpawn: true,
+            isInFinish: false
+          },
+          {
+            pegID: 9,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
@@ -87,31 +87,31 @@ module.exports = class gameData {
         hand: [],
         pegs: [
           {
-            pegID: 1,
+            pegID: 10,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
           },
           {
-            pegID: 2,
+            pegID: 11,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
           },
           {
-            pegID: 3,
+            pegID: 12,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
           },
           {
-            pegID: 4,
+            pegID: 13,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
           },
           {
-            pegID: 5,
+            pegID: 14,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
@@ -124,31 +124,31 @@ module.exports = class gameData {
         hand: [],
         pegs: [
           {
-            pegID: 1,
+            pegID: 15,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
           },
           {
-            pegID: 2,
+            pegID: 16,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
           },
           {
-            pegID: 3,
+            pegID: 17,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
           },
           {
-            pegID: 4,
+            pegID: 18,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
           },
           {
-            pegID: 5,
+            pegID: 19,
             pegLocation: null,
             isAtSpawn: true,
             isInFinish: false
