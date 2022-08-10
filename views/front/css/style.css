@@ -532,9 +532,55 @@ p#tease {
 
 
 
+/* ****************** */
+/* gunnars ugly toast */
+/* ****************** */
+#mmmToast {
+  visibility: hidden; 
+  min-width: 420px; /* Set a default minimum width */
+  margin-left: 125px; 
+  background: linear-gradient(to bottom right, rgba(0,0,0,1.00), rgb(60, 9, 10));
+  color: rgb(209, 206, 206);
+  box-shadow: 5px 5px 5px black;
+  text-align: center; /* Centered text */
+  border-radius: 10px; /* Rounded borders */
+  padding: 22px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  /* left: 50%; */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#mmmToast.show {
+  visibility: visible;
+  -webkit-animation: toastFadein 0.5s, toastFadeout 0.5s 2.5s;
+  animation: toastFadein 0.5s, toastFadeout 0.5s 2.5s;
+}
 
 
+@-webkit-keyframes toastFadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
 
+@keyframes toastFadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes toastFadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes toastFadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+/* ****************** */
+/* gunnars ugly toast */
+/* ****************** */
 
 
 /*Keyframe for main section fade ins*/

@@ -13,6 +13,7 @@
 
 {{{body}}}
 
+<div id="mmmToast"></div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
@@ -52,15 +53,16 @@
 
     });
 
+    socket.on('errors', (err) => {
+      console.log(`There was an error: ${err.error}`);
+
+      toastEl = document.getElementById('mmmToast');
+      toastEl.innerText = `${err.error} :(`;
+      toastEl.className = 'show';
+      setTimeout(() => { toastEl.className = toastEl.className.replace("show", ""); }, 3000);
+    })
+    
   });
-
-  socket.on('errors', (err) => {
-
-    console.log(err);
-  }
-  )
-
-
 
 
   //socket.on('redirect', function (destination) {
@@ -95,30 +97,24 @@
   /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
   /* ********************************** */
   const queryGameSocket = async () => {
-    let name = 'epicGameName';
-    socket.emit('testQuery', name);
+    let name = {
+    username: 'bobbyfillets',
+    userColor: "0xF78DA7"
+  }
+    
+    socket.emit('joinRequest', name, 'sql');
+
+
+
     console.log('queried boii');
   }
-  socket.on('logs', (data) => {
+
+  socket.on('enoughLength', (data) => {
     console.log(data);
   })
+
   queryGameButtonEl = document.getElementById('queryGame');
   queryGameButtonEl.addEventListener('click', queryGameSocket);
-
-
-  /* ********************************** */
-  /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
-  /* ********************************** */
-  //socket.on('redirect', (url) => {
-
-  //redirectMe(lank);
-
-  //});
-  //const redirectMe = (lank) => {
-
-  //}
-
-
   /* ********************************** */
   /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
   /* ********************************** */

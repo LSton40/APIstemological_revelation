@@ -32,12 +32,13 @@ module.exports = {
   },
   initDealCards: async(gameID) => {
     const gameRoom = gameRoomPinger(gameID);
+    console.log(gameRoom.gamePlayers);
 
     // ref array for easier
     let gamePlayers = gameRoom.gamePlayers;
     
     // nested for loop to create 5 cards and push them to each players hand
-    for (let i = 0; i < gamePlayers.length; i++) {
+    for (let i = 0; i < gamePlayers.length(); i++) {
       tempHand = [];
       for (let j = 0; j < 5; j++) {
         // generate index for card
