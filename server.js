@@ -429,6 +429,12 @@ const lobby = io.of('/lobby');
 // lobby connection func
 lobby.on('connection', async (socket) => {
 
+
+  const destination = '/index.html';
+  socket.emit('redirect', destination);
+
+
+
   /* declares all games being played */
 
   const gameLister = async () => {
@@ -475,6 +481,11 @@ lobby.on('connection', async (socket) => {
 
 
 
+
+
+
+
+
   /* ************************* */
   /* join game socket listener */
   /* ************************* */
@@ -483,7 +494,7 @@ lobby.on('connection', async (socket) => {
     console.log('caught join game call');
     const gameRoom = await GameBoard.findOne({ where: { gameID: gameID } });
 
-    
+
     if (gameRoom) {
       // grabbing gamePlayers from the game
       let roomPlayers = gameRoom.gamePlayers || [];
@@ -517,6 +528,7 @@ lobby.on('connection', async (socket) => {
   socket.on('createGame', async (gameID) => {
     /* board exists ? created = false : created = true && return newGame */
     let currUser = socket.handshake.query['username'] || null;
+    console.log('test2');
 
 
 
@@ -545,14 +557,15 @@ lobby.on('connection', async (socket) => {
     const GameData = new GameDataClass(testGameID, testUserList);
 
     console.log(GameData.gamePlayers);
+    console.log('test3');
 
     /* game exists ? created = false : created = true && return game */
     const game = await GameBoard.create({
-        gameID: GameData.gameID,
-        gameCreator: GameData.gameCreator,
-        gameStatus: GameData.gameStatus,
-        gamePlayers: GameData.gamePlayers,
-        gameTurn: GameData.gameTurn
+      gameID: GameData.gameID,
+      gameCreator: GameData.gameCreator,
+      gameStatus: GameData.gameStatus,
+      gamePlayers: GameData.gamePlayers,
+      gameTurn: GameData.gameTurn
     });
 
     socket.emit('logs', {
@@ -655,7 +668,7 @@ lobby.on('connection', async (socket) => {
   /* ************* */
   /* GUNGUNTESTING */
   /* ************* */
-  socket.on('testQuery', async(gameID) => {
+  socket.on('testQuery', async (gameID) => {
     // playGame.getGameData(gameID);
     // console.log(await playGame.getGameData(gameID));
     playGame.initDealCards(gameID);
