@@ -116,6 +116,18 @@
     })
     queryGameButtonEl = document.getElementById('queryGame');
     queryGameButtonEl.addEventListener('click', queryGameSocket);
+
+
+    socket.on('redirect', (url) => {
+
+      redirectMe(lank);
+
+    });
+    const redirectMe = (lank) => {
+      
+    }
+
+
     /* ********************************** */
     /* GUNGUNTESTING REMOVE ON DEPLOYMENT */
     /* ********************************** */
