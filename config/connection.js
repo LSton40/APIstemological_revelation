@@ -10,7 +10,7 @@ const logging = process.env.LOG ? true : false;
 if (process.env.JAWSDB_URL) {
   module.exports = new Sequelize(process.env.JAWSDB_URL);
 } else {
-  new Sequelize(process.env.DB, process.env.SQLUSER, process.env.SQLPASS, {
+  module.exports = new Sequelize(process.env.DB, process.env.SQLUSER, process.env.SQLPASS, {
   host: process.env.HOST,
   dialect: 'mysql',
   logging: false
