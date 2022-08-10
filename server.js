@@ -562,7 +562,7 @@ lobby.on('connection', async (socket) => {
       }
     ];
 
-    const GameData = new GameDataClass(testGameID, testUserList);
+    const GameData = new GameDataClass(testGameID, testUserList, testUserList[0].username);
 
     console.log(GameData.gamePlayers);
     console.log('test3');
