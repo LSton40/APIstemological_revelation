@@ -2,6 +2,8 @@
 
 Get ready for this hip new heartstopping game. In this game users play cards to move around the gameboard and try to get all their pegs back home. 
 
+[Link to deployed app on Heroku](https://jegs-pokers.herokuapp.com/)
+
 ## Table of Contents  
 
 - [Installation](#installation)  
