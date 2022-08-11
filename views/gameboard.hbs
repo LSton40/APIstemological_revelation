@@ -225,7 +225,7 @@
             for (let i = 0; i < pegHoles.length; i++) {
                 gameContainer.addChild(pegHoles[i]);
             }
-            console.log(pegHoles);
+            //console.log(pegHoles);
 
             app.ticker.add(gameLoop);
         }
@@ -289,10 +289,10 @@
 
         //Move a given game piece to the selected possible move position
         function doPointerDown() {
-            console.log(`type: ${this.type}`);
-            console.log(`type: ${this.canMove}`);
-            console.log(`this output ${this}`);
-            console.log(`name ${this.name}`);
+            //console.log(`type: ${this.type}`);
+            //console.log(`type: ${this.canMove}`);
+            //console.log(`this output ${this}`);
+            //console.log(`name ${this.name}`);
 
             //This lets the user to use new peg
             if (userTokens.length > 0) {
@@ -303,21 +303,16 @@
 
                     playerOneLocations.push(pegHoles[39 + cardValue].name)
 
-                    clearYellowSpaces();
                     comeOut();
-                    discardDatCard();
                 }
 
-                console.log(playerOneLocations);
+                //console.log(playerOneLocations);
             };
 
            if (this.name === pegHoles[39].name) {
-                pegHoles[39].tint = green;
+                //pegHoles[39].tint = green;
 
                 goHome();
-                clearYellowSpaces();
-                discardDatCard();
-                winCondition();
            }
 
             //This lets the user move a peg to a new spot
@@ -340,10 +335,7 @@
 
                 let newPositions = playerOneLocations.map((pos) => { return pos + cardValue });
 
-                clearYellowSpaces();
-
                 for (let i = 0; i < newPositions.length; i++) {
-                    console.log(pegHoles[i])
 
                     if (newPositions[i] > 71) {
                         newPositions[i] = newPositions[i] - 72;
@@ -353,10 +345,11 @@
                 };
 
                               
-                discardDatCard();
 
-                console.log(localStorage.getItem('playerOneLocations'));
+                //console.log(localStorage.getItem('playerOneLocations'));
             };
+                clearYellowSpaces();
+                discardDatCard();
             pointerIsDown = true;
         };
 
@@ -403,7 +396,7 @@
 
                 //We'll need to add this to the array if they click it    
                 //playerOneLocations.push(pegHoles[39 + cardValue].name);
-                console.log(playerOneLocations);
+                //console.log(playerOneLocations);
             }
         };
 
@@ -448,11 +441,9 @@
         //Removes token from userTokens when a piece moves out of start position
         //Also removes counter from header
         function comeOut() {
-        let tok = userTokens.shift();
-        userTokensOnBoard.push(tok);
-
-        console.log(bCounter)
-          sCounter.removeChild(sCounter.firstElementChild);
+            let tok = userTokens.shift();
+            userTokensOnBoard.push(tok);
+            sCounter.removeChild(sCounter.firstElementChild);
         }
 
         //Removes token from the userTokensOnBoard array when it reaches Home base
@@ -461,18 +452,20 @@
             let leaveTokens = userTokensOnBoard.shift();
             userHome.push(leaveTokens);
 
+            pegHoles[39].tint = green;
             homeCounter();
+            winCondition();
         }
 
         //If all of the user's pieces enter home base, the game ends
         function winCondition() {
-            if (userHome.length = 5) {
+
+            console.log(userHome.length)
+            if (userHome.length === 5) {
                 //Game over message
+                console.log('Game over!')
             }
         }
-
-
-
 
         //Starts game: shuffles cards, pushes into playDeck, then passes to the dealCards function
         function gameStart(cardArray) {
@@ -500,7 +493,7 @@
             player2Hand = playDeck.splice(0, 5);
             player3Hand = playDeck.splice(0, 5);
             player4Hand = playDeck.splice(0, 5);
-
+            
             userHand = player1Hand;
 
             startCounter();
@@ -512,24 +505,23 @@
 
             for (let c in myHand) {
                 let handCard = document.createElement('div');
-                handCard.id = `card${c}`;
                 handCard.className = "cards";
                 handCard.textContent = myHand[c];
                 hand.appendChild(handCard);
             }
+
+            drawCard()
         };
 
 
         //On player's turn, draws a card and displays it in the HTML
-        async function drawCard() {
-            let drawCard = userHand.push(playDeck.splice(0, 1));
+        function drawCard() {
+            let drawCard = playDeck.splice(0, 1) 
+            userHand.push(drawCard);
             let handCard = document.createElement('div');
             handCard.className = "cards"
             handCard.textContent = drawCard;
-            handCard.id = 'card5';
             hand.appendChild(handCard);
-
-            let idAssign = await assignCardIds();
         }
 
 
@@ -553,46 +545,38 @@
 
         //Card elements that do not exist until after page load and game starts
         const cards = document.querySelectorAll('.cards');
-        const card1 = document.querySelector('#card0');
-        const card2 = document.querySelector('#card1');
-        const card3 = document.querySelector('#card2');
-        const card4 = document.querySelector('#card3');
-        const card5 = document.querySelector('#card4');
-        const card6 = document.querySelector('#card5');
-
-        function assignCardIds() {
-            for (let c in cards) {
-                cards[c].id === `card${c}`;
-            }
-        }
 
         //Highlights a given card on click, or removes highlighting on second click
         //When highlighted, also calls iLikeToMoveItMoveIt function to display possible moves from card selection
         function addSelectClass(event) {
+            event.stopPropagation();
 
-            if (!event.target.classList.contains("selectedCard")) {
-                event.target.classList.add("selectedCard")
+            if (event.target.classList.contains('cards')) {
 
-                for (i = 0; i < cards.length; i++) {
-                    if (cards[i] != event.target) {
-                        cards[i].classList.remove("selectedCard")
+                if (!event.target.classList.contains("selectedCard")) {
+                    event.target.classList.add("selectedCard")
+
+                    for (i = 0; i < cards.length; i++) {
+                        if (cards[i] != event.target) {
+                            cards[i].classList.remove("selectedCard")
+                        }
                     }
-                }
-               
-                for (let i =0; i < pegHoles.length; i++) {
+                
+                    for (let i =0; i < pegHoles.length; i++) {
+                            if (pegHoles[i].tint == yellow) {
+                                pegHoles[i].tint = NORMAL;
+                            }
+                        }
+            
+                    iLikeToMoveItMoveIt(event.target.textContent);
+                } 
+                else {
+                    event.target.classList.remove("selectedCard")
+
+                    for (let i =0; i < pegHoles.length; i++) {
                         if (pegHoles[i].tint == yellow) {
                             pegHoles[i].tint = NORMAL;
                         }
-                    }
-        
-                iLikeToMoveItMoveIt(event.target.textContent);
-            } 
-            else {
-                event.target.classList.remove("selectedCard")
-
-                for (let i =0; i < pegHoles.length; i++) {
-                    if (pegHoles[i].tint == yellow) {
-                        pegHoles[i].tint = NORMAL;
                     }
                 }
             }
@@ -606,13 +590,11 @@
             discard.push(discardCard);
             
             cardPlayed(discardCard)
-            console.log(cardSelect)
-
 
             cardSelect.classList.add('smokeIt')
+            
             setTimeout(() => {
                 cardSelect.remove();
-                assignCardIds();
             }, 1500)    
         
             drawCard();
@@ -620,11 +602,6 @@
         
 
         //Event listeners for cards
-        card1.addEventListener('click', addSelectClass)
-        card2.addEventListener('click', addSelectClass)
-        card3.addEventListener('click', addSelectClass)
-        card4.addEventListener('click', addSelectClass)
-        card5.addEventListener('click', addSelectClass)
-        card6.addEventListener('click', addSelectClass)
-
+        hand.addEventListener('click', addSelectClass);
+ 
     </script>
