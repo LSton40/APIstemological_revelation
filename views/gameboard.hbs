@@ -388,6 +388,7 @@
                 moves = pegHoles[moveLocations];
                 moves.canMove = true;
                 moves.tint = yellow;
+                console.log(playerOneLocations);
             };
 
             //Allow player to deploy unused peg
@@ -407,10 +408,8 @@
                     pegHoles[i].tint = NORMAL;
                 };
             };
+            playerPieces();
         };
-
-
-
 
         /********************
         Token Ticker Counters
