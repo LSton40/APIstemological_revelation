@@ -4,7 +4,7 @@ const gameRoomPinger = async(gameID) => { await GameBoard.findOne({ where: { gam
 
 module.exports = {
   gameMaker: async(GameData) => {
-    newGameRoom = GameBoard.findOrCreate({ 
+    let newGameRoom = GameBoard.findOrCreate({ 
       where: {
         gameID: GameData.gameID,
     }, 
@@ -38,7 +38,7 @@ module.exports = {
     let gamePlayers = gameRoom.gamePlayers;
     
     // nested for loop to create 5 cards and push them to each players hand
-    for (let i = 0; i < gamePlayers.length(); i++) {
+    for (let i = 0; i < gamePlayers.length; i++) {
       tempHand = [];
       for (let j = 0; j < 5; j++) {
         // generate index for card
